@@ -35,7 +35,7 @@ namespace Billiards.Table
             // Ensure this is configured as a trigger
             if (!triggerCollider.isTrigger)
             {
-                Debug.LogWarning($"[PocketTrigger] {gameObject.name} collider is not set as Trigger. Auto-enabling.", this);
+                UnityEngine.Debug.LogWarning($"[PocketTrigger] {gameObject.name} collider is not set as Trigger. Auto-enabling.", this);
                 triggerCollider.isTrigger = true;
             }
         }
@@ -59,7 +59,7 @@ namespace Billiards.Table
 
             if (logPocketEvents)
             {
-                Debug.Log($"[PocketTrigger] Ball '{ball.name}' entered pocket '{gameObject.name}'", this);
+                UnityEngine.Debug.Log($"[PocketTrigger] Ball '{ball.name}' entered pocket '{gameObject.name}'", this);
             }
 
             // Fire event immediately
@@ -141,7 +141,7 @@ namespace Billiards.Table
 
             if (logPocketEvents)
             {
-                Debug.Log($"[PocketTrigger] Ball '{ball.name}' disabled", this);
+                UnityEngine.Debug.Log($"[PocketTrigger] Ball '{ball.name}' disabled", this);
             }
 
             // Optionally: Move ball far away or destroy it

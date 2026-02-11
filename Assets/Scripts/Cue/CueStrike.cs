@@ -52,7 +52,7 @@ namespace Billiards.Cue
                 cueBall = GameObject.FindGameObjectWithTag("CueBall");
                 if (cueBall == null)
                 {
-                    Debug.LogError("[CueStrike] No cue ball assigned and none found with tag 'CueBall'", this);
+                    UnityEngine.Debug.LogError("[CueStrike] No cue ball assigned and none found with tag 'CueBall'", this);
                     return;
                 }
             }
@@ -62,12 +62,12 @@ namespace Billiards.Cue
 
             if (ballPhysics == null)
             {
-                Debug.LogError("[CueStrike] Cue ball missing BallPhysics component", this);
+                UnityEngine.Debug.LogError("[CueStrike] Cue ball missing BallPhysics component", this);
             }
 
             if (ballSpin == null)
             {
-                Debug.LogError("[CueStrike] Cue ball missing BallSpin component", this);
+                UnityEngine.Debug.LogError("[CueStrike] Cue ball missing BallSpin component", this);
             }
 
             // Subscribe to shot release event
@@ -110,7 +110,7 @@ namespace Billiards.Cue
 
             if (logStrikeInfo)
             {
-                Debug.Log($"[CueStrike] Strike executed: {impulseForce:F2}N in direction {direction}, spin {spin}");
+                UnityEngine.Debug.Log($"[CueStrike] Strike executed: {impulseForce:F2}N in direction {direction}, spin {spin}");
             }
         }
 

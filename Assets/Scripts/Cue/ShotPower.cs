@@ -126,7 +126,7 @@ namespace Billiards.Cue
 
             if (Application.isPlaying)
             {
-                Debug.Log($"[ShotPower] Shot released: {finalImpulse:F2}N (charge: {NormalizedPower:P0})");
+                UnityEngine.Debug.Log($"[ShotPower] Shot released: {finalImpulse:F2}N (charge: {NormalizedPower:P0})");
             }
 
             ResetCharge();

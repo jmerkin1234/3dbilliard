@@ -223,8 +223,14 @@ Implementation details:
 - Public methods: SetContactOffset(), ResetContactOffset()
 - Gizmo visualization of contact point and offset vector
 
+### Compilation Fix
+- Fixed namespace collision: All `Debug` calls replaced with `UnityEngine.Debug` prefix
+- Affected files: CueAim.cs, ShotPower.cs, CueStrike.cs, PocketTrigger.cs
+- Compilation verified: **0 errors** after fix
+
 ### Definition of Done
 - [x] Full shot pipeline functional (CueAim → ShotPower → CueStrike → BallPhysics/BallSpin)
+- [x] Zero compilation errors (Debug namespace collision resolved)
 - [ ] Play Mode validation (deferred to Phase 7)
 
 ---

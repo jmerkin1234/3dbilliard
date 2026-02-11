@@ -61,7 +61,7 @@ namespace Billiards.Cue
                 }
                 else
                 {
-                    Debug.LogError("[CueAim] No cue ball assigned and none found with tag 'CueBall'", this);
+                    UnityEngine.Debug.LogError("[CueAim] No cue ball assigned and none found with tag 'CueBall'", this);
                 }
             }
 
