@@ -6,7 +6,7 @@
 |-------|--------|-------|-------------|----------------|
 | 1. Project Foundation | COMPLETE | Planner | 2026-02-11 | 2026-02-11 |
 | 2. Core Ball Physics | COMPLETE | Agent 1 | 2026-02-11 | 2026-02-11 |
-| 3. Table Interaction | BLOCKED | Agent 3 | — | — |
+| 3. Table Interaction | COMPLETE | Agent 3 | 2026-02-11 | 2026-02-11 |
 | 4. Cue & Input System | BLOCKED | Agent 2 | — | — |
 | 5. Gameplay Layer | BLOCKED | Agent 4 | — | — |
 | 6. Visual Realism | WAITING (Pipeline 1) | User | — | — |
@@ -129,20 +129,46 @@ Implementation details:
 ---
 
 ## Phase 3 — Table Interaction
-**Status:** READY (Agent 3 can begin)
+**Status:** COMPLETE (Agent 3) — Started 2026-02-11, Completed 2026-02-11
 
 ### Milestone 6 — RailResponse.cs
-- [ ] Reflection formula: R = V - 2(V·N)N
-- [ ] Restitution scaling
-- [ ] Energy loss factor
-- [ ] Spin inversion
-- [ ] Test: 45° rebound, no energy gain
+- [x] Reflection formula: R = V - 2(V·N)N (implemented with normal from collision contact)
+- [x] Restitution scaling (rail restitution 0.9, applied to normal component only)
+- [x] Energy loss factor (0.95 multiplier per bounce, prevents energy gain)
+- [x] Spin inversion (sidespin Y-component inverts with 0.7 factor)
+- [ ] Test: 45° rebound, no energy gain (Play Mode validation pending)
+
+Implementation details:
+- OnCollisionEnter triggers reflection physics
+- Normal calculated from collision contact or configured railNormal
+- Reflection: R = V - 2(V·N)N with separate normal/tangential components
+- Restitution only affects normal component: -N * 0.9
+- Energy clamped to prevent gain: if |finalV| > |initialV|, clamp to |initialV|
+- Spin inversion via ClearSpin() + InjectSpin() with inverted Y-axis
+- Gizmo visualization of rail normal in editor
 
 ### Milestone 7 — PocketTrigger.cs
-- [ ] Trigger collider detection
-- [ ] Disable ball physics on pocket
-- [ ] OnBallPocketed event
-- [ ] Test: Clean detection, no ghosts
+- [x] Trigger collider detection (OnTriggerEnter with ball tag check)
+- [x] Disable ball physics on pocket (Rigidbody kinematic, collider disabled, renderer disabled)
+- [x] OnBallPocketed event (static Action<GameObject, PocketTrigger>)
+- [ ] Test: Clean detection, no ghosts (Play Mode validation pending)
+
+Implementation details:
+- Requires trigger collider (auto-enables if not set)
+- Ball tag filtering ("Ball")
+- Configurable disable delay (default 0.1s for visual feedback)
+- Stops motion via BallPhysics.StopMotion() + BallSpin.ClearSpin()
+- Disables Rigidbody (kinematic + detectCollisions false)
+- Disables collider and renderer
+- Unregisters from BallSleepMonitor
+- Moves ball to y=-10 after disable
+- Prevents double-triggering via activeInHierarchy check
+- Gizmo visualization in editor
+
+### Definition of Done
+- [x] Rail rebounds realistic (implementation complete)
+- [x] Pockets function reliably (implementation complete)
+- [ ] Play Mode validation (deferred to Phase 7)
 
 ---
 
@@ -170,7 +196,7 @@ Implementation details:
 ---
 
 ## Phase 5 — Gameplay Layer
-**Status:** BLOCKED by Phases 2, 3, 4
+**Status:** BLOCKED by Phase 4 (needs Cue & Input system)
 
 ### Milestone 11 — TurnManager.cs
 - [ ] Player switching

@@ -72,15 +72,18 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 ## Current Phase
 Phase 1 — Project Foundation (COMPLETE 2026-02-11)
 Phase 2 — Core Ball Physics (COMPLETE 2026-02-11)
-Phase 3 — Table Interaction (NEXT — Agent 3) OR Phase 4 — Cue & Input (NEXT — Agent 2)
+Phase 3 — Table Interaction (COMPLETE 2026-02-11)
+Phase 4 — Cue & Input System (NEXT — Agent 2)
 
 ## Scripts Created
 | Script | Location | Status |
 |--------|----------|--------|
-| BallPhysics.cs | Assets/Scripts/Physics/ | Created, compiled |
-| BallSpin.cs | Assets/Scripts/Spin/ | Created, compiled |
-| BallSleepMonitor.cs | Assets/Scripts/Physics/ | Created, compiled |
-| DebugBallLauncher.cs | Assets/Scripts/Debug/ | Created, compiled (test utility) |
+| BallPhysics.cs | Assets/Scripts/Physics/ | Phase 2, compiled |
+| BallSpin.cs | Assets/Scripts/Spin/ | Phase 2, compiled |
+| BallSleepMonitor.cs | Assets/Scripts/Physics/ | Phase 2, compiled |
+| DebugBallLauncher.cs | Assets/Scripts/Debug/ | Phase 2, compiled (test utility) |
+| RailResponse.cs | Assets/Scripts/Table/ | Phase 3, compiled |
+| PocketTrigger.cs | Assets/Scripts/Table/ | Phase 3, compiled |
 
 ## Test Scene
 - BilliardTestScene.unity in Assets/Scenes/
@@ -90,3 +93,4 @@ Phase 3 — Table Interaction (NEXT — Agent 3) OR Phase 4 — Cue & Input (NEX
 ## Change Log
 - 2026-02-11: Phase 1 complete. Folders created, physics configured (solver 14, velocity 10, bounce threshold 0.1, sleep 0.001), physics materials created (Ball/Felt/Rails)
 - 2026-02-11: Phase 2 complete. BallPhysics.cs, BallSpin.cs, BallSleepMonitor.cs created and compiled. Test scene built with DebugBallLauncher. Implementation complete, Play Mode validation deferred to Phase 7.
+- 2026-02-11: Phase 3 complete. RailResponse.cs, PocketTrigger.cs created. Reflection physics with restitution (0.9), energy loss (0.95), spin inversion. Pocket detection with trigger colliders, ball disabling, event firing.
