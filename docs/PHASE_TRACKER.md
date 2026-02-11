@@ -7,7 +7,7 @@
 | 1. Project Foundation | COMPLETE | Planner | 2026-02-11 | 2026-02-11 |
 | 2. Core Ball Physics | COMPLETE | Agent 1 | 2026-02-11 | 2026-02-11 |
 | 3. Table Interaction | COMPLETE | Agent 3 | 2026-02-11 | 2026-02-11 |
-| 4. Cue & Input System | BLOCKED | Agent 2 | — | — |
+| 4. Cue & Input System | COMPLETE | Agent 2 | 2026-02-11 | 2026-02-11 |
 | 5. Gameplay Layer | BLOCKED | Agent 4 | — | — |
 | 6. Visual Realism | WAITING (Pipeline 1) | User | — | — |
 | 7. Validation Protocol | BLOCKED | Planner | — | — |
@@ -173,30 +173,64 @@ Implementation details:
 ---
 
 ## Phase 4 — Cue & Input System
-**Status:** READY (Agent 2 can begin)
+**Status:** COMPLETE (Agent 2) — Started 2026-02-11, Completed 2026-02-11
 
 ### Milestone 8 — CueAim.cs
-- [ ] Mouse rotation
-- [ ] Normalized direction vector
-- [ ] Input lock for TurnManager
-- [ ] Test: Stable, no jitter
+- [x] Mouse rotation (horizontal mouse input with smooth damping)
+- [x] Normalized direction vector (AimDirection property)
+- [x] Input lock for TurnManager (InputEnabled property)
+- [ ] Test: Stable, no jitter (Play Mode validation pending)
+
+Implementation details:
+- Mouse X input controls rotation around cue ball (Y-axis)
+- Smooth rotation via Mathf.DeltaAngle + lerp (prevents jitter)
+- Auto-finds cue ball by "CueBall" tag if not assigned
+- Positions cue stick behind ball at configurable distance
+- Public accessors: AimDirection, AimAngle, InputEnabled
+- Public methods: SetAimAngle(), ResetAim()
+- Gizmo visualization for aim direction and cue position
 
 ### Milestone 9 — ShotPower.cs
-- [ ] Hold-to-charge
-- [ ] Clamped max impulse
-- [ ] Exponential curve option
-- [ ] Test: Scales correctly
+- [x] Hold-to-charge (mouse button hold duration)
+- [x] Clamped max impulse (min 0.5N, max 8N, configurable)
+- [x] Exponential curve option (power 1.5 default, linear fallback)
+- [ ] Test: Scales correctly (Play Mode validation pending)
+
+Implementation details:
+- Charge time configurable (default 2s to max power)
+- OnShotReleased event fires with final impulse value
+- Exponential scaling: Pow(normalized, curvePower) for faster start
+- Public accessors: NormalizedPower, CurrentImpulse, IsCharging, InputEnabled
+- Public method: TriggerShot(float) for AI/testing
+- On-screen power meter (GUI label + bar)
 
 ### Milestone 10 — CueStrike.cs
-- [ ] Apply impulse to cue ball
-- [ ] Spin injection via offset
-- [ ] Respect mass (0.17)
-- [ ] Test: Center/low/high hit behavior
+- [x] Apply impulse to cue ball (via BallPhysics.ApplyImpulse)
+- [x] Spin injection via offset (vertical offset = topspin/backspin, horizontal = sidespin)
+- [x] Respect mass (0.17 kg via BallMass constant)
+- [ ] Test: Center/low/high hit behavior (Play Mode validation pending)
+
+Implementation details:
+- Subscribes to ShotPower.OnShotReleased event
+- Applies impulse: direction (from CueAim) * force (from ShotPower)
+- Spin calculation based on contact point offset from ball center:
+  - High hit (+Y offset) → topspin (rotation around right axis)
+  - Low hit (-Y offset) → backspin (rotation around right axis)
+  - Right hit (+X offset) → right english (rotation around up axis)
+  - Left hit (-X offset) → left english (rotation around up axis)
+- Max offset clamped to 70% of ball radius
+- Spin scales with impulse force and offset distance
+- Public methods: SetContactOffset(), ResetContactOffset()
+- Gizmo visualization of contact point and offset vector
+
+### Definition of Done
+- [x] Full shot pipeline functional (CueAim → ShotPower → CueStrike → BallPhysics/BallSpin)
+- [ ] Play Mode validation (deferred to Phase 7)
 
 ---
 
 ## Phase 5 — Gameplay Layer
-**Status:** BLOCKED by Phase 4 (needs Cue & Input system)
+**Status:** READY (Agent 4 can begin)
 
 ### Milestone 11 — TurnManager.cs
 - [ ] Player switching

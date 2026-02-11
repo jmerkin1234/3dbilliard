@@ -63,7 +63,7 @@ Assets/
 - [x] Phase 1 — Project Foundation
 - [x] Phase 2 — Core Ball Physics
 - [x] Phase 3 — Table Interaction
-- [ ] Phase 4 — Cue & Input System
+- [x] Phase 4 — Cue & Input System
 - [ ] Phase 5 — Gameplay Layer
 - [ ] Phase 6 — Visual Realism
 - [ ] Phase 7 — Validation Protocol

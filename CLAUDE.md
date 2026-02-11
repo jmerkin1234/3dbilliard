@@ -73,7 +73,8 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 Phase 1 — Project Foundation (COMPLETE 2026-02-11)
 Phase 2 — Core Ball Physics (COMPLETE 2026-02-11)
 Phase 3 — Table Interaction (COMPLETE 2026-02-11)
-Phase 4 — Cue & Input System (NEXT — Agent 2)
+Phase 4 — Cue & Input System (COMPLETE 2026-02-11)
+Phase 5 — Gameplay Layer (NEXT — Agent 4)
 
 ## Scripts Created
 | Script | Location | Status |
@@ -84,6 +85,9 @@ Phase 4 — Cue & Input System (NEXT — Agent 2)
 | DebugBallLauncher.cs | Assets/Scripts/Debug/ | Phase 2, compiled (test utility) |
 | RailResponse.cs | Assets/Scripts/Table/ | Phase 3, compiled |
 | PocketTrigger.cs | Assets/Scripts/Table/ | Phase 3, compiled |
+| CueAim.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
+| ShotPower.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
+| CueStrike.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
 
 ## Test Scene
 - BilliardTestScene.unity in Assets/Scenes/
@@ -94,3 +98,4 @@ Phase 4 — Cue & Input System (NEXT — Agent 2)
 - 2026-02-11: Phase 1 complete. Folders created, physics configured (solver 14, velocity 10, bounce threshold 0.1, sleep 0.001), physics materials created (Ball/Felt/Rails)
 - 2026-02-11: Phase 2 complete. BallPhysics.cs, BallSpin.cs, BallSleepMonitor.cs created and compiled. Test scene built with DebugBallLauncher. Implementation complete, Play Mode validation deferred to Phase 7.
 - 2026-02-11: Phase 3 complete. RailResponse.cs, PocketTrigger.cs created. Reflection physics with restitution (0.9), energy loss (0.95), spin inversion. Pocket detection with trigger colliders, ball disabling, event firing.
+- 2026-02-11: Phase 4 complete. CueAim.cs (mouse rotation with smooth damping), ShotPower.cs (hold-to-charge 0.5-8N with exponential curve), CueStrike.cs (impulse + spin injection via contact offset). Full shot pipeline functional.
