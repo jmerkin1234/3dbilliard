@@ -236,18 +236,40 @@ Implementation details:
 ---
 
 ## Phase 5 — Gameplay Layer
-**Status:** READY (Agent 4 can begin)
+**Status:** COMPLETE (Agent 4) — Started 2026-02-11, Completed 2026-02-11
 
 ### Milestone 11 — TurnManager.cs
-- [ ] Player switching
-- [ ] Shot validation
-- [ ] Foul logic
-- [ ] Rack reset
+- [x] Player switching (automatic after foul, manual via ForcePlayerSwitch)
+- [x] Shot validation (via ValidateShot, integrates with RuleEngine)
+- [x] Foul logic (scratch detection, OnFoul event)
+- [x] Rack reset (ResetRack method, resets to Player 1)
+
+Implementation details:
+- Turn state machine: Aiming → BallsMoving → TurnEnding → Aiming (cycle)
+- Subscribes to BallSleepMonitor.OnAllBallsStopped for turn progression
+- Controls input enable/disable for CueAim and ShotPower
+- Events: OnTurnChanged (player switch), OnFoul (foul detection)
+- Auto-finds CueAim and ShotPower components if not assigned
+- Scratch detection via PocketTrigger.OnBallPocketed
 
 ### Milestone 12 — Rule Engine
-- [ ] Legal contact detection
-- [ ] Pocket tracking
-- [ ] Scratch detection
+- [x] Legal contact detection (RecordFirstContact for first ball hit)
+- [x] Pocket tracking (tracks all pocketed balls per shot)
+- [x] Scratch detection (cue ball pocketed = foul)
+
+Implementation details:
+- Shot tracking begins on shot release, ends on balls stopped
+- Tracks: firstBallContacted, ballsPocketed, cueBallPocketed
+- ValidateShot() returns true/false for legal/foul
+- OnFoulDetected event with foul description string
+- Public accessors: GetBallsPocketed(), IsScratch(), GetFirstContact()
+- Integrates with TurnManager for turn flow
+
+### Definition of Done
+- [x] Turn flow stable (state machine implemented)
+- [x] No stuck states (all transitions handled)
+- [x] Zero compilation errors
+- [ ] Play Mode validation (deferred to Phase 7)
 
 ---
 

@@ -74,7 +74,9 @@ Phase 1 — Project Foundation (COMPLETE 2026-02-11)
 Phase 2 — Core Ball Physics (COMPLETE 2026-02-11)
 Phase 3 — Table Interaction (COMPLETE 2026-02-11)
 Phase 4 — Cue & Input System (COMPLETE 2026-02-11)
-Phase 5 — Gameplay Layer (NEXT — Agent 4)
+Phase 5 — Gameplay Layer (COMPLETE 2026-02-11)
+Phase 6 — Visual Realism (WAITING for Pipeline 1)
+Phase 7 — Validation Protocol (NEXT)
 
 ## Scripts Created
 | Script | Location | Status |
@@ -88,6 +90,8 @@ Phase 5 — Gameplay Layer (NEXT — Agent 4)
 | CueAim.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
 | ShotPower.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
 | CueStrike.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
+| TurnManager.cs | Assets/Scripts/GameState/ | Phase 5, compiled |
+| RuleEngine.cs | Assets/Scripts/GameState/ | Phase 5, compiled |
 
 ## Test Scene
 - BilliardTestScene.unity in Assets/Scenes/
@@ -99,3 +103,4 @@ Phase 5 — Gameplay Layer (NEXT — Agent 4)
 - 2026-02-11: Phase 2 complete. BallPhysics.cs, BallSpin.cs, BallSleepMonitor.cs created and compiled. Test scene built with DebugBallLauncher. Implementation complete, Play Mode validation deferred to Phase 7.
 - 2026-02-11: Phase 3 complete. RailResponse.cs, PocketTrigger.cs created. Reflection physics with restitution (0.9), energy loss (0.95), spin inversion. Pocket detection with trigger colliders, ball disabling, event firing.
 - 2026-02-11: Phase 4 complete. CueAim.cs (mouse rotation with smooth damping), ShotPower.cs (hold-to-charge 0.5-8N with exponential curve), CueStrike.cs (impulse + spin injection via contact offset). Full shot pipeline functional. Fixed Debug namespace collision (replaced with UnityEngine.Debug). Zero compilation errors verified via Unity MCP.
+- 2026-02-11: Phase 5 complete. TurnManager.cs (turn state machine: Aiming→BallsMoving→TurnEnding, player switching, foul handling, input control), RuleEngine.cs (shot tracking, legal contact, pocket validation, scratch detection). Zero compilation errors. Event-driven architecture integrates with BallSleepMonitor and PocketTrigger.

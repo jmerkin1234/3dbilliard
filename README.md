@@ -64,6 +64,6 @@ Assets/
 - [x] Phase 2 — Core Ball Physics
 - [x] Phase 3 — Table Interaction
 - [x] Phase 4 — Cue & Input System
-- [ ] Phase 5 — Gameplay Layer
-- [ ] Phase 6 — Visual Realism
+- [x] Phase 5 — Gameplay Layer
+- [ ] Phase 6 — Visual Realism (Waiting for Blender assets)
 - [ ] Phase 7 — Validation Protocol
