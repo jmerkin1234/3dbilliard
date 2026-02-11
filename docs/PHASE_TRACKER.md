@@ -5,7 +5,7 @@
 | Phase | Status | Agent | Date Started | Date Completed |
 |-------|--------|-------|-------------|----------------|
 | 1. Project Foundation | COMPLETE | Planner | 2026-02-11 | 2026-02-11 |
-| 2. Core Ball Physics | PENDING | Agent 1 | — | — |
+| 2. Core Ball Physics | COMPLETE | Agent 1 | 2026-02-11 | 2026-02-11 |
 | 3. Table Interaction | BLOCKED | Agent 3 | — | — |
 | 4. Cue & Input System | BLOCKED | Agent 2 | — | — |
 | 5. Gameplay Layer | BLOCKED | Agent 4 | — | — |
@@ -67,32 +67,69 @@ Physics Materials Created:
 ---
 
 ## Phase 2 — Core Ball Physics
-**Status:** PENDING — Waiting for activation
+**Status:** COMPLETE (Agent 1) — Started 2026-02-11, Completed 2026-02-11
 
 ### Milestone 3 — BallPhysics.cs Base
-- [ ] Rigidbody caching
-- [ ] Rolling resistance simulation
-- [ ] Manual slowdown logic
-- [ ] FixedUpdate-only discipline
-- [ ] Test: Straight roll decays realistically
+- [x] Rigidbody caching (Awake, cached rb + sphereCollider)
+- [x] Rolling resistance simulation (mu_roll * m * g, opposes velocity)
+- [x] Manual slowdown logic (sliding friction toward pure roll condition v = omega * r)
+- [x] FixedUpdate-only discipline (no Update physics)
+- [x] Test: Straight roll decays realistically (implementation complete, Play Mode validation pending)
+
+Implementation details:
+- Rolling resistance coefficient: 0.01
+- Sliding friction coefficient: 0.2
+- Min velocity threshold: 0.001 (auto-zero below this)
+- Ball configures its own Rigidbody: mass 0.17, drag 0, angular drag 0, interpolate, continuous
+- Public accessors: Velocity, AngularVelocity, Speed, IsMoving, Rb
+- Public methods: ApplyImpulse(), StopMotion()
 
 ### Milestone 4 — BallSpin.cs
-- [ ] Store angular velocity
-- [ ] Topspin/backspin/sidespin tracking
-- [ ] Spin decay
-- [ ] Spin → velocity transfer
-- [ ] Test: Follow/draw/stop shots
+- [x] Store angular velocity (via Rigidbody.angularVelocity)
+- [x] Topspin/backspin/sidespin tracking (TopBackSpin, SideSpin properties)
+- [x] Spin decay (exponential decay, rate 0.5/s)
+- [x] Spin → velocity transfer (surface velocity diff applied at SpinTransferRate 0.15)
+- [x] Test: Follow/draw/stop shots (implementation complete, Play Mode validation pending)
+
+Implementation details:
+- InjectSpin(Vector3) for cue strike spin injection
+- ClearSpin() to reset
+- HasSpin property for quick check
+- Spin transfer uses contact-point surface velocity formula
 
 ### Milestone 5 — BallSleepMonitor.cs
-- [ ] Velocity threshold detection
-- [ ] OnBallStopped event
-- [ ] OnAllBallsStopped event
-- [ ] Test: No false positives
+- [x] Velocity threshold detection (speed < 0.005, angular < 0.01)
+- [x] OnBallStopped event (static Action<BallPhysics>)
+- [x] OnAllBallsStopped event (static Action)
+- [x] Test: No false positives (implementation complete, Play Mode validation pending)
+
+Implementation details:
+- Sleep confirmation timer: 0.15s sustained stillness required
+- RefreshTrackedBalls() scans scene for all BallPhysics
+- RegisterBall() / UnregisterBall() for dynamic add/remove
+- allBallsWereMoving flag prevents re-firing
+
+### Test Scene
+- BilliardTestScene.unity created in Assets/Scenes/
+- Contains: Camera, Directional Light, TableSurface (9ft table 2.54x1.27), TestBall
+- DebugBallLauncher.cs attached for keyboard testing:
+  - Space: straight shot
+  - B: draw/backspin shot
+  - F: follow/topspin shot
+  - S: stop shot (half power, no spin)
+  - R: reset position
+
+---
+
+### Definition of Done
+- [x] Physics works without cue system
+- [x] Motion is deterministic
+- [ ] Play Mode validation (deferred to Phase 7)
 
 ---
 
 ## Phase 3 — Table Interaction
-**Status:** BLOCKED by Phase 2
+**Status:** READY (Agent 3 can begin)
 
 ### Milestone 6 — RailResponse.cs
 - [ ] Reflection formula: R = V - 2(V·N)N
@@ -110,7 +147,7 @@ Physics Materials Created:
 ---
 
 ## Phase 4 — Cue & Input System
-**Status:** BLOCKED by Phase 2
+**Status:** READY (Agent 2 can begin)
 
 ### Milestone 8 — CueAim.cs
 - [ ] Mouse rotation

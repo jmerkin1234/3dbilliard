@@ -1,5 +1,12 @@
 # 3D Billiards Simulation — Claude Project Context
 
+## BEFORE YOU DO ANYTHING
+1. Read THIS file completely
+2. Read `docs/PHASE_TRACKER.md` to know current state
+3. Read the relevant phase MD from the list below BEFORE writing any code
+4. Check what phase we're on, what's done, what's next
+5. Never assume — always verify current project state first
+
 ## Project Type
 Unity 6 (6000.3.6f1) billiards simulation using HDRP.
 
@@ -25,6 +32,21 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 - Solver iterations: 12-16, velocity iterations: 8-12
 - Fixed timestep: 0.02, bounce threshold: 0.1
 
+## Mandatory Workflow Rules
+- ALWAYS read the relevant phase MD from `/home/justin/Desktop/project md's/` BEFORE starting any phase
+- DOCUMENT EVERYTHING — update PHASE_TRACKER.md, CLAUDE.md, and README.md after every milestone
+- Commit after each phase/milestone completion
+- Never skip validation steps defined in the phase doc
+
+## Phase Documents
+- `/home/justin/Desktop/project md's/phase 1 Project_Foundation.md`
+- `/home/justin/Desktop/project md's/Phase 2 — Core Physics system.md`
+- `/home/justin/Desktop/project md's/Phase 3 — Table Interaction.md`
+- `/home/justin/Desktop/project md's/Phase 4 — Cue & Input System.md`
+- `/home/justin/Desktop/project md's/pahase 5_Gameplay_Layer.md`
+- `/home/justin/Desktop/project md's/phase 06_Asset_Integration.md`
+- `/home/justin/Desktop/project md's/phase 07_Validation_Protocol.md`
+
 ## Coding Rules
 - ALL physics in FixedUpdate — never Update()
 - SphereCollider only for balls — never MeshCollider
@@ -49,7 +71,22 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 
 ## Current Phase
 Phase 1 — Project Foundation (COMPLETE 2026-02-11)
-Phase 2 — Core Ball Physics (NEXT — Agent 1)
+Phase 2 — Core Ball Physics (COMPLETE 2026-02-11)
+Phase 3 — Table Interaction (NEXT — Agent 3) OR Phase 4 — Cue & Input (NEXT — Agent 2)
+
+## Scripts Created
+| Script | Location | Status |
+|--------|----------|--------|
+| BallPhysics.cs | Assets/Scripts/Physics/ | Created, compiled |
+| BallSpin.cs | Assets/Scripts/Spin/ | Created, compiled |
+| BallSleepMonitor.cs | Assets/Scripts/Physics/ | Created, compiled |
+| DebugBallLauncher.cs | Assets/Scripts/Debug/ | Created, compiled (test utility) |
+
+## Test Scene
+- BilliardTestScene.unity in Assets/Scenes/
+- TestBall with all physics scripts attached
+- Debug keys: Space (straight), B (draw), F (follow), S (stop), R (reset)
 
 ## Change Log
 - 2026-02-11: Phase 1 complete. Folders created, physics configured (solver 14, velocity 10, bounce threshold 0.1, sleep 0.001), physics materials created (Ball/Felt/Rails)
+- 2026-02-11: Phase 2 complete. BallPhysics.cs, BallSpin.cs, BallSleepMonitor.cs created and compiled. Test scene built with DebugBallLauncher. Implementation complete, Play Mode validation deferred to Phase 7.

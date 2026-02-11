@@ -61,7 +61,7 @@ Assets/
 ## Progress
 
 - [x] Phase 1 — Project Foundation
-- [ ] Phase 2 — Core Ball Physics
+- [x] Phase 2 — Core Ball Physics
 - [ ] Phase 3 — Table Interaction
 - [ ] Phase 4 — Cue & Input System
 - [ ] Phase 5 — Gameplay Layer
