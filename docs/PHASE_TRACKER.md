@@ -239,18 +239,25 @@ Implementation details:
 **Status:** COMPLETE (Agent 4) — Started 2026-02-11, Completed 2026-02-11
 
 ### Milestone 11 — TurnManager.cs
-- [x] Player switching (automatic after foul, manual via ForcePlayerSwitch)
+- [x] Single-player game modes (Training, VsComputer)
+- [x] Training mode: Unlimited shots, no turn switching
+- [x] VsComputer mode: Player vs AI with turn switching on fouls
 - [x] Shot validation (via ValidateShot, integrates with RuleEngine)
 - [x] Foul logic (scratch detection, OnFoul event)
-- [x] Rack reset (ResetRack method, resets to Player 1)
+- [x] Rack reset (ResetRack method)
 
 Implementation details:
-- Turn state machine: Aiming → BallsMoving → TurnEnding → Aiming (cycle)
+- GameMode enum: Training (free practice), VsComputer (player vs AI)
+- TurnOwner enum: Player, AI
+- Turn state machine: PlayerAiming/AIAiming → BallsMoving → TurnEnding
+- Training mode: Always continues player turn regardless of fouls
+- VsComputer mode: Legal shot = continue, foul = switch to AI
 - Subscribes to BallSleepMonitor.OnAllBallsStopped for turn progression
 - Controls input enable/disable for CueAim and ShotPower
-- Events: OnTurnChanged (player switch), OnFoul (foul detection)
+- Events: OnPlayerTurnStart, OnAITurnStart, OnFoul
 - Auto-finds CueAim and ShotPower components if not assigned
 - Scratch detection via PocketTrigger.OnBallPocketed
+- AI turn placeholder (StartAITurn method for future AI implementation)
 
 ### Milestone 12 — Rule Engine
 - [x] Legal contact detection (RecordFirstContact for first ball hit)
