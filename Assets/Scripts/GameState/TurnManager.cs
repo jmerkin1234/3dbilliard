@@ -3,15 +3,16 @@ using UnityEngine;
 namespace Billiards.GameState
 {
     /// <summary>
-    /// Manages turn flow, player switching, shot validation, and fouls.
+    /// Manages game flow for single-player billiards.
+    /// Supports two game modes: Training (unlimited shots) and VsComputer (player vs AI).
     /// Listens to BallSleepMonitor.OnAllBallsStopped to progress turns.
     /// Controls input enable/disable for CueAim and ShotPower.
     /// </summary>
     public class TurnManager : MonoBehaviour
     {
-        [Header("Player Configuration")]
-        [Tooltip("Current active player (1 or 2)")]
-        [SerializeField] private int currentPlayer = 1;
+        [Header("Game Mode")]
+        [Tooltip("Training = unlimited shots, VsComputer = player vs AI")]
+        [SerializeField] private GameMode gameMode = GameMode.Training;
 
         [Header("Input Control")]
         [Tooltip("Cue aim component to control")]
@@ -21,21 +22,28 @@ namespace Billiards.GameState
         [SerializeField] private Cue.ShotPower shotPower;
 
         [Header("Turn State")]
-        [SerializeField] private TurnState currentState = TurnState.Aiming;
+        [SerializeField] private TurnState currentState = TurnState.PlayerAiming;
+
+        [Tooltip("Current turn owner (Player or AI)")]
+        [SerializeField] private TurnOwner currentTurnOwner = TurnOwner.Player;
 
         [Header("Debug")]
         [SerializeField] private bool logTurnEvents = true;
 
         // === Events ===
-        /// <summary>Fired when turn changes</summary>
-        public static event System.Action<int> OnTurnChanged;
+        /// <summary>Fired when turn changes to AI</summary>
+        public static event System.Action OnAITurnStart;
+
+        /// <summary>Fired when turn returns to player</summary>
+        public static event System.Action OnPlayerTurnStart;
 
         /// <summary>Fired when foul occurs</summary>
-        public static event System.Action<int, string> OnFoul;
+        public static event System.Action<string> OnFoul;
 
         // === Properties ===
-        public int CurrentPlayer => currentPlayer;
+        public GameMode CurrentGameMode => gameMode;
         public TurnState CurrentState => currentState;
+        public TurnOwner CurrentTurnOwner => currentTurnOwner;
 
         private void Awake()
         {
@@ -77,13 +85,12 @@ namespace Billiards.GameState
 
         private void Start()
         {
-            // Initialize turn
-            SetTurnState(TurnState.Aiming);
-            EnableInput(true);
+            // Initialize game
+            StartPlayerTurn();
 
             if (logTurnEvents)
             {
-                UnityEngine.Debug.Log($"[TurnManager] Game started. Player {currentPlayer}'s turn.", this);
+                UnityEngine.Debug.Log($"[TurnManager] Game started in {gameMode} mode.", this);
             }
         }
 
@@ -93,7 +100,7 @@ namespace Billiards.GameState
         /// </summary>
         private void HandleShotReleased(float impulse)
         {
-            if (currentState != TurnState.Aiming)
+            if (currentState != TurnState.PlayerAiming && currentState != TurnState.AIAiming)
                 return;
 
             SetTurnState(TurnState.BallsMoving);
@@ -101,13 +108,14 @@ namespace Billiards.GameState
 
             if (logTurnEvents)
             {
-                UnityEngine.Debug.Log($"[TurnManager] Player {currentPlayer} shot with {impulse:F2}N. Balls moving...", this);
+                string shooter = (currentTurnOwner == TurnOwner.Player) ? "Player" : "AI";
+                UnityEngine.Debug.Log($"[TurnManager] {shooter} shot with {impulse:F2}N. Balls moving...", this);
             }
         }
 
         /// <summary>
         /// Called when all balls stop moving.
-        /// Validates shot and determines next turn.
+        /// Validates shot and determines next turn based on game mode.
         /// </summary>
         private void HandleAllBallsStopped()
         {
@@ -119,24 +127,56 @@ namespace Billiards.GameState
             // Validate shot via rule engine
             bool shotWasLegal = ValidateShot();
 
-            if (shotWasLegal)
+            if (gameMode == GameMode.Training)
             {
+                // Training mode: Always continue player turn regardless of fouls
                 if (logTurnEvents)
                 {
-                    UnityEngine.Debug.Log($"[TurnManager] Player {currentPlayer} legal shot. Continuing turn.", this);
+                    UnityEngine.Debug.Log("[TurnManager] Training mode - continuing player turn.", this);
                 }
-                // Continue current player's turn
-                StartNextTurn(currentPlayer);
+                StartPlayerTurn();
             }
-            else
+            else if (gameMode == GameMode.VsComputer)
             {
-                if (logTurnEvents)
+                // VsComputer mode: Legal shot = continue, foul = switch turn
+                if (shotWasLegal)
                 {
-                    UnityEngine.Debug.Log($"[TurnManager] Player {currentPlayer} foul. Switching turn.", this);
+                    if (currentTurnOwner == TurnOwner.Player)
+                    {
+                        if (logTurnEvents)
+                        {
+                            UnityEngine.Debug.Log("[TurnManager] Player legal shot. Continuing player turn.", this);
+                        }
+                        StartPlayerTurn();
+                    }
+                    else // AI's turn
+                    {
+                        if (logTurnEvents)
+                        {
+                            UnityEngine.Debug.Log("[TurnManager] AI legal shot. Continuing AI turn.", this);
+                        }
+                        StartAITurn();
+                    }
                 }
-                // Switch to other player
-                SwitchPlayer();
-                StartNextTurn(currentPlayer);
+                else // Foul occurred
+                {
+                    if (currentTurnOwner == TurnOwner.Player)
+                    {
+                        if (logTurnEvents)
+                        {
+                            UnityEngine.Debug.Log("[TurnManager] Player foul. Switching to AI turn.", this);
+                        }
+                        StartAITurn();
+                    }
+                    else // AI foul
+                    {
+                        if (logTurnEvents)
+                        {
+                            UnityEngine.Debug.Log("[TurnManager] AI foul. Switching to player turn.", this);
+                        }
+                        StartPlayerTurn();
+                    }
+                }
             }
         }
 
@@ -149,12 +189,14 @@ namespace Billiards.GameState
             // Check for scratch (cue ball pocketed)
             if (ball.CompareTag("CueBall"))
             {
+                string shooter = (currentTurnOwner == TurnOwner.Player) ? "Player" : "AI";
+
                 if (logTurnEvents)
                 {
-                    UnityEngine.Debug.Log($"[TurnManager] SCRATCH! Cue ball pocketed by Player {currentPlayer}.", this);
+                    UnityEngine.Debug.Log($"[TurnManager] SCRATCH! Cue ball pocketed by {shooter}.", this);
                 }
 
-                OnFoul?.Invoke(currentPlayer, "Scratch - Cue ball pocketed");
+                OnFoul?.Invoke("Scratch - Cue ball pocketed");
             }
         }
 
@@ -173,32 +215,38 @@ namespace Billiards.GameState
         }
 
         /// <summary>
-        /// Switches to the other player.
+        /// Starts the player's turn.
         /// </summary>
-        private void SwitchPlayer()
+        private void StartPlayerTurn()
         {
-            currentPlayer = (currentPlayer == 1) ? 2 : 1;
-            OnTurnChanged?.Invoke(currentPlayer);
+            currentTurnOwner = TurnOwner.Player;
+            SetTurnState(TurnState.PlayerAiming);
+            EnableInput(true);
+            OnPlayerTurnStart?.Invoke();
 
             if (logTurnEvents)
             {
-                UnityEngine.Debug.Log($"[TurnManager] Turn switched to Player {currentPlayer}.", this);
+                UnityEngine.Debug.Log("[TurnManager] Player's turn begins.", this);
             }
         }
 
         /// <summary>
-        /// Starts the next turn for the given player.
+        /// Starts the AI's turn.
         /// </summary>
-        private void StartNextTurn(int player)
+        private void StartAITurn()
         {
-            currentPlayer = player;
-            SetTurnState(TurnState.Aiming);
-            EnableInput(true);
+            currentTurnOwner = TurnOwner.AI;
+            SetTurnState(TurnState.AIAiming);
+            EnableInput(false);
+            OnAITurnStart?.Invoke();
 
             if (logTurnEvents)
             {
-                UnityEngine.Debug.Log($"[TurnManager] Player {currentPlayer}'s turn begins.", this);
+                UnityEngine.Debug.Log("[TurnManager] AI's turn begins.", this);
             }
+
+            // TODO: Invoke AI shot logic here
+            // For now, AI turn does nothing (requires AI implementation)
         }
 
         /// <summary>
@@ -239,22 +287,45 @@ namespace Billiards.GameState
             // - Reposition all balls to starting positions
             // - Reset cue ball
             // - Clear pocketed balls
-            // - Reset turn to Player 1
 
-            currentPlayer = 1;
-            SetTurnState(TurnState.Aiming);
-            EnableInput(true);
-            OnTurnChanged?.Invoke(currentPlayer);
+            StartPlayerTurn();
         }
 
         /// <summary>
-        /// Manually trigger player switch (for testing or game master control).
+        /// Changes the game mode (Training or VsComputer).
         /// </summary>
-        public void ForcePlayerSwitch()
+        public void SetGameMode(GameMode mode)
         {
-            SwitchPlayer();
-            StartNextTurn(currentPlayer);
+            gameMode = mode;
+
+            if (logTurnEvents)
+            {
+                UnityEngine.Debug.Log($"[TurnManager] Game mode changed to {gameMode}.", this);
+            }
+
+            // Reset to player turn when mode changes
+            StartPlayerTurn();
         }
+
+        /// <summary>
+        /// Manually trigger AI turn (for testing).
+        /// </summary>
+        public void ForceSwitchToAI()
+        {
+            if (gameMode == GameMode.VsComputer)
+            {
+                StartAITurn();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Game mode options.
+    /// </summary>
+    public enum GameMode
+    {
+        Training,       // Unlimited shots, no turn switching, free practice
+        VsComputer      // Player vs AI opponent
     }
 
     /// <summary>
@@ -262,9 +333,19 @@ namespace Billiards.GameState
     /// </summary>
     public enum TurnState
     {
-        Aiming,         // Player is aiming and charging shot
+        PlayerAiming,   // Player is aiming and charging shot
+        AIAiming,       // AI is calculating and executing shot
         BallsMoving,    // Balls are in motion after shot
         TurnEnding,     // Validating shot and determining next turn
         GameOver        // Game has ended
+    }
+
+    /// <summary>
+    /// Turn owner (who is currently shooting).
+    /// </summary>
+    public enum TurnOwner
+    {
+        Player,
+        AI
     }
 }
