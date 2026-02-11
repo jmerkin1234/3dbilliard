@@ -42,5 +42,14 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 - Assets/Scripts/GameState/ — TurnManager.cs
 - Assets/Scripts/Debug/ — Test utilities
 
+## Documentation
+- docs/PHASE_TRACKER.md — Detailed milestone checklist with dates and values
+- README.md — Project overview and roadmap
+- CLAUDE.md — This file, agent context
+
 ## Current Phase
-Phase 1 — Project Foundation (not started)
+Phase 1 — Project Foundation (COMPLETE 2026-02-11)
+Phase 2 — Core Ball Physics (NEXT — Agent 1)
+
+## Change Log
+- 2026-02-11: Phase 1 complete. Folders created, physics configured (solver 14, velocity 10, bounce threshold 0.1, sleep 0.001), physics materials created (Ball/Felt/Rails)
