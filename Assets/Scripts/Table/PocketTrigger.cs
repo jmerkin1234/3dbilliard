@@ -42,8 +42,8 @@ namespace Billiards.Table
 
         private void OnTriggerEnter(Collider other)
         {
-            // Only process balls
-            if (!other.CompareTag(ballTag))
+            // Only process balls (check both Ball and CueBall tags)
+            if (!other.CompareTag(ballTag) && !other.CompareTag("CueBall"))
                 return;
 
             GameObject ball = other.gameObject;

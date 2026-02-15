@@ -36,8 +36,8 @@ namespace Billiards.Table
 
         private void OnCollisionEnter(Collision collision)
         {
-            // Only process ball collisions
-            if (!collision.gameObject.CompareTag(ballTag))
+            // Only process ball collisions (check both Ball and CueBall tags)
+            if (!collision.gameObject.CompareTag(ballTag) && !collision.gameObject.CompareTag("CueBall"))
                 return;
 
             Rigidbody ballRb = collision.rigidbody;

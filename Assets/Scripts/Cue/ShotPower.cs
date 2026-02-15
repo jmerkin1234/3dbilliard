@@ -3,9 +3,10 @@ using UnityEngine;
 namespace Billiards.Cue
 {
     /// <summary>
-    /// Handles shot power via hold-to-charge mechanic.
-    /// Mouse button hold duration determines impulse magnitude.
-    /// Provides clamped power value with optional exponential scaling.
+    /// Handles shot power via UI slider input.
+    /// Power is set by UI slider (0-1 normalized).
+    /// Shoot is triggered by UI button.
+    /// Cue stick pulls back visually based on power level.
     /// </summary>
     public class ShotPower : MonoBehaviour
     {
@@ -16,26 +17,25 @@ namespace Billiards.Cue
         [Tooltip("Maximum impulse force (Newtons)")]
         [SerializeField] private float maxPower = 8f;
 
-        [Tooltip("Time to reach max power (seconds)")]
-        [SerializeField] private float chargeTime = 2f;
-
         [Tooltip("Use exponential power curve (faster start, slower end)")]
         [SerializeField] private bool useExponentialCurve = true;
 
         [Tooltip("Exponential curve power (1 = linear, 2 = quadratic, etc.)")]
         [SerializeField] private float curvePower = 1.5f;
 
-        [Header("Input")]
-        [Tooltip("Mouse button for charging (0 = left, 1 = right)")]
-        [SerializeField] private int chargeButton = 0;
+        [Header("Cue Pullback")]
+        [Tooltip("Max pullback distance at full power")]
+        [SerializeField] private float maxPullbackDistance = 0.3f;
 
+        [Header("Input")]
         [Tooltip("Allow input (controlled by TurnManager)")]
         [SerializeField] private bool inputEnabled = true;
 
         // === State ===
-        private float currentCharge = 0f;
-        private bool isCharging = false;
-        private float chargeStartTime;
+        private float normalizedPower = 0f;
+
+        // === Cached References ===
+        private CueAim cueAim;
 
         // === Events ===
         /// <summary>Fired when shot is released</summary>
@@ -43,13 +43,10 @@ namespace Billiards.Cue
 
         // === Public Read Accessors ===
         /// <summary>Current power value (0-1 normalized)</summary>
-        public float NormalizedPower => Mathf.Clamp01(currentCharge / chargeTime);
+        public float NormalizedPower => normalizedPower;
 
         /// <summary>Current impulse force in Newtons</summary>
         public float CurrentImpulse => Mathf.Lerp(minPower, maxPower, GetScaledPower());
-
-        /// <summary>Whether currently charging a shot</summary>
-        public bool IsCharging => isCharging;
 
         /// <summary>Enable/disable input</summary>
         public bool InputEnabled
@@ -58,103 +55,44 @@ namespace Billiards.Cue
             set => inputEnabled = value;
         }
 
+        private void Awake()
+        {
+            cueAim = GetComponent<CueAim>();
+        }
+
         private void Update()
         {
+            UpdateCuePullback();
+        }
+
+        /// <summary>
+        /// Set power from UI slider (0-1 normalized).
+        /// </summary>
+        public void SetPower(float normalized)
+        {
             if (!inputEnabled)
-            {
-                // Reset charge if input disabled mid-charge
-                if (isCharging)
-                {
-                    ResetCharge();
-                }
                 return;
-            }
 
-            HandleChargeInput();
+            normalizedPower = Mathf.Clamp01(normalized);
         }
 
         /// <summary>
-        /// Handles mouse button input for power charging.
+        /// Fire the shot at current power. Called by Shoot button.
         /// </summary>
-        private void HandleChargeInput()
+        public void Shoot()
         {
-            // Start charging
-            if (Input.GetMouseButtonDown(chargeButton) && !isCharging)
-            {
-                StartCharge();
-            }
+            if (!inputEnabled)
+                return;
 
-            // Continue charging
-            if (Input.GetMouseButton(chargeButton) && isCharging)
-            {
-                UpdateCharge();
-            }
+            if (normalizedPower < 0.01f)
+                return;
 
-            // Release shot
-            if (Input.GetMouseButtonUp(chargeButton) && isCharging)
-            {
-                ReleaseShot();
-            }
-        }
-
-        /// <summary>
-        /// Begins power charge.
-        /// </summary>
-        private void StartCharge()
-        {
-            isCharging = true;
-            chargeStartTime = Time.time;
-            currentCharge = 0f;
-        }
-
-        /// <summary>
-        /// Updates charge based on hold duration.
-        /// </summary>
-        private void UpdateCharge()
-        {
-            float elapsed = Time.time - chargeStartTime;
-            currentCharge = Mathf.Clamp(elapsed, 0f, chargeTime);
-        }
-
-        /// <summary>
-        /// Releases the shot and fires event with final power.
-        /// </summary>
-        private void ReleaseShot()
-        {
             float finalImpulse = CurrentImpulse;
             OnShotReleased?.Invoke(finalImpulse);
 
-            if (Application.isPlaying)
-            {
-                UnityEngine.Debug.Log($"[ShotPower] Shot released: {finalImpulse:F2}N (charge: {NormalizedPower:P0})");
-            }
+            UnityEngine.Debug.Log($"[ShotPower] Shot released: {finalImpulse:F2}N (power: {normalizedPower:P0})");
 
-            ResetCharge();
-        }
-
-        /// <summary>
-        /// Resets charge state.
-        /// </summary>
-        private void ResetCharge()
-        {
-            isCharging = false;
-            currentCharge = 0f;
-        }
-
-        /// <summary>
-        /// Applies exponential or linear scaling to power curve.
-        /// </summary>
-        private float GetScaledPower()
-        {
-            float normalized = NormalizedPower;
-
-            if (useExponentialCurve)
-            {
-                // Exponential curve: faster charge at start, slower at end
-                return Mathf.Pow(normalized, curvePower);
-            }
-
-            return normalized;
+            ResetPower();
         }
 
         /// <summary>
@@ -166,29 +104,36 @@ namespace Billiards.Cue
             OnShotReleased?.Invoke(clampedImpulse);
         }
 
-        private void OnGUI()
+        /// <summary>
+        /// Reset power to zero.
+        /// </summary>
+        public void ResetPower()
         {
-            if (!isCharging)
+            normalizedPower = 0f;
+        }
+
+        /// <summary>
+        /// Applies exponential or linear scaling to power curve.
+        /// </summary>
+        private float GetScaledPower()
+        {
+            if (useExponentialCurve)
+            {
+                return Mathf.Pow(normalizedPower, curvePower);
+            }
+            return normalizedPower;
+        }
+
+        /// <summary>
+        /// Pulls cue stick back based on current power level.
+        /// </summary>
+        private void UpdateCuePullback()
+        {
+            if (cueAim == null)
                 return;
 
-            // Simple on-screen power meter
-            float powerPercent = NormalizedPower * 100f;
-            string powerText = $"Power: {powerPercent:F0}% ({CurrentImpulse:F2}N)";
-
-            GUIStyle style = new GUIStyle(GUI.skin.label);
-            style.fontSize = 24;
-            style.normal.textColor = Color.white;
-
-            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height - 100, 200, 50), powerText, style);
-
-            // Power bar
-            float barWidth = 300f;
-            float barHeight = 30f;
-            float barX = Screen.width / 2 - barWidth / 2;
-            float barY = Screen.height - 60;
-
-            GUI.Box(new Rect(barX, barY, barWidth, barHeight), "");
-            GUI.Box(new Rect(barX, barY, barWidth * NormalizedPower, barHeight), "");
+            float pullback = normalizedPower * maxPullbackDistance;
+            cueAim.SetPullback(pullback);
         }
     }
 }
