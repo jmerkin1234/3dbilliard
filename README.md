@@ -46,16 +46,16 @@ Two parallel pipelines:
 ```
 Assets/
  ├── Scripts/
- │    ├── Physics/      BallPhysics, BallSleepMonitor
- │    ├── Spin/         BallSpin
- │    ├── Cue/          CueAim, ShotPower, CueStrike
- │    ├── Table/        RailResponse, PocketTrigger
- │    ├── GameState/    TurnManager
- │    └── Debug/        Test utilities
+ │    ├── Physics/         BallPhysics, BallSleepMonitor
+ │    ├── Spin/            BallSpin
+ │    ├── Cue/             CueAim, ShotPower, CueStrike
+ │    ├── Table/           RailResponse, PocketTrigger
+ │    ├── GameState/       TurnManager, RuleEngine
+ │    └── Debug/           Test utilities
  ├── Prefabs/
- ├── Materials/
- ├── PhysicsMaterials/
- └── Scenes/
+ ├── Materials/            HDRP materials (reassign textures on new model import)
+ ├── PhysicsMaterials 1/   Ball, Felt, Rails physics materials
+ └── Scenes/               BilliardGameScene, BilliardTestScene
 ```
 
 ## Progress

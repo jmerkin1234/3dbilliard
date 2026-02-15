@@ -19,7 +19,7 @@
 ### Milestone 1 — Project Structure Setup
 **Status:** COMPLETE
 
-Created folder structure:
+Created folder structure (updated 2026-02-15 after pre-model cleanup):
 ```
 Assets/
  ├── Scripts/
@@ -30,10 +30,12 @@ Assets/
  │    ├── GameState/
  │    └── Debug/
  ├── Prefabs/
- ├── Materials/
- ├── PhysicsMaterials/
- └── Scenes/
+ ├── Materials/         (hand-crafted HDRP materials retained)
+ ├── PhysicsMaterials 1/
+ └── Scenes/            (BilliardGameScene + BilliardTestScene)
 ```
+
+Note: Assets/Models/, Assets/Textures/, and Assets/2/ removed during pre-model cleanup. Models/ will be recreated on new FBX import.
 
 Render Pipeline: **HDRP** (High Definition Render Pipeline)
 Fixed Timestep: **0.02** (confirmed in TimeManager.asset)
