@@ -5,12 +5,12 @@
 | Phase | Status | Agent | Date Started | Date Completed |
 |-------|--------|-------|-------------|----------------|
 | 1. Project Foundation | COMPLETE | Planner | 2026-02-11 | 2026-02-11 |
-| 2. Core Ball Physics | COMPLETE | Agent 1 | 2026-02-11 | 2026-02-11 |
-| 3. Table Interaction | COMPLETE | Agent 3 | 2026-02-11 | 2026-02-11 |
-| 4. Cue & Input System | COMPLETE | Agent 2 | 2026-02-11 | 2026-02-11 |
-| 5. Gameplay Layer | BLOCKED | Agent 4 | — | — |
+| 2. Core Ball Physics | COMPLETE | Agent 1 | 2026-02-11 | 2026-02-15 (Refined) |
+| 3. Table Interaction | COMPLETE | Agent 3 | 2026-02-11 | 2026-02-15 (Refined) |
+| 4. Cue & Input System | COMPLETE | Agent 2 | 2026-02-11 | 2026-02-15 (Refined) |
+| 5. Gameplay Layer | COMPLETE | Agent 4 | 2026-02-11 | 2026-02-15 (Refined) |
 | 6. Visual Realism | WAITING (Pipeline 1) | User | — | — |
-| 7. Validation Protocol | BLOCKED | Planner | — | — |
+| 7. Validation Protocol | IN PROGRESS | Planner | 2026-02-15 | — |
 
 ---
 
@@ -311,3 +311,12 @@ Implementation details:
 - [ ] No jitter at rest
 - [ ] 60+ FPS stable
 - [ ] Deterministic physics confirmed
+
+---
+
+## 2026-02-15 Refinements (Logic Audit)
+- **Physics Consolidation:** Moved all ball-cloth interaction logic (sliding friction, English transfer) into `BallSpin.cs`. Used force-based calculations instead of direct velocity manipulation for better physical realism.
+- **Race Condition Fix:** Updated `PocketTrigger.cs` to use independent coroutines per ball, preventing state overwrites when multiple balls are pocketed simultaneously.
+- **Rule Integration:** Created `CueBallCollision.cs` and integrated `RuleEngine.cs` fully with `TurnManager.cs`. Shot validation now respects contact rules.
+- **Performance:** Optimized `CueAim.cs` to cache renderers, reducing per-frame overhead.
+- **Stability:** Refined `RailResponse.cs` to prevent double-bounce artifacts by delegating base reflection to Unity's physics engine.
