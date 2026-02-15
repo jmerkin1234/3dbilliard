@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Billiards.GameState
@@ -32,6 +33,13 @@ namespace Billiards.GameState
 
         [Header("Debug")]
         [SerializeField] private bool logTurnEvents = true;
+
+        [Header("AI Fallback")]
+        [Tooltip("Temporary fallback while AI shot logic is not implemented.")]
+        [SerializeField] private bool autoReturnTurnWhenAIUnavailable = true;
+
+        [Tooltip("Delay before returning control to player when no AI logic exists.")]
+        [SerializeField] private float aiFallbackDelaySeconds = 0.4f;
 
         // === Events ===
         /// <summary>Fired when turn changes to AI</summary>
@@ -267,8 +275,26 @@ namespace Billiards.GameState
                 UnityEngine.Debug.Log("[TurnManager] AI's turn begins.", this);
             }
 
-            // TODO: Invoke AI shot logic here
-            // For now, AI turn does nothing (requires AI implementation)
+            // TODO: Replace this fallback with real AI shot logic.
+            if (autoReturnTurnWhenAIUnavailable)
+            {
+                StartCoroutine(ReturnPlayerTurnAfterAIFallback());
+            }
+        }
+
+        private IEnumerator ReturnPlayerTurnAfterAIFallback()
+        {
+            yield return new WaitForSeconds(aiFallbackDelaySeconds);
+
+            if (currentTurnOwner == TurnOwner.AI && currentState == TurnState.AIAiming)
+            {
+                if (logTurnEvents)
+                {
+                    UnityEngine.Debug.LogWarning("[TurnManager] AI shot logic is not implemented yet. Returning turn to player.", this);
+                }
+
+                StartPlayerTurn();
+            }
         }
 
         /// <summary>
