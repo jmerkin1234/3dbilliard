@@ -68,9 +68,7 @@ namespace Billiards.Table
             // Disable ball after a short delay (allows for visual/audio feedback)
             if (disableDelay > 0f)
             {
-                Invoke(nameof(DisableBallDelayed), disableDelay);
-                // Store ball reference for delayed disable
-                ballToDisable = ball;
+                StartCoroutine(DisableBallCoroutine(ball));
             }
             else
             {
@@ -78,15 +76,10 @@ namespace Billiards.Table
             }
         }
 
-        private GameObject ballToDisable;
-
-        private void DisableBallDelayed()
+        private System.Collections.IEnumerator DisableBallCoroutine(GameObject ball)
         {
-            if (ballToDisable != null)
-            {
-                DisableBall(ballToDisable);
-                ballToDisable = null;
-            }
+            yield return new WaitForSeconds(disableDelay);
+            DisableBall(ball);
         }
 
         /// <summary>

@@ -21,6 +21,9 @@ namespace Billiards.GameState
         [Tooltip("Shot power component to control")]
         [SerializeField] private Cue.ShotPower shotPower;
 
+        [Tooltip("Rule engine for shot validation")]
+        [SerializeField] private RuleEngine ruleEngine;
+
         [Header("Turn State")]
         [SerializeField] private TurnState currentState = TurnState.PlayerAiming;
 
@@ -56,6 +59,11 @@ namespace Billiards.GameState
             if (shotPower == null)
             {
                 shotPower = FindAnyObjectByType<Cue.ShotPower>();
+            }
+
+            if (ruleEngine == null)
+            {
+                ruleEngine = FindAnyObjectByType<RuleEngine>();
             }
 
             // Subscribe to ball sleep events
@@ -106,6 +114,12 @@ namespace Billiards.GameState
             SetTurnState(TurnState.BallsMoving);
             EnableInput(false);
 
+            // Begin shot tracking in rule engine
+            if (ruleEngine != null)
+            {
+                ruleEngine.BeginShotTracking();
+            }
+
             if (logTurnEvents)
             {
                 string shooter = (currentTurnOwner == TurnOwner.Player) ? "Player" : "AI";
@@ -126,6 +140,12 @@ namespace Billiards.GameState
 
             // Validate shot via rule engine
             bool shotWasLegal = ValidateShot();
+
+            // Reset rule engine for next turn
+            if (ruleEngine != null)
+            {
+                ruleEngine.ResetShotTracking();
+            }
 
             if (gameMode == GameMode.Training)
             {
@@ -206,11 +226,13 @@ namespace Billiards.GameState
         /// </summary>
         private bool ValidateShot()
         {
-            // Basic validation for now
-            // TODO: Integrate with RuleEngine for advanced validation
+            // Validate shot via rule engine
+            if (ruleEngine != null)
+            {
+                return ruleEngine.ValidateShot();
+            }
 
-            // For now, assume all shots are legal unless scratch occurred
-            // Scratch is handled in HandleBallPocketed
+            // Fallback: Assume all shots are legal unless scratch occurred
             return true;
         }
 
