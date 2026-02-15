@@ -12,8 +12,9 @@ namespace Billiards.Spin
     {
         // === Constants ===
         private const float BallRadius = 0.028575f;
-        private const float SpinDecayRate = 0.5f; // angular velocity decay per second
-        private const float SpinTransferRate = 0.15f; // how aggressively spin converts to velocity
+        private const float BallMass = 0.17f;
+        private const float SlidingFrictionCoefficient = 0.2f; // cloth friction
+        private const float SpinDecayRate = 0.3f; // additional angular decay for sidespin
         private const float MinAngularThreshold = 0.01f;
         private const float MinVelocityThreshold = 0.001f;
 
@@ -64,13 +65,49 @@ namespace Billiards.Spin
                 rb.angularVelocity.magnitude < MinAngularThreshold)
                 return;
 
+            ApplySlidingFriction();
             ApplySpinDecay();
-            ApplySpinToVelocityTransfer();
         }
 
         /// <summary>
-        /// Spin decays over time due to friction between ball and cloth.
-        /// This is separate from the sliding friction in BallPhysics.
+        /// Sliding friction: when the ball is sliding (not pure rolling),
+        /// apply friction to transition toward pure roll and transfer spin to velocity.
+        /// </summary>
+        private void ApplySlidingFriction()
+        {
+            Vector3 velocity = rb.linearVelocity;
+            Vector3 angularVel = rb.angularVelocity;
+
+            // Contact point is at the bottom of the ball
+            Vector3 contactOffset = Vector3.down * BallRadius;
+            Vector3 surfaceVelocity = Vector3.Cross(angularVel, contactOffset);
+
+            // Slip velocity = linear velocity - surface velocity at contact
+            Vector3 slipVelocity = velocity - surfaceVelocity;
+            slipVelocity.y = 0f;
+
+            float slipSpeed = slipVelocity.magnitude;
+            if (slipSpeed < MinVelocityThreshold)
+                return;
+
+            // Friction force: F = mu * m * g
+            float frictionForce = SlidingFrictionCoefficient * BallMass * Mathf.Abs(UnityEngine.Physics.gravity.y);
+            Vector3 frictionDir = -slipVelocity.normalized;
+
+            // Don't overshoot the slip correction
+            float maxForce = slipSpeed * BallMass / Time.fixedDeltaTime;
+            float appliedForce = Mathf.Min(frictionForce, maxForce);
+
+            // Apply friction force to linear velocity
+            rb.AddForce(frictionDir * appliedForce, ForceMode.Force);
+
+            // Apply torque from friction to angular velocity
+            Vector3 torque = Vector3.Cross(contactOffset, frictionDir * appliedForce);
+            rb.AddTorque(torque, ForceMode.Force);
+        }
+
+        /// <summary>
+        /// General spin decay due to air resistance and micro-friction.
         /// </summary>
         private void ApplySpinDecay()
         {
@@ -82,46 +119,9 @@ namespace Billiards.Spin
                 return;
             }
 
-            // Exponential decay: omega *= (1 - decay * dt)
             float decayFactor = 1f - SpinDecayRate * Time.fixedDeltaTime;
-            decayFactor = Mathf.Clamp01(decayFactor);
-            rb.angularVelocity = angVel * decayFactor;
-
-            // Decay applied spin tracking
-            appliedSpin *= decayFactor;
-        }
-
-        /// <summary>
-        /// Transfers spin differential into linear velocity.
-        /// 
-        /// Backspin (negative topspin): when ball is moving forward but spinning backward,
-        ///   the spin opposes motion, eventually reversing the ball (draw shot).
-        /// 
-        /// Topspin (positive topspin): spin adds to forward motion (follow shot).
-        /// 
-        /// Sidespin: deflects the ball laterally (english/throw).
-        /// </summary>
-        private void ApplySpinToVelocityTransfer()
-        {
-            Vector3 velocity = rb.linearVelocity;
-            Vector3 angVel = rb.angularVelocity;
-
-            // Calculate surface velocity at the contact point
-            Vector3 contactOffset = Vector3.down * BallRadius;
-            Vector3 surfaceVelocity = Vector3.Cross(angVel, contactOffset);
-
-            // The difference between surface velocity and linear velocity
-            Vector3 spinDiff = surfaceVelocity - velocity;
-
-            // Only horizontal component matters for table contact
-            spinDiff.y = 0f;
-
-            if (spinDiff.magnitude < MinVelocityThreshold)
-                return;
-
-            // Transfer spin difference into linear velocity
-            Vector3 transfer = spinDiff * SpinTransferRate * Time.fixedDeltaTime;
-            rb.linearVelocity += transfer;
+            rb.angularVelocity = angVel * Mathf.Clamp01(decayFactor);
+            appliedSpin *= Mathf.Clamp01(decayFactor);
         }
 
         /// <summary>

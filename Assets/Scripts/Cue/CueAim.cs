@@ -42,6 +42,8 @@ namespace Billiards.Cue
         private Vector3 aimDirection;
         private bool isLocked = false;
         private SphereCollider cueBallCollider;
+        private Renderer[] cueRenderers;
+        private bool lastInputEnabledState = true;
 
         // === Public Read Accessors ===
         /// <summary>Normalized direction vector for the shot</summary>
@@ -81,6 +83,10 @@ namespace Billiards.Cue
             if (cueBall != null)
                 cueBallCollider = cueBall.GetComponent<SphereCollider>();
 
+            // Cache renderers for performance (avoid GetComponentsInChildren in Update)
+            cueRenderers = GetComponentsInChildren<Renderer>();
+            lastInputEnabledState = inputEnabled;
+
             currentAngle = initialAngle;
             UpdateAimDirection();
             SetupAimLine();
@@ -93,6 +99,7 @@ namespace Billiards.Cue
 
             UpdateCuePosition();
             UpdateAimLine();
+            UpdateVisualVisibility();
         }
 
         /// <summary>
@@ -223,7 +230,7 @@ namespace Billiards.Cue
         /// </summary>
         private void UpdateAimLine()
         {
-            if (aimLineRenderer == null || cueBall == null)
+            if (aimLineRenderer == null || cueBall == null || !aimLineRenderer.enabled)
                 return;
 
             Vector3 ballCenter = GetBallCenter();
@@ -231,6 +238,34 @@ namespace Billiards.Cue
             Vector3 end = start + aimDirection * aimLineLength;
             aimLineRenderer.SetPosition(0, start);
             aimLineRenderer.SetPosition(1, end);
+        }
+
+        /// <summary>
+        /// Shows/hides cue stick and aim line based on input state.
+        /// </summary>
+        private void UpdateVisualVisibility()
+        {
+            // Only update if state has changed
+            if (lastInputEnabledState == inputEnabled)
+                return;
+
+            lastInputEnabledState = inputEnabled;
+            bool isVisible = inputEnabled;
+
+            // Toggle cached cue stick renderers
+            if (cueRenderers != null)
+            {
+                foreach (Renderer r in cueRenderers)
+                {
+                    if (r != null && r != aimLineRenderer) // aimLineRenderer is handled separately
+                        r.enabled = isVisible;
+                }
+            }
+
+            if (aimLineRenderer != null)
+            {
+                aimLineRenderer.enabled = isVisible;
+            }
         }
 
         private void OnDrawGizmos()

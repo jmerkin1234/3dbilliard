@@ -66,4 +66,4 @@ Assets/
 - [x] Phase 4 — Cue & Input System
 - [x] Phase 5 — Gameplay Layer
 - [ ] Phase 6 — Visual Realism (Waiting for Blender assets)
-- [ ] Phase 7 — Validation Protocol
+- [/] Phase 7 — Validation Protocol (In Progress: Logic refined, physics consolidated)

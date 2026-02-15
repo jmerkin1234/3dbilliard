@@ -27,13 +27,11 @@ namespace Billiards.GameState
         {
             // Subscribe to physics events
             Table.PocketTrigger.OnBallPocketed += HandleBallPocketed;
-            Physics.BallSleepMonitor.OnAllBallsStopped += HandleAllBallsStopped;
         }
 
         private void OnDestroy()
         {
             Table.PocketTrigger.OnBallPocketed -= HandleBallPocketed;
-            Physics.BallSleepMonitor.OnAllBallsStopped -= HandleAllBallsStopped;
         }
 
         private void OnEnable()
@@ -61,7 +59,7 @@ namespace Billiards.GameState
         /// <summary>
         /// Resets shot tracking state.
         /// </summary>
-        private void ResetShotTracking()
+        public void ResetShotTracking()
         {
             firstBallContacted = null;
             ballsPocketed.Clear();
@@ -97,18 +95,6 @@ namespace Billiards.GameState
                     UnityEngine.Debug.Log($"[RuleEngine] Ball '{ball.name}' pocketed.", this);
                 }
             }
-        }
-
-        /// <summary>
-        /// Called when all balls stop moving.
-        /// </summary>
-        private void HandleAllBallsStopped()
-        {
-            if (!shotInProgress)
-                return;
-
-            ValidateShot();
-            ResetShotTracking();
         }
 
         /// <summary>

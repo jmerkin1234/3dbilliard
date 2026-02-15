@@ -58,46 +58,17 @@ namespace Billiards.Table
 
             normal = normal.normalized;
 
-            // Apply reflection with restitution and energy loss
-            ApplyReflection(ballRb, normal);
+            // Note: Unity's physics engine handles the basic reflection based on PhysicsMaterials.
+            // We use this script to apply additional energy loss and spin inversion.
+
+            // Apply energy loss (simulates inelastic collision)
+            ballRb.linearVelocity *= EnergyLossFactor;
 
             // Invert spin on rail contact
             if (ballSpin != null)
             {
                 ApplySpinInversion(ballSpin, normal);
             }
-        }
-
-        /// <summary>
-        /// Applies reflection formula with restitution and energy loss.
-        /// Formula: R = V - 2(V·N)N
-        /// </summary>
-        private void ApplyReflection(Rigidbody ballRb, Vector3 normal)
-        {
-            Vector3 velocity = ballRb.linearVelocity;
-
-            // Reflection formula: R = V - 2(V·N)N
-            float dotProduct = Vector3.Dot(velocity, normal);
-            Vector3 reflection = velocity - 2f * dotProduct * normal;
-
-            // Apply restitution (bounciness factor from rail physics material)
-            // Restitution only affects the normal component
-            Vector3 normalComponent = dotProduct * normal;
-            Vector3 tangentialComponent = velocity - normalComponent;
-
-            Vector3 reflectedNormal = -normalComponent * RailRestitution;
-            Vector3 finalVelocity = tangentialComponent + reflectedNormal;
-
-            // Apply energy loss (simulates inelastic collision and friction)
-            finalVelocity *= EnergyLossFactor;
-
-            // Ensure no energy gain
-            if (finalVelocity.magnitude > velocity.magnitude)
-            {
-                finalVelocity = finalVelocity.normalized * velocity.magnitude;
-            }
-
-            ballRb.linearVelocity = finalVelocity;
         }
 
         /// <summary>

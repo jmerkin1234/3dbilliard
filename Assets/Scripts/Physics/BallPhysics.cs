@@ -10,7 +10,6 @@ namespace Billiards.Physics
         private const float BallMass = 0.17f;
         private const float BallRadius = 0.028575f; // regulation ball radius in meters
         private const float RollingResistanceCoefficient = 0.01f; // cloth rolling resistance
-        private const float SlidingFrictionCoefficient = 0.2f; // ball-on-cloth sliding friction
         private const float MinVelocityThreshold = 0.001f; // below this, force stop
 
         // === Cached References ===
@@ -49,7 +48,6 @@ namespace Billiards.Physics
                 return;
 
             ApplyRollingResistance();
-            ApplySlidingFriction();
             ClampMinimumVelocity();
         }
 
@@ -83,48 +81,6 @@ namespace Billiards.Physics
             // Apply opposite to velocity direction
             Vector3 resistanceDir = -velocity.normalized;
             rb.AddForce(resistanceDir * resistanceForce, ForceMode.Force);
-        }
-
-        /// <summary>
-        /// Sliding friction: when the ball is sliding (not pure rolling),
-        /// apply friction to transition toward pure roll.
-        /// Pure roll condition: v = omega * r (surface speed matches linear speed)
-        /// </summary>
-        private void ApplySlidingFriction()
-        {
-            Vector3 velocity = rb.linearVelocity;
-            Vector3 angularVel = rb.angularVelocity;
-
-            // Surface velocity from spin: v_surface = omega x r (upward)
-            // For a ball on a flat surface, the contact point is at -Y
-            // Surface velocity at contact = angularVelocity cross (0, -radius, 0)
-            Vector3 contactOffset = Vector3.down * BallRadius;
-            Vector3 surfaceVelocity = Vector3.Cross(angularVel, contactOffset);
-
-            // Slip velocity = linear velocity - surface velocity at contact
-            Vector3 slipVelocity = velocity - surfaceVelocity;
-
-            // Only consider horizontal slip (XZ plane)
-            slipVelocity.y = 0f;
-
-            float slipSpeed = slipVelocity.magnitude;
-            if (slipSpeed < MinVelocityThreshold)
-                return;
-
-            // Sliding friction force opposes slip
-            float frictionForce = SlidingFrictionCoefficient * BallMass * Mathf.Abs(UnityEngine.Physics.gravity.y);
-            Vector3 frictionDir = -slipVelocity.normalized;
-
-            // Don't overshoot the slip correction
-            float maxForce = slipSpeed * BallMass / Time.fixedDeltaTime;
-            float appliedForce = Mathf.Min(frictionForce, maxForce);
-
-            // Apply friction force (decelerates linear, accelerates angular toward pure roll)
-            rb.AddForce(frictionDir * appliedForce, ForceMode.Force);
-
-            // Torque from friction: T = r x F (cross product of contact to friction)
-            Vector3 torque = Vector3.Cross(contactOffset, frictionDir * appliedForce);
-            rb.AddTorque(torque, ForceMode.Force);
         }
 
         /// <summary>
