@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Billiards.GameState
@@ -21,6 +22,9 @@ namespace Billiards.GameState
         [Tooltip("Shot power component to control")]
         [SerializeField] private Cue.ShotPower shotPower;
 
+        [Tooltip("Rule engine for shot validation")]
+        [SerializeField] private RuleEngine ruleEngine;
+
         [Header("Turn State")]
         [SerializeField] private TurnState currentState = TurnState.PlayerAiming;
 
@@ -29,6 +33,13 @@ namespace Billiards.GameState
 
         [Header("Debug")]
         [SerializeField] private bool logTurnEvents = true;
+
+        [Header("AI Fallback")]
+        [Tooltip("Temporary fallback while AI shot logic is not implemented.")]
+        [SerializeField] private bool autoReturnTurnWhenAIUnavailable = true;
+
+        [Tooltip("Delay before returning control to player when no AI logic exists.")]
+        [SerializeField] private float aiFallbackDelaySeconds = 0.4f;
 
         // === Events ===
         /// <summary>Fired when turn changes to AI</summary>
@@ -56,6 +67,11 @@ namespace Billiards.GameState
             if (shotPower == null)
             {
                 shotPower = FindAnyObjectByType<Cue.ShotPower>();
+            }
+
+            if (ruleEngine == null)
+            {
+                ruleEngine = FindAnyObjectByType<RuleEngine>();
             }
 
             // Subscribe to ball sleep events
@@ -106,6 +122,12 @@ namespace Billiards.GameState
             SetTurnState(TurnState.BallsMoving);
             EnableInput(false);
 
+            // Begin shot tracking in rule engine
+            if (ruleEngine != null)
+            {
+                ruleEngine.BeginShotTracking();
+            }
+
             if (logTurnEvents)
             {
                 string shooter = (currentTurnOwner == TurnOwner.Player) ? "Player" : "AI";
@@ -126,6 +148,12 @@ namespace Billiards.GameState
 
             // Validate shot via rule engine
             bool shotWasLegal = ValidateShot();
+
+            // Reset rule engine for next turn
+            if (ruleEngine != null)
+            {
+                ruleEngine.ResetShotTracking();
+            }
 
             if (gameMode == GameMode.Training)
             {
@@ -206,11 +234,13 @@ namespace Billiards.GameState
         /// </summary>
         private bool ValidateShot()
         {
-            // Basic validation for now
-            // TODO: Integrate with RuleEngine for advanced validation
+            // Validate shot via rule engine
+            if (ruleEngine != null)
+            {
+                return ruleEngine.ValidateShot();
+            }
 
-            // For now, assume all shots are legal unless scratch occurred
-            // Scratch is handled in HandleBallPocketed
+            // Fallback: Assume all shots are legal unless scratch occurred
             return true;
         }
 
@@ -245,8 +275,26 @@ namespace Billiards.GameState
                 UnityEngine.Debug.Log("[TurnManager] AI's turn begins.", this);
             }
 
-            // TODO: Invoke AI shot logic here
-            // For now, AI turn does nothing (requires AI implementation)
+            // TODO: Replace this fallback with real AI shot logic.
+            if (autoReturnTurnWhenAIUnavailable)
+            {
+                StartCoroutine(ReturnPlayerTurnAfterAIFallback());
+            }
+        }
+
+        private IEnumerator ReturnPlayerTurnAfterAIFallback()
+        {
+            yield return new WaitForSeconds(aiFallbackDelaySeconds);
+
+            if (currentTurnOwner == TurnOwner.AI && currentState == TurnState.AIAiming)
+            {
+                if (logTurnEvents)
+                {
+                    UnityEngine.Debug.LogWarning("[TurnManager] AI shot logic is not implemented yet. Returning turn to player.", this);
+                }
+
+                StartPlayerTurn();
+            }
         }
 
         /// <summary>

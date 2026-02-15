@@ -57,12 +57,13 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 - Deterministic physics required
 
 ## Script Locations
-- Assets/Scripts/Physics/ — BallPhysics.cs, BallSleepMonitor.cs
+- Assets/Scripts/Physics/ — BallPhysics.cs, BallSleepMonitor.cs, CueBallCollision.cs
 - Assets/Scripts/Spin/ — BallSpin.cs
 - Assets/Scripts/Cue/ — CueAim.cs, ShotPower.cs, CueStrike.cs
 - Assets/Scripts/Table/ — RailResponse.cs, PocketTrigger.cs
-- Assets/Scripts/GameState/ — TurnManager.cs
+- Assets/Scripts/GameState/ — TurnManager.cs, RuleEngine.cs
 - Assets/Scripts/Debug/ — Test utilities
+- Assets/Scripts/UI/ — GameUI.cs
 
 ## Documentation
 - docs/PHASE_TRACKER.md — Detailed milestone checklist with dates and values
@@ -71,27 +72,29 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 
 ## Current Phase
 Phase 1 — Project Foundation (COMPLETE 2026-02-11)
-Phase 2 — Core Ball Physics (COMPLETE 2026-02-11)
-Phase 3 — Table Interaction (COMPLETE 2026-02-11)
-Phase 4 — Cue & Input System (COMPLETE 2026-02-11)
-Phase 5 — Gameplay Layer (COMPLETE 2026-02-11)
+Phase 2 — Core Ball Physics (REFINED 2026-02-15)
+Phase 3 — Table Interaction (REFINED 2026-02-15)
+Phase 4 — Cue & Input System (REFINED 2026-02-15)
+Phase 5 — Gameplay Layer (REFINED 2026-02-15)
 Phase 6 — Visual Realism (WAITING for Pipeline 1)
-Phase 7 — Validation Protocol (NEXT)
+Phase 7 — Validation Protocol (IN PROGRESS)
 
 ## Scripts Created
 | Script | Location | Status |
 |--------|----------|--------|
-| BallPhysics.cs | Assets/Scripts/Physics/ | Phase 2, compiled |
-| BallSpin.cs | Assets/Scripts/Spin/ | Phase 2, compiled |
+| BallPhysics.cs | Assets/Scripts/Physics/ | Phase 2, refined |
+| BallSpin.cs | Assets/Scripts/Spin/ | Phase 2, friction consolidated |
 | BallSleepMonitor.cs | Assets/Scripts/Physics/ | Phase 2, compiled |
+| CueBallCollision.cs | Assets/Scripts/Physics/ | Phase 5, rule detection |
 | DebugBallLauncher.cs | Assets/Scripts/Debug/ | Phase 2, compiled (test utility) |
-| RailResponse.cs | Assets/Scripts/Table/ | Phase 3, compiled |
-| PocketTrigger.cs | Assets/Scripts/Table/ | Phase 3, compiled |
-| CueAim.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
+| RailResponse.cs | Assets/Scripts/Table/ | Phase 3, refined |
+| PocketTrigger.cs | Assets/Scripts/Table/ | Phase 3, race condition fix |
+| CueAim.cs | Assets/Scripts/Cue/ | Phase 4, perf optimization |
 | ShotPower.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
 | CueStrike.cs | Assets/Scripts/Cue/ | Phase 4, compiled |
-| TurnManager.cs | Assets/Scripts/GameState/ | Phase 5, compiled |
-| RuleEngine.cs | Assets/Scripts/GameState/ | Phase 5, compiled |
+| TurnManager.cs | Assets/Scripts/GameState/ | Phase 5, integrated |
+| RuleEngine.cs | Assets/Scripts/GameState/ | Phase 5, integrated |
+| GameUI.cs | Assets/Scripts/UI/ | Phase 4, compiled |
 
 ## Test Scene
 - BilliardTestScene.unity in Assets/Scenes/
@@ -105,4 +108,9 @@ Phase 7 — Validation Protocol (NEXT)
 - 2026-02-11: Phase 4 complete. CueAim.cs (mouse rotation with smooth damping), ShotPower.cs (hold-to-charge 0.5-8N with exponential curve), CueStrike.cs (impulse + spin injection via contact offset). Full shot pipeline functional. Fixed Debug namespace collision (replaced with UnityEngine.Debug). Zero compilation errors verified via Unity MCP.
 - 2026-02-11: Phase 5 complete. TurnManager.cs (turn state machine: Aiming→BallsMoving→TurnEnding, player switching, foul handling, input control), RuleEngine.cs (shot tracking, legal contact, pocket validation, scratch detection). Zero compilation errors. Event-driven architecture integrates with BallSleepMonitor and PocketTrigger.
 - 2026-02-11: TurnManager refactored for single-player. Removed 2-player logic. Added GameMode enum (Training, VsComputer). Training mode = unlimited shots, VsComputer = player vs AI with turn switching on fouls. AI logic placeholder for future implementation.
-- 2026-02-15: Pre-model cleanup. Removed old PoolTable.fbx + all old textures/auto-materials from Assets/Models/. Removed 17 loose duplicate textures from Assets root. Removed Assets/Textures/ duplicates. Removed stale scenes (test.unity, OutdoorsScene.unity). Removed auto-generated material debris. Removed crash artifact. Moved BilliardTestScene from Assets/2/ to Assets/Scenes/. Hand-crafted HDRP materials and physics materials retained.
+- 2026-02-15: Backend script refinement and logic audit.
+  - Consolidated ball friction and spin-to-velocity transfer in `BallSpin.cs` using force-based physics.
+  - Fixed `PocketTrigger.cs` race condition for simultaneous pocketing using coroutines.
+  - Integrated `RuleEngine` with `TurnManager` and added `CueBallCollision.cs` for foul detection.
+  - Optimized `CueAim.cs` by caching renderers and only updating visibility on state change.
+  - Refined `RailResponse.cs` to rely on Unity physics for base reflection, preventing double-bouncing.
