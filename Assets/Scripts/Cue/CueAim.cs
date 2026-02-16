@@ -169,7 +169,10 @@ namespace Billiards.Cue
             // Position tip behind ball (opposite to aim direction)
             Vector3 tipPosition = ballCenter - aimDirection * tipDistance;
             transform.position = tipPosition;
-            transform.LookAt(ballCenter);
+
+            // LookAt away from ball (tip toward ball, butt away)
+            Vector3 awayFromBall = transform.position + (transform.position - ballCenter);
+            transform.LookAt(awayFromBall);
         }
 
         /// <summary>
@@ -189,7 +192,10 @@ namespace Billiards.Cue
             // Position tip behind ball with pullback offset
             Vector3 tipPosition = ballCenter - aimDirection * tipDistance;
             transform.position = tipPosition;
-            transform.LookAt(ballCenter);
+
+            // LookAt away from ball (tip toward ball, butt away)
+            Vector3 awayFromBall = transform.position + (transform.position - ballCenter);
+            transform.LookAt(awayFromBall);
         }
 
         /// <summary>
