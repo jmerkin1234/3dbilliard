@@ -591,32 +591,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!134 &150411966
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Ball (Instance) (Instance) (Instance)
-  serializedVersion: 2
-  m_DynamicFriction: 0.05
-  m_StaticFriction: 0.05
-  m_Bounciness: 0.95
-  m_FrictionCombine: 0
-  m_BounceCombine: 3
---- !u!134 &277710849
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Ball (Instance) (Instance)
-  serializedVersion: 2
-  m_DynamicFriction: 0.05
-  m_StaticFriction: 0.05
-  m_Bounciness: 0.95
-  m_FrictionCombine: 0
-  m_BounceCombine: 3
 --- !u!1 &413617663 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -110142668121624709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
@@ -1128,6 +1102,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!134 &1154406383
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ball (Instance)
+  serializedVersion: 2
+  m_DynamicFriction: 0.05
+  m_StaticFriction: 0.05
+  m_Bounciness: 0.95
+  m_FrictionCombine: 0
+  m_BounceCombine: 1
 --- !u!1 &1174764703 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7170249994497489313, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
@@ -2120,7 +2107,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337434289}
-  m_Material: {fileID: 277710849}
+  m_Material: {fileID: 13400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2704,7 +2691,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337434288}
-  m_Material: {fileID: 13400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
+  m_Material: {fileID: 1154406383}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2907,7 +2894,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337434279}
-  m_Material: {fileID: 150411966}
+  m_Material: {fileID: 13400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
