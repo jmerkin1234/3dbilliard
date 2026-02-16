@@ -41,9 +41,9 @@ namespace Billiards.Debug
             // === 1. Assign Physics Materials ===
             UnityEngine.Debug.Log("\n--- Assigning Physics Materials ---");
 
-            PhysicMaterial ballMat = AssetDatabase.LoadAssetAtPath<PhysicMaterial>("Assets/PhysicsMaterials 1/Ball.physicMaterial");
-            PhysicMaterial feltMat = AssetDatabase.LoadAssetAtPath<PhysicMaterial>("Assets/PhysicsMaterials 1/Felt.physicMaterial");
-            PhysicMaterial railsMat = AssetDatabase.LoadAssetAtPath<PhysicMaterial>("Assets/PhysicsMaterials 1/Rails.physicMaterial");
+            PhysicsMaterial ballMat = AssetDatabase.LoadAssetAtPath<PhysicsMaterial>("Assets/PhysicsMaterials 1/Ball.physicMaterial");
+            PhysicsMaterial feltMat = AssetDatabase.LoadAssetAtPath<PhysicsMaterial>("Assets/PhysicsMaterials 1/Felt.physicMaterial");
+            PhysicsMaterial railsMat = AssetDatabase.LoadAssetAtPath<PhysicsMaterial>("Assets/PhysicsMaterials 1/Rails.physicMaterial");
 
             if (ballMat == null) UnityEngine.Debug.LogError("Ball.physicMaterial not found!");
             if (feltMat == null) UnityEngine.Debug.LogError("Felt.physicMaterial not found!");
