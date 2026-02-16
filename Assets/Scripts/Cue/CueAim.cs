@@ -166,14 +166,11 @@ namespace Billiards.Cue
             float ballRadius = cueBallCollider != null ? cueBallCollider.radius : 0.028575f;
             float tipDistance = ballRadius + tipGap;
 
-            // Position tip behind ball (opposite to aim direction)
-            Vector3 tipPosition = ballCenter - aimDirection * tipDistance;
-            transform.position = tipPosition;
+            // Position: 3cm behind ball along aim direction
+            transform.position = ballCenter - aimDirection * tipDistance;
 
-            // Orient cue: tip toward ball, butt away
-            // Mesh forward = butt, so rotate 180° after LookAt
-            transform.LookAt(ballCenter);
-            transform.Rotate(0, 180, 0, Space.Self);
+            // Rotation: point along aim direction (clean, no stacking)
+            transform.forward = aimDirection;
         }
 
         /// <summary>
@@ -190,14 +187,11 @@ namespace Billiards.Cue
             float ballRadius = cueBallCollider != null ? cueBallCollider.radius : 0.028575f;
             float tipDistance = ballRadius + tipGap + pullbackDistance;
 
-            // Position tip behind ball with pullback offset
-            Vector3 tipPosition = ballCenter - aimDirection * tipDistance;
-            transform.position = tipPosition;
+            // Position: 3cm + pullback behind ball along aim direction
+            transform.position = ballCenter - aimDirection * tipDistance;
 
-            // Orient cue: tip toward ball, butt away
-            // Mesh forward = butt, so rotate 180° after LookAt
-            transform.LookAt(ballCenter);
-            transform.Rotate(0, 180, 0, Space.Self);
+            // Rotation: point along aim direction (clean, no stacking)
+            transform.forward = aimDirection;
         }
 
         /// <summary>
