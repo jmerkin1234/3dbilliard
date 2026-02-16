@@ -113,80 +113,76 @@ namespace Billiards.Debug
             // === 2. Wire Component References ===
             UnityEngine.Debug.Log("\n--- Wiring Component References ---");
 
-            // CueAim references
+            // CueAim references (using SerializedObject for private fields)
             CueAim cueAim = cuestick.GetComponent<CueAim>();
             if (cueAim != null)
             {
+                SerializedObject serializedCueAim = new SerializedObject(cueAim);
+
                 // Set cueBall reference
-                if (cueAim.cueBall == null)
+                SerializedProperty cueBallProp = serializedCueAim.FindProperty("cueBall");
+                if (cueBallProp != null)
                 {
-                    // Use reflection to set private field
-                    var cueBallField = typeof(CueAim).GetField("cueBall",
-                        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                    if (cueBallField != null)
-                    {
-                        cueBallField.SetValue(cueAim, cueball);
-                        UnityEngine.Debug.Log("✓ Connected CueAim.cueBall → cueball");
-                        fixedCount++;
-                    }
+                    cueBallProp.objectReferenceValue = cueball;
+                    UnityEngine.Debug.Log("✓ Connected CueAim.cueBall → cueball");
+                    fixedCount++;
                 }
 
                 // Set aimLineRenderer reference
                 LineRenderer lineRenderer = cueball.GetComponent<LineRenderer>();
                 if (lineRenderer != null)
                 {
-                    var lineRendererField = typeof(CueAim).GetField("aimLineRenderer",
-                        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                    if (lineRendererField != null)
+                    SerializedProperty lineRendererProp = serializedCueAim.FindProperty("aimLineRenderer");
+                    if (lineRendererProp != null)
                     {
-                        lineRendererField.SetValue(cueAim, lineRenderer);
+                        lineRendererProp.objectReferenceValue = lineRenderer;
                         UnityEngine.Debug.Log("✓ Connected CueAim.aimLineRenderer → cueball LineRenderer");
                         fixedCount++;
                     }
                 }
 
-                EditorUtility.SetDirty(cueAim);
+                serializedCueAim.ApplyModifiedProperties();
             }
 
-            // CueStrike references
+            // CueStrike references (using SerializedObject for private fields)
             CueStrike cueStrike = cuestick.GetComponent<CueStrike>();
             if (cueStrike != null)
             {
-                var cueBallField = typeof(CueStrike).GetField("cueBall",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (cueBallField != null)
+                SerializedObject serializedCueStrike = new SerializedObject(cueStrike);
+                SerializedProperty cueBallProp = serializedCueStrike.FindProperty("cueBall");
+                if (cueBallProp != null)
                 {
-                    cueBallField.SetValue(cueStrike, cueball.gameObject);
+                    cueBallProp.objectReferenceValue = cueball.gameObject;
                     UnityEngine.Debug.Log("✓ Connected CueStrike.cueBall → cueball");
                     fixedCount++;
                 }
-                EditorUtility.SetDirty(cueStrike);
+                serializedCueStrike.ApplyModifiedProperties();
             }
 
-            // TurnManager references
+            // TurnManager references (using SerializedObject for private fields)
             TurnManager turnManager = gameManager.GetComponent<TurnManager>();
             if (turnManager != null)
             {
-                var cueAimField = typeof(TurnManager).GetField("cueAim",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (cueAimField != null && cueAim != null)
+                SerializedObject serializedTurnManager = new SerializedObject(turnManager);
+
+                SerializedProperty cueAimProp = serializedTurnManager.FindProperty("cueAim");
+                if (cueAimProp != null && cueAim != null)
                 {
-                    cueAimField.SetValue(turnManager, cueAim);
+                    cueAimProp.objectReferenceValue = cueAim;
                     UnityEngine.Debug.Log("✓ Connected TurnManager.cueAim → cuestick CueAim");
                     fixedCount++;
                 }
 
                 ShotPower shotPower = cuestick.GetComponent<ShotPower>();
-                var shotPowerField = typeof(TurnManager).GetField("shotPower",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (shotPowerField != null && shotPower != null)
+                SerializedProperty shotPowerProp = serializedTurnManager.FindProperty("shotPower");
+                if (shotPowerProp != null && shotPower != null)
                 {
-                    shotPowerField.SetValue(turnManager, shotPower);
+                    shotPowerProp.objectReferenceValue = shotPower;
                     UnityEngine.Debug.Log("✓ Connected TurnManager.shotPower → cuestick ShotPower");
                     fixedCount++;
                 }
 
-                EditorUtility.SetDirty(turnManager);
+                serializedTurnManager.ApplyModifiedProperties();
             }
 
             // === 3. Verify Ball Positions ===
