@@ -113,7 +113,7 @@ Assets/
   - **Scene Reload**: Reloaded scene to force Unity to recreate material instances from updated asset
   - **Position with Clearance**: Y=**0.811854** (2mm clearance above felt to prevent floating-point precision issues)
   - **Formula**: 0.771279 (felt top) + 0.028575 (radius) + 0.01 (contactOffset) + 0.002 (clearance) = 0.811854
-  - **Cue stick**: X=-0.620280, Y=0.795, Z=0, Rotation=(0,0,0)
+  - **Cue stick**: X=-1.0, Y=0.811854, Z=0, Rotation=(0,0,0) - 44cm behind cueball
   - **Result**: Balls settle naturally onto felt with **ZERO BOUNCING** (bounceCombine Minimum = 0)
 
 ### Tools Created
