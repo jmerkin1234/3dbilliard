@@ -1035,6 +1035,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0081325, y: 0.044888973, z: 0.044151902}
   m_Center: {x: 0.55128956, y: 0.7861138, z: -0.5419865}
+--- !u!134 &1122455108
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ball (Instance) (Instance)
+  serializedVersion: 2
+  m_DynamicFriction: 0.05
+  m_StaticFriction: 0.05
+  m_Bounciness: 0.95
+  m_FrictionCombine: 0
+  m_BounceCombine: 3
 --- !u!1 &1128636502 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 891712398245736941, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
@@ -1385,6 +1398,50 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: -6911360345776426850, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.691182
+      objectReference: {fileID: 0}
+    - target: {fileID: -6911360345776426850, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -6911360345776426850, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.041353
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861100985085279118, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.55402
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861100985085279118, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -6861100985085279118, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.041395
+      objectReference: {fileID: 0}
+    - target: {fileID: -6796009618967900300, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.599748
+      objectReference: {fileID: 0}
+    - target: {fileID: -6796009618967900300, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -6796009618967900300, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.041268
+      objectReference: {fileID: 0}
+    - target: {fileID: -6093963330258848403, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -6093963330258848403, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5061168438719607290, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
       value: Ball
@@ -1405,6 +1462,30 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: -3631012944442137599, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.691252
+      objectReference: {fileID: 0}
+    - target: {fileID: -3631012944442137599, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -3631012944442137599, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.04134
+      objectReference: {fileID: 0}
+    - target: {fileID: -3459008920525559007, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.599889
+      objectReference: {fileID: 0}
+    - target: {fileID: -3459008920525559007, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -3459008920525559007, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.067205
+      objectReference: {fileID: 0}
     - target: {fileID: -3174283689434923875, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
       value: Ball
@@ -1412,6 +1493,22 @@ PrefabInstance:
     - target: {fileID: -2767397199966599230, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
       value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -1874210438556204396, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.645387
+      objectReference: {fileID: 0}
+    - target: {fileID: -1874210438556204396, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -1874210438556204396, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1179258452999124552, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
       objectReference: {fileID: 0}
     - target: {fileID: -1080986793137417640, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
@@ -1425,9 +1522,45 @@ PrefabInstance:
       propertyPath: m_TagString
       value: CueBall
       objectReference: {fileID: 0}
+    - target: {fileID: -91036877911060331, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.553951
+      objectReference: {fileID: 0}
+    - target: {fileID: -91036877911060331, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: -91036877911060331, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.041328
+      objectReference: {fileID: 0}
     - target: {fileID: 130945389498422502, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
       value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 330540544829756570, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.645175
+      objectReference: {fileID: 0}
+    - target: {fileID: 330540544829756570, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: 330540544829756570, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.041358
+      objectReference: {fileID: 0}
+    - target: {fileID: 654956220256049264, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.645283
+      objectReference: {fileID: 0}
+    - target: {fileID: 654956220256049264, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: 654956220256049264, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01018
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_Name
@@ -1437,17 +1570,81 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 2805103286984653709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.645105
+      objectReference: {fileID: 0}
+    - target: {fileID: 2805103286984653709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: 2805103286984653709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.041315
+      objectReference: {fileID: 0}
     - target: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
       value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 5542214772654746241, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.599819
+      objectReference: {fileID: 0}
+    - target: {fileID: 5542214772654746241, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: 5542214772654746241, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.087722
       objectReference: {fileID: 0}
     - target: {fileID: 5974305845171484013, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 6134602890477496308, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 66811633f849baa8688cf0137bfbdc21, type: 2}
+    - target: {fileID: 6905330743348584272, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.599678
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905330743348584272, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905330743348584272, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.041455
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031953092837925202, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.553981
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031953092837925202, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031953092837925202, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.062135
+      objectReference: {fileID: 0}
     - target: {fileID: 8293448228226528098, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_TagString
       value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726645088781385292, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.645065
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726645088781385292, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.781526
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726645088781385292, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.092578
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2285,19 +2482,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0047599, y: 0.044888973, z: 0.04415232}
   m_Center: {x: -0.55046564, y: 0.7861138, z: -0.54198563}
---- !u!134 &1835475188
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Ball (Instance)
-  serializedVersion: 2
-  m_DynamicFriction: 0.05
-  m_StaticFriction: 0.05
-  m_Bounciness: 0.95
-  m_FrictionCombine: 0
-  m_BounceCombine: 3
 --- !u!1 &1897704655 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
@@ -2681,7 +2865,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337434279}
-  m_Material: {fileID: 1835475188}
+  m_Material: {fileID: 1122455108}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

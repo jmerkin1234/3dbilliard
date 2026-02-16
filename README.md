@@ -96,11 +96,19 @@ Assets/
 - TurnManager.cueAim → cuestick CueAim (-31552)
 - TurnManager.shotPower → cuestick ShotPower (-31556)
 
-### Ball Positioning (Original FBX Export)
-- **Cueball**: X=-0.561705, Y=0.795 (original position from Blender)
-- **Cue stick**: X=-0.620280, Y=0.795 (correctly positioned behind cueball)
-- **Numbered balls**: Y=0.79485 (triangle rack formation)
-- **Felt surface**: Y=0.752951 (5mm clearance under balls - no bouncing)
+### Ball Positioning (CORRECTED 2026-02-15)
+- **Issue**: Original FBX export had balls hovering 13.5mm above felt surface
+- **Root cause**: Ball centers at Y=0.795/0.79485, felt at Y=0.752951, ball radius 0.028575m
+  - Ball bottoms at Y=0.766425, creating 13.5mm gap → balls dropped and bounced in Play Mode
+- **Fix**: Lowered all 16 balls to **Y=0.781526** (felt Y + ball radius)
+  - Formula: 0.752951 + 0.028575 = 0.781526
+  - Ball bottoms now exactly touch felt surface at Y=0.752951
+- **Final positions**:
+  - **Cueball**: X=-0.561705, Y=0.781526, Z=0
+  - **Cue stick**: X=-0.620280, Y=0.795, Z=0 (correctly behind cueball)
+  - **Numbered balls**: Y=0.781526 (all 15 balls, triangle rack, X/Z preserved from FBX)
+  - **Felt surface**: Y=0.752951
+- **Result**: ZERO clearance gap, NO BOUNCING in Play Mode
 
 ### Tools Created
 - **AssignPoolTableMaterials.cs**: Auto-assigns HDRP materials to model objects (Tools → Assign Pool Table Materials)
