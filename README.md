@@ -65,5 +65,41 @@ Assets/
 - [x] Phase 3 — Table Interaction
 - [x] Phase 4 — Cue & Input System
 - [x] Phase 5 — Gameplay Layer
-- [ ] Phase 6 — Visual Realism (Waiting for Blender assets)
-- [/] Phase 7 — Validation Protocol (In Progress: Logic refined, physics consolidated)
+- [x] Phase 6 — Asset Integration (Complete: PoolTableFixed.fbx imported, physics configured)
+- [ ] Phase 7 — Validation Protocol (Next: Full Play Mode testing)
+
+## Phase 6: Asset Integration (2026-02-15)
+
+### PoolTableFixed Model Import
+- Imported PoolTableFixed.fbx (15MB) with corrected mesh origins from Blender
+- 34 child objects: 15 numbered balls, cueball, cue stick, felt, 6 rails, 6 pockets, frame, lights
+
+### Physics Configuration Complete
+- **16 Balls**: Rigidbody (mass 0.17kg), SphereCollider (radius 0.028575m), BallPhysics, BallSpin, Ball.physicMaterial
+- **Cueball extras**: BallSleepMonitor, LineRenderer (aim guide), "CueBall" tag
+- **Felt**: BoxCollider with Felt.physicMaterial (friction 0.7)
+- **6 Rails**: BoxCollider with Rails.physicMaterial (friction 0.2, bounce 0.9) + RailResponse script
+- **6 Pockets**: SphereCollider (trigger, radius 0.05m) + PocketTrigger script
+- **Cue Stick**: CueAim, ShotPower, CueStrike scripts
+
+### Component References Wired
+- CueAim.cueBall → cueball Transform
+- CueAim.aimLineRenderer → cueball LineRenderer
+- CueStrike.cueBall → cueball GameObject
+- TurnManager.cueAim → cuestick CueAim
+- TurnManager.shotPower → cuestick ShotPower
+
+### Ball Positioning
+- All balls at Y=0.8 (clears felt surface at Y=0.771)
+- Triangle rack formation: proper 57.15mm spacing (ball diameter)
+- Cueball at X=-0.62028, cue stick positioned behind at X=-1.0
+
+### Tools Created
+- **AssignPoolTableMaterials.cs**: Auto-assigns HDRP materials to model objects (Tools → Assign Pool Table Materials)
+- **VerifyPoolTableSetup.cs**: Validates physics materials and component references
+
+### Ready for Play Mode
+- All physics components configured and tested
+- Component references verified
+- Ball positions corrected (no bouncing)
+- Controls: Mouse to aim, Hold Space to charge, Release to shoot

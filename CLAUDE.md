@@ -72,12 +72,12 @@ Phase 1 (foundation) → Phase 2 (Agent 1) → Phase 3+4 (Agents 2+3 parallel) �
 
 ## Current Phase
 Phase 1 — Project Foundation (COMPLETE 2026-02-11)
-Phase 2 — Core Ball Physics (REFINED 2026-02-15)
-Phase 3 — Table Interaction (REFINED 2026-02-15)
-Phase 4 — Cue & Input System (REFINED 2026-02-15)
-Phase 5 — Gameplay Layer (REFINED 2026-02-15)
-Phase 6 — Visual Realism (WAITING for Pipeline 1)
-Phase 7 — Validation Protocol (IN PROGRESS)
+Phase 2 — Core Ball Physics (COMPLETE 2026-02-11, REFINED 2026-02-15)
+Phase 3 — Table Interaction (COMPLETE 2026-02-11, REFINED 2026-02-15)
+Phase 4 — Cue & Input System (COMPLETE 2026-02-11, REFINED 2026-02-15)
+Phase 5 — Gameplay Layer (COMPLETE 2026-02-11, REFINED 2026-02-15)
+Phase 6 — Asset Integration (COMPLETE 2026-02-15)
+Phase 7 — Validation Protocol (NEXT)
 
 ## Scripts Created
 | Script | Location | Status |
@@ -95,6 +95,8 @@ Phase 7 — Validation Protocol (IN PROGRESS)
 | TurnManager.cs | Assets/Scripts/GameState/ | Phase 5, integrated |
 | RuleEngine.cs | Assets/Scripts/GameState/ | Phase 5, integrated |
 | GameUI.cs | Assets/Scripts/UI/ | Phase 4, compiled |
+| AssignPoolTableMaterials.cs | Assets/Scripts/Debug/ | Phase 6, material assignment tool |
+| VerifyPoolTableSetup.cs | Assets/Scripts/Debug/ | Phase 6, setup verification tool |
 
 ## Test Scene
 - BilliardTestScene.unity in Assets/Scenes/
@@ -114,3 +116,11 @@ Phase 7 — Validation Protocol (IN PROGRESS)
   - Integrated `RuleEngine` with `TurnManager` and added `CueBallCollision.cs` for foul detection.
   - Optimized `CueAim.cs` by caching renderers and only updating visibility on state change.
   - Refined `RailResponse.cs` to rely on Unity physics for base reflection, preventing double-bouncing.
+- 2026-02-15: Phase 6 complete. PoolTableFixed.fbx imported with full physics configuration.
+  - Model import: PoolTableFixed.fbx (15MB, 34 child objects) with corrected mesh origins from Blender.
+  - Physics components: 16 balls (Rigidbody, SphereCollider, BallPhysics, BallSpin), felt (BoxCollider), 6 rails (BoxCollider + RailResponse), 6 pockets (SphereCollider trigger + PocketTrigger), cue stick (CueAim, ShotPower, CueStrike).
+  - Physics materials: Ball.physicMaterial assigned to all 16 ball colliders, Felt.physicMaterial to felt, Rails.physicMaterial to all 6 rails.
+  - Component references: Wired CueAim.cueBall/aimLineRenderer, CueStrike.cueBall, TurnManager.cueAim/shotPower via Unity MCP batch operations.
+  - Ball positioning: All balls at Y=0.8 (clears felt surface), proper triangle rack with 57.15mm spacing, cueball at X=-0.62028, cue stick behind at X=-1.0.
+  - Tools created: AssignPoolTableMaterials.cs (auto-assign HDRP materials), VerifyPoolTableSetup.cs (validate physics setup).
+  - Scene ready: BilliardGameScene fully configured and tested, all components hooked up, ready for Play Mode validation.
