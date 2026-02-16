@@ -21,7 +21,7 @@ namespace Billiards.Cue
         [SerializeField] private float aimLineLength = 1.5f;
 
         [Tooltip("Starting angle (degrees)")]
-        [SerializeField] private float initialAngle = 180f;
+        [SerializeField] private float initialAngle = 90f;
 
         [Header("Aim Line")]
         [Tooltip("LineRenderer for aim line (auto-created on cueball if null)")]
@@ -170,9 +170,10 @@ namespace Billiards.Cue
             Vector3 tipPosition = ballCenter - aimDirection * tipDistance;
             transform.position = tipPosition;
 
-            // LookAt away from ball (tip toward ball, butt away)
-            Vector3 awayFromBall = transform.position + (transform.position - ballCenter);
-            transform.LookAt(awayFromBall);
+            // Orient cue: tip toward ball, butt away
+            // Mesh forward = butt, so rotate 180° after LookAt
+            transform.LookAt(ballCenter);
+            transform.Rotate(0, 180, 0, Space.Self);
         }
 
         /// <summary>
@@ -193,9 +194,10 @@ namespace Billiards.Cue
             Vector3 tipPosition = ballCenter - aimDirection * tipDistance;
             transform.position = tipPosition;
 
-            // LookAt away from ball (tip toward ball, butt away)
-            Vector3 awayFromBall = transform.position + (transform.position - ballCenter);
-            transform.LookAt(awayFromBall);
+            // Orient cue: tip toward ball, butt away
+            // Mesh forward = butt, so rotate 180° after LookAt
+            transform.LookAt(ballCenter);
+            transform.Rotate(0, 180, 0, Space.Self);
         }
 
         /// <summary>
