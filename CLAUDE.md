@@ -135,7 +135,7 @@ Phase 7 — Validation Protocol (NEXT)
   - **Tools**: WirePoolGameReferences.cs created as backup reference wiring utility
   - **Scene saved**: PoolGame.unity ready for Phase 7 Play Mode validation
   - **Deprecated**: BilliardGameScene.unity (use PoolGame.unity going forward)
-- 2026-02-15: **CRITICAL FIX - Ball bouncing issue ACTUALLY resolved (second attempt)**
+- 2026-02-15: **CRITICAL FIX - Ball bouncing issue ACTUALLY resolved (third attempt)**
   - **First Attempt FAILED**: Set balls to Y=0.781526 - balls STILL bounced
   - **Root Cause Discovery**: Was using felt Transform Y (0.752951) instead of felt COLLIDER top surface
   - **Collider Analysis**:
@@ -144,9 +144,22 @@ Phase 7 — Validation Protocol (NEXT)
     - Felt BoxCollider size Y: 0.032456
     - **Felt collider TOP surface**: 0.752951 + 0.0021005 + (0.032456/2) = 0.771279
     - Ball radius: 0.028575m
-  - **WRONG Formula** (first attempt): felt transform Y + radius = 0.752951 + 0.028575 = 0.781526 → FAILED
-  - **CORRECT Formula**: felt collider top + radius = 0.771279 + 0.028575 = **0.799854**
-  - **Final Solution**: Raised all 16 balls to Y=0.799854
+    - Ball SphereCollider contactOffset: 0.01m
+  - **WRONG Formula** (attempt 1): felt transform Y + radius = 0.752951 + 0.028575 = 0.781526 → FAILED
+  - **WRONG Formula** (attempt 2): felt collider top + radius = 0.771279 + 0.028575 = 0.799854 → FAILED (ignored contactOffset)
+  - **WRONG Formula** (attempt 3): 0.771279 + 0.028575 + 0.01 = 0.809854 + bounceCombine=1 → STILL FAILED (old material instances)
+  - **FINAL SOLUTION (2026-02-15 evening)**:
+    - Changed Ball.physicMaterial bounceCombine from 3 (Maximum) to 1 (Minimum)
+    - Saved and reloaded scene to force Unity to recreate physics material instances from updated asset
+    - Raised all 16 balls to Y=0.811854 (added 2mm clearance to prevent floating-point precision issues)
+    - Formula: 0.771279 (felt top) + 0.028575 (radius) + 0.01 (contactOffset) + 0.002 (clearance) = 0.811854
   - **Cuestick**: Rotation set to (0,0,0) - default orientation aims correctly at rack
-  - **Verification**: Tested 5+ times in Play Mode - zero bouncing confirmed
-  - **Lesson**: Always use COLLIDER bounds, not Transform position, for physics calculations
+  - **Why it finally worked**:
+    - bounceCombine=1 (Minimum) means ball (0.95) + felt (0) = 0 bounce (no bouncing)
+    - Scene reload applied updated physics material to runtime instances
+    - 2mm clearance prevents penetration from floating-point errors
+  - **Lessons**:
+    - Always use COLLIDER bounds, not Transform position, for physics calculations
+    - Account for SphereCollider contactOffset when positioning
+    - Modifying physics material assets requires scene reload to update runtime instances
+    - Add small clearance (1-2mm) to prevent floating-point precision issues

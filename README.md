@@ -97,19 +97,24 @@ Assets/
 - TurnManager.shotPower → cuestick ShotPower (-31556)
 
 ### Ball Positioning (FINAL FIX 2026-02-15)
-- **Critical Issue**: Balls were positioned below felt collider surface causing bounce
+- **Critical Issue**: Balls were bouncing on Play Mode due to physics material instances and positioning
 - **Root Cause Analysis**:
   - Felt Transform Y: 0.752951
   - Felt BoxCollider center offset Y: 0.0021005
   - Felt BoxCollider size Y: 0.032456
   - **Felt collider TOP surface**: 0.752951 + 0.0021005 + (0.032456/2) = **0.771279**
   - Ball radius: 0.028575m
-  - **FIRST ATTEMPT (WRONG)**: Set balls to Y=0.781526 (felt transform + radius) → balls INSIDE collider → bounced
-  - **CORRECT FORMULA**: Felt collider top + ball radius = 0.771279 + 0.028575 = **0.799854**
-- **Final Positions (VERIFIED WORKING)**:
-  - **All 16 balls**: Y=**0.799854** (cueball + 15 numbered balls)
+  - Ball SphereCollider contactOffset: 0.01m
+  - **ATTEMPT 1 (WRONG)**: Y=0.781526 (used Transform Y instead of collider top) → penetration → bounced
+  - **ATTEMPT 2 (WRONG)**: Y=0.799854 (collider top + radius, ignored contactOffset) → still bounced
+  - **ATTEMPT 3 (WRONG)**: Y=0.809854 (added contactOffset) + bounceCombine=1 → still bounced (old material instances)
+- **Final Solution (WORKING)**:
+  - **Physics Material Fix**: Set Ball.physicMaterial bounceCombine=1 (Minimum) instead of 3 (Maximum)
+  - **Scene Reload**: Reloaded scene to force Unity to recreate material instances from updated asset
+  - **Position with Clearance**: Y=**0.811854** (2mm clearance above felt to prevent floating-point precision issues)
+  - **Formula**: 0.771279 (felt top) + 0.028575 (radius) + 0.01 (contactOffset) + 0.002 (clearance) = 0.811854
   - **Cue stick**: X=-0.620280, Y=0.795, Z=0, Rotation=(0,0,0)
-  - **Result**: Ball bottoms touch felt collider top surface exactly - **ZERO BOUNCING**
+  - **Result**: Balls settle naturally onto felt with **ZERO BOUNCING** (bounceCombine Minimum = 0)
 
 ### Tools Created
 - **AssignPoolTableMaterials.cs**: Auto-assigns HDRP materials to model objects (Tools → Assign Pool Table Materials)
