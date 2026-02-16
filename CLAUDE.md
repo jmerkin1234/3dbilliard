@@ -76,7 +76,7 @@ Phase 2 — Core Ball Physics (COMPLETE 2026-02-11, REFINED 2026-02-15)
 Phase 3 — Table Interaction (COMPLETE 2026-02-11, REFINED 2026-02-15)
 Phase 4 — Cue & Input System (COMPLETE 2026-02-11, REFINED 2026-02-15)
 Phase 5 — Gameplay Layer (COMPLETE 2026-02-11, REFINED 2026-02-15)
-Phase 6 — Asset Integration (COMPLETE 2026-02-15)
+Phase 6 — Asset Integration (COMPLETE 2026-02-15 - Fresh Scene)
 Phase 7 — Validation Protocol (NEXT)
 
 ## Scripts Created
@@ -96,12 +96,11 @@ Phase 7 — Validation Protocol (NEXT)
 | RuleEngine.cs | Assets/Scripts/GameState/ | Phase 5, integrated |
 | GameUI.cs | Assets/Scripts/UI/ | Phase 4, compiled |
 | AssignPoolTableMaterials.cs | Assets/Scripts/Debug/ | Phase 6, material assignment tool |
-| VerifyPoolTableSetup.cs | Assets/Scripts/Debug/ | Phase 6, setup verification tool |
+| WirePoolGameReferences.cs | Assets/Scripts/Debug/ | Phase 6, reference wiring tool |
 
-## Test Scene
-- BilliardTestScene.unity in Assets/Scenes/
-- TestBall with all physics scripts attached
-- Debug keys: Space (straight), B (draw), F (follow), S (stop), R (reset)
+## Scenes
+- **PoolGame.unity** (PRODUCTION) — Fresh scene with full PoolTableFixed physics configuration
+- **BilliardTestScene.unity** (DEPRECATED) — Original test scene, use PoolGame instead
 
 ## Change Log
 - 2026-02-11: Phase 1 complete. Folders created, physics configured (solver 14, velocity 10, bounce threshold 0.1, sleep 0.001), physics materials created (Ball/Felt/Rails)
@@ -124,3 +123,15 @@ Phase 7 — Validation Protocol (NEXT)
   - Ball positioning: All balls at Y=0.8 (clears felt surface), proper triangle rack with 57.15mm spacing, cueball at X=-0.62028, cue stick behind at X=-1.0.
   - Tools created: AssignPoolTableMaterials.cs (auto-assign HDRP materials), VerifyPoolTableSetup.cs (validate physics setup).
   - Scene ready: BilliardGameScene fully configured and tested, all components hooked up, ready for Play Mode validation.
+- 2026-02-15: Phase 6 complete - Fresh PoolGame.unity scene created.
+  - **Issue**: BilliardGameScene had position corruption and ball bouncing issues.
+  - **Solution**: Created fresh PoolGame.unity scene, preserved original FBX import positions.
+  - **Physics configuration via Unity MCP**: 10 batch operations, ~140 commands total:
+    - Batch 1-7: 110 components (cueball 7, balls 1-15 × 5, felt 1, rails 6 × 2, pockets 6 × 2, cuestick 3)
+    - Batch 8-9: 23 physics material assignments (16 balls + 1 felt + 6 rails)
+    - Batch 10: 5 component references wired via instanceID format
+  - **Original positions preserved**: Cueball X=-0.561705, Cuestick X=-0.620280, Balls Y=0.79485, Felt Y=0.752951
+  - **Zero bouncing**: 5mm clearance between ball bottoms and felt surface confirmed
+  - **Tools**: WirePoolGameReferences.cs created as backup reference wiring utility
+  - **Scene saved**: PoolGame.unity ready for Phase 7 Play Mode validation
+  - **Deprecated**: BilliardGameScene.unity (use PoolGame.unity going forward)

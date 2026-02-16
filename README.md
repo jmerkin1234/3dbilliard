@@ -55,7 +55,7 @@ Assets/
  ├── Prefabs/
  ├── Materials/            HDRP materials (reassign textures on new model import)
  ├── PhysicsMaterials 1/   Ball, Felt, Rails physics materials
- └── Scenes/               BilliardGameScene, BilliardTestScene
+ └── Scenes/               PoolGame (main), BilliardTestScene (deprecated)
 ```
 
 ## Progress
@@ -65,41 +65,56 @@ Assets/
 - [x] Phase 3 — Table Interaction
 - [x] Phase 4 — Cue & Input System
 - [x] Phase 5 — Gameplay Layer
-- [x] Phase 6 — Asset Integration (Complete: PoolTableFixed.fbx imported, physics configured)
+- [x] Phase 6 — Asset Integration ✅ COMPLETE (2026-02-15)
 - [ ] Phase 7 — Validation Protocol (Next: Full Play Mode testing)
 
-## Phase 6: Asset Integration (2026-02-15)
+## Phase 6: Asset Integration (2026-02-15) ✅
+
+### Fresh Scene Created
+- **PoolGame.unity**: New production scene created from scratch
+- Old BilliardGameScene deprecated (position issues)
+- Camera at (0, 2, -3) with proper framing
+- Original FBX positions preserved from Blender export
 
 ### PoolTableFixed Model Import
 - Imported PoolTableFixed.fbx (15MB) with corrected mesh origins from Blender
 - 34 child objects: 15 numbered balls, cueball, cue stick, felt, 6 rails, 6 pockets, frame, lights
+- Model instantiated at (0, 0, 0) with original child positions intact
 
-### Physics Configuration Complete
+### Physics Configuration Complete (110 components via Unity MCP)
 - **16 Balls**: Rigidbody (mass 0.17kg), SphereCollider (radius 0.028575m), BallPhysics, BallSpin, Ball.physicMaterial
 - **Cueball extras**: BallSleepMonitor, LineRenderer (aim guide), "CueBall" tag
 - **Felt**: BoxCollider with Felt.physicMaterial (friction 0.7)
-- **6 Rails**: BoxCollider with Rails.physicMaterial (friction 0.2, bounce 0.9) + RailResponse script
+- **6 Rails**: BoxCollider + Rails.physicMaterial (friction 0.2, bounce 0.9) + RailResponse script
 - **6 Pockets**: SphereCollider (trigger, radius 0.05m) + PocketTrigger script
 - **Cue Stick**: CueAim, ShotPower, CueStrike scripts
 
-### Component References Wired
-- CueAim.cueBall → cueball Transform
-- CueAim.aimLineRenderer → cueball LineRenderer
-- CueStrike.cueBall → cueball GameObject
-- TurnManager.cueAim → cuestick CueAim
-- TurnManager.shotPower → cuestick ShotPower
+### Component References Wired (5 references via instanceID)
+- CueAim.cueBall → cueball Transform (-28648)
+- CueAim.aimLineRenderer → cueball LineRenderer (56306)
+- CueStrike.cueBall → cueball GameObject (56244)
+- TurnManager.cueAim → cuestick CueAim (-31552)
+- TurnManager.shotPower → cuestick ShotPower (-31556)
 
-### Ball Positioning
-- All balls at Y=0.8 (clears felt surface at Y=0.771)
-- Triangle rack formation: proper 57.15mm spacing (ball diameter)
-- Cueball at X=-0.62028, cue stick positioned behind at X=-1.0
+### Ball Positioning (Original FBX Export)
+- **Cueball**: X=-0.561705, Y=0.795 (original position from Blender)
+- **Cue stick**: X=-0.620280, Y=0.795 (correctly positioned behind cueball)
+- **Numbered balls**: Y=0.79485 (triangle rack formation)
+- **Felt surface**: Y=0.752951 (5mm clearance under balls - no bouncing)
 
 ### Tools Created
 - **AssignPoolTableMaterials.cs**: Auto-assigns HDRP materials to model objects (Tools → Assign Pool Table Materials)
-- **VerifyPoolTableSetup.cs**: Validates physics materials and component references
+- **WirePoolGameReferences.cs**: Manual reference wiring tool (backup utility)
 
-### Ready for Play Mode
-- All physics components configured and tested
-- Component references verified
-- Ball positions corrected (no bouncing)
+### Implementation Details
+- 10 Unity MCP batch operations (~140 commands total)
+- All physics materials assigned (23 colliders)
+- Scene saved and verified
+- Zero compilation errors
+- Ready for Play Mode validation
+
+### Ready for Phase 7
+- All physics components functional
+- Component references validated
+- Original positions preserved
 - Controls: Mouse to aim, Hold Space to charge, Release to shoot
