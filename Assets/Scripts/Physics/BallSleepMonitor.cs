@@ -11,7 +11,7 @@ namespace Billiards.Physics
     public class BallSleepMonitor : MonoBehaviour
     {
         // === Constants ===
-        private const float SleepVelocityThreshold = 0.005f;
+        private const float SleepHorizontalVelocityThreshold = 0.005f;
         private const float SleepAngularThreshold = 0.01f;
         private const float SleepConfirmTime = 0.15f; // must be still for this duration to confirm sleep
 
@@ -93,11 +93,36 @@ namespace Billiards.Physics
                 // Handle destroyed balls
                 if (ball == null)
                 {
+                    sleepTimers.Remove(ball);
+                    stoppedBalls.Remove(ball);
                     trackedBalls.RemoveAt(i);
                     continue;
                 }
 
-                bool isBelowThreshold = ball.Speed < SleepVelocityThreshold &&
+                Rigidbody rb = ball.Rb;
+                if (rb == null)
+                {
+                    trackedBalls.RemoveAt(i);
+                    sleepTimers.Remove(ball);
+                    stoppedBalls.Remove(ball);
+                    continue;
+                }
+
+                // Respect Unity's own sleep/kinematic states first.
+                if (rb.isKinematic || rb.IsSleeping())
+                {
+                    sleepTimers[ball] = SleepConfirmTime;
+                    if (!stoppedBalls.Contains(ball))
+                    {
+                        stoppedBalls.Add(ball);
+                        OnBallStopped?.Invoke(ball);
+                    }
+                    continue;
+                }
+
+                Vector3 velocity = ball.Velocity;
+                float horizontalSpeed = new Vector2(velocity.x, velocity.z).magnitude;
+                bool isBelowThreshold = horizontalSpeed < SleepHorizontalVelocityThreshold &&
                                         ball.AngularVelocity.magnitude < SleepAngularThreshold;
 
                 if (isBelowThreshold)
@@ -121,8 +146,10 @@ namespace Billiards.Physics
                 }
             }
 
-            // Fire OnAllBallsStopped once when transitioning from moving → all stopped
-            if (!anyMoving && allBallsWereMoving && AllBallsStopped)
+            bool allStoppedNow = trackedBalls.Count > 0 && !anyMoving && stoppedBalls.Count == trackedBalls.Count;
+
+            // Fire OnAllBallsStopped once when transitioning from moving -> all stopped
+            if (allStoppedNow && allBallsWereMoving)
             {
                 OnAllBallsStopped?.Invoke();
             }

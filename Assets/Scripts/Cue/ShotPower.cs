@@ -5,7 +5,6 @@ namespace Billiards.Cue
     /// <summary>
     /// Handles shot power via UI slider input.
     /// Power is set by UI slider (0-1 normalized).
-    /// Shoot is triggered by UI button.
     /// Cue stick pulls back visually based on power level.
     /// </summary>
     public class ShotPower : MonoBehaviour
@@ -77,15 +76,16 @@ namespace Billiards.Cue
         }
 
         /// <summary>
-        /// Fire the shot at current power. Called by Shoot button.
+        /// Attempts to fire the shot at current power.
+        /// Returns true if a shot was emitted; false if blocked or too low power.
         /// </summary>
-        public void Shoot()
+        public bool TryShoot()
         {
             if (!inputEnabled)
-                return;
+                return false;
 
             if (normalizedPower < 0.01f)
-                return;
+                return false;
 
             float finalImpulse = CurrentImpulse;
             OnShotReleased?.Invoke(finalImpulse);
@@ -93,6 +93,15 @@ namespace Billiards.Cue
             UnityEngine.Debug.Log($"[ShotPower] Shot released: {finalImpulse:F2}N (power: {normalizedPower:P0})");
 
             ResetPower();
+            return true;
+        }
+
+        /// <summary>
+        /// Backward-compatible fire call for existing integrations.
+        /// </summary>
+        public void Shoot()
+        {
+            TryShoot();
         }
 
         /// <summary>

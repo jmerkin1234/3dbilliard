@@ -1,4 +1,7 @@
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace Billiards.Cue
 {
@@ -23,6 +26,15 @@ namespace Billiards.Cue
         [Tooltip("Starting angle (degrees)")]
         [SerializeField] private float initialAngle = 90f;
 
+        [Tooltip("Which local axis of the cue mesh points toward the shot direction")]
+        [SerializeField] private CueForwardAxis cueForwardAxis = CueForwardAxis.Right;
+
+        [Tooltip("Distance from cue pivot to cue tip along aim direction (meters). Auto-calibrated from scene pose when enabled.")]
+        [SerializeField] private float cuePivotToTipOffset = 0f;
+
+        [Tooltip("Auto-calibrate cue pivot-to-tip offset from current scene placement at startup")]
+        [SerializeField] private bool autoCalibratePivotOffset = true;
+
         [Header("Aim Line")]
         [Tooltip("LineRenderer for aim line (auto-created on cueball if null)")]
         [SerializeField] private LineRenderer aimLineRenderer;
@@ -33,15 +45,42 @@ namespace Billiards.Cue
         [Tooltip("Aim line width")]
         [SerializeField] private float aimLineWidth = 0.005f;
 
+        [Tooltip("Start the aim line at the cueball surface instead of center")]
+        [SerializeField] private bool startLineAtBallSurface = true;
+
+        [Tooltip("Vertical offset to keep the aim line visible above felt")]
+        [SerializeField] private float aimLineHeightOffset = 0.002f;
+
+        [Header("Fine Control")]
+        [Tooltip("Enable mouse wheel fine aim control while aiming")]
+        [SerializeField] private bool enableMouseWheelFineControl = true;
+
+        [Tooltip("Degrees to rotate per scroll unit (small value = finer control)")]
+        [SerializeField, Range(0.05f, 5f)] private float mouseWheelDegreesPerStep = 0.5f;
+
+        [Tooltip("Invert mouse wheel fine control direction")]
+        [SerializeField] private bool invertMouseWheel = false;
+
         [Header("Input Lock")]
         [Tooltip("Allow input (controlled by TurnManager)")]
         [SerializeField] private bool inputEnabled = true;
+
+        [Header("Visibility")]
+        [Tooltip("Hide cue stick mesh + aim line after shot release until all balls stop")]
+        [SerializeField] private bool hideCueAndAimWhileBallsMoving = true;
 
         // === State ===
         private float currentAngle;
         private Vector3 aimDirection;
         private bool isLocked = false;
+        private bool visualsHiddenForShot = false;
         private SphereCollider cueBallCollider;
+        private ShotPower shotPower;
+        private Renderer[] cueRenderers;
+
+        // === Events ===
+        /// <summary>Fired when aim angle changes (UI slider + mouse wheel)</summary>
+        public System.Action<float> OnAimAngleChanged;
 
         // === Public Read Accessors ===
         /// <summary>Normalized direction vector for the shot</summary>
@@ -63,6 +102,19 @@ namespace Billiards.Cue
             set => inputEnabled = value;
         }
 
+        /// <summary>
+        /// Explicitly controls cue/aim visibility for shot flow.
+        /// hidden=true hides cue mesh + aim line until set false.
+        /// </summary>
+        public void SetShotVisualsHidden(bool hidden)
+        {
+            if (!hideCueAndAimWhileBallsMoving)
+                hidden = false;
+
+            visualsHiddenForShot = hidden;
+            SetCueAndAimVisible(!hidden);
+        }
+
         private void Awake()
         {
             if (cueBall == null)
@@ -81,9 +133,32 @@ namespace Billiards.Cue
             if (cueBall != null)
                 cueBallCollider = cueBall.GetComponent<SphereCollider>();
 
-            currentAngle = initialAngle;
-            UpdateAimDirection();
+            shotPower = GetComponent<ShotPower>();
+            cueRenderers = GetComponentsInChildren<Renderer>(true);
+
+            InitializeAimFromConfig();
+            CalibratePivotOffsetFromScenePose();
             SetupAimLine();
+            SetCueAndAimVisible(true);
+        }
+
+        private void OnEnable()
+        {
+            if (shotPower == null)
+                shotPower = GetComponent<ShotPower>();
+
+            if (shotPower != null)
+                shotPower.OnShotReleased += OnShotReleased;
+
+            Physics.BallSleepMonitor.OnAllBallsStopped += OnAllBallsStopped;
+        }
+
+        private void OnDisable()
+        {
+            if (shotPower != null)
+                shotPower.OnShotReleased -= OnShotReleased;
+
+            Physics.BallSleepMonitor.OnAllBallsStopped -= OnAllBallsStopped;
         }
 
         private void Update()
@@ -91,6 +166,7 @@ namespace Billiards.Cue
             if (cueBall == null)
                 return;
 
+            HandleMouseWheelFineControl();
             UpdateCuePosition();
             UpdateAimLine();
         }
@@ -104,7 +180,11 @@ namespace Billiards.Cue
             if (isLocked || !inputEnabled)
                 return;
 
-            currentAngle = Mathf.Repeat(angle, 360f);
+            float normalizedAngle = Mathf.Repeat(angle, 360f);
+            if (Mathf.Abs(Mathf.DeltaAngle(currentAngle, normalizedAngle)) < 0.0001f)
+                return;
+
+            currentAngle = normalizedAngle;
             UpdateAimDirection();
         }
 
@@ -146,12 +226,131 @@ namespace Billiards.Cue
         }
 
         /// <summary>
+        /// Gets cue ball radius in world space, accounting for transform scale.
+        /// </summary>
+        private float GetBallRadiusWorld()
+        {
+            if (cueBallCollider == null)
+                return 0.028575f;
+
+            Vector3 lossyScale = cueBall.lossyScale;
+            float maxScale = Mathf.Max(Mathf.Abs(lossyScale.x), Mathf.Abs(lossyScale.y), Mathf.Abs(lossyScale.z));
+            if (maxScale < 0.0001f)
+                maxScale = 1f;
+
+            return cueBallCollider.radius * maxScale;
+        }
+
+        /// <summary>
+        /// Initializes aim direction from configured initial angle.
+        /// </summary>
+        private void InitializeAimFromConfig()
+        {
+            currentAngle = initialAngle;
+            UpdateAimDirection();
+        }
+
+        /// <summary>
+        /// Calibrates pivot-to-tip offset so startup scene placement is preserved in Play Mode.
+        /// </summary>
+        private void CalibratePivotOffsetFromScenePose()
+        {
+            if (!autoCalibratePivotOffset || cueBall == null)
+                return;
+
+            Vector3 ballCenter = GetBallCenter();
+            float tipDistance = GetBallRadiusWorld() + tipGap;
+            Vector3 targetTipPosition = ballCenter - aimDirection * tipDistance;
+
+            // Positive value means pivot sits behind tip along shot direction.
+            cuePivotToTipOffset = Mathf.Max(0f, Vector3.Dot(targetTipPosition - transform.position, aimDirection));
+        }
+
+        /// <summary>
+        /// Returns the world-space cue forward direction based on configured local cue axis.
+        /// </summary>
+        private Vector3 GetCueForwardWorld()
+        {
+            switch (cueForwardAxis)
+            {
+                case CueForwardAxis.Right:
+                    return transform.right;
+                case CueForwardAxis.Left:
+                    return -transform.right;
+                case CueForwardAxis.Back:
+                    return -transform.forward;
+                case CueForwardAxis.Forward:
+                default:
+                    return transform.forward;
+            }
+        }
+
+        /// <summary>
+        /// Rotates cue so configured cue-forward axis points along aim direction.
+        /// </summary>
+        private void AlignCueRotationToAim()
+        {
+            Vector3 currentCueDirection = GetCueForwardWorld();
+            if (currentCueDirection.sqrMagnitude < 0.000001f || aimDirection.sqrMagnitude < 0.000001f)
+                return;
+
+            Quaternion deltaRotation = Quaternion.FromToRotation(currentCueDirection.normalized, aimDirection.normalized);
+            transform.rotation = deltaRotation * transform.rotation;
+        }
+
+        /// <summary>
         /// Updates the normalized aim direction vector based on current angle.
         /// </summary>
         private void UpdateAimDirection()
         {
             float angleRad = currentAngle * Mathf.Deg2Rad;
             aimDirection = new Vector3(Mathf.Sin(angleRad), 0f, Mathf.Cos(angleRad)).normalized;
+            OnAimAngleChanged?.Invoke(currentAngle);
+        }
+
+        /// <summary>
+        /// Reads mouse wheel delta and applies small angle adjustments for precise aiming.
+        /// </summary>
+        private void HandleMouseWheelFineControl()
+        {
+            if (!enableMouseWheelFineControl || isLocked || !inputEnabled)
+                return;
+
+            float scrollDelta = ReadMouseWheelDelta();
+            if (Mathf.Abs(scrollDelta) < 0.001f)
+                return;
+
+            float direction = invertMouseWheel ? -1f : 1f;
+            float angleDelta = scrollDelta * mouseWheelDegreesPerStep * direction;
+            SetAimAngle(currentAngle + angleDelta);
+        }
+
+        private float ReadMouseWheelDelta()
+        {
+            float delta = 0f;
+
+#if ENABLE_INPUT_SYSTEM
+            if (Mouse.current != null)
+            {
+                float raw = Mouse.current.scroll.ReadValue().y;
+                if (Mathf.Abs(raw) > 20f)
+                {
+                    // Some backends report wheel notches as +/-120.
+                    raw /= 120f;
+                }
+
+                delta = raw;
+            }
+#endif
+
+#if ENABLE_LEGACY_INPUT_MANAGER
+            // Prefer whichever backend reports the larger non-zero delta this frame.
+            float legacy = Input.mouseScrollDelta.y;
+            if (Mathf.Abs(legacy) > Mathf.Abs(delta))
+                delta = legacy;
+#endif
+
+            return delta;
         }
 
         /// <summary>
@@ -163,14 +362,14 @@ namespace Billiards.Cue
             Vector3 ballCenter = GetBallCenter();
 
             // Calculate distance: ball radius + gap
-            float ballRadius = cueBallCollider != null ? cueBallCollider.radius : 0.028575f;
-            float tipDistance = ballRadius + tipGap;
+            float ballRadius = GetBallRadiusWorld();
+            float tipDistance = ballRadius + tipGap + cuePivotToTipOffset;
 
-            // Position: 3cm behind ball along aim direction
+            // Position behind ball along aim direction, with optional pivot offset compensation.
             transform.position = ballCenter - aimDirection * tipDistance;
 
-            // Rotation: point along aim direction (clean, no stacking)
-            transform.forward = aimDirection;
+            // Rotation: align configured cue-forward axis with aim direction.
+            AlignCueRotationToAim();
         }
 
         /// <summary>
@@ -184,14 +383,14 @@ namespace Billiards.Cue
             Vector3 ballCenter = GetBallCenter();
 
             // Calculate distance: ball radius + gap + pullback
-            float ballRadius = cueBallCollider != null ? cueBallCollider.radius : 0.028575f;
-            float tipDistance = ballRadius + tipGap + pullbackDistance;
+            float ballRadius = GetBallRadiusWorld();
+            float tipDistance = ballRadius + tipGap + pullbackDistance + cuePivotToTipOffset;
 
-            // Position: 3cm + pullback behind ball along aim direction
+            // Position behind ball along aim direction, with pullback and pivot offset compensation.
             transform.position = ballCenter - aimDirection * tipDistance;
 
-            // Rotation: point along aim direction (clean, no stacking)
-            transform.forward = aimDirection;
+            // Rotation: align configured cue-forward axis with aim direction.
+            AlignCueRotationToAim();
         }
 
         /// <summary>
@@ -217,6 +416,7 @@ namespace Billiards.Cue
                 aimLineRenderer.startColor = aimLineColor;
                 aimLineRenderer.endColor = aimLineColor;
                 aimLineRenderer.useWorldSpace = true;
+                aimLineRenderer.enabled = true;
             }
         }
 
@@ -228,11 +428,61 @@ namespace Billiards.Cue
             if (aimLineRenderer == null || cueBall == null)
                 return;
 
+            if (!IsCueAndAimVisible())
+            {
+                if (aimLineRenderer.enabled)
+                    aimLineRenderer.enabled = false;
+                return;
+            }
+
+            if (!aimLineRenderer.enabled)
+                aimLineRenderer.enabled = true;
+
             Vector3 ballCenter = GetBallCenter();
-            Vector3 start = ballCenter;
+            Vector3 start = ballCenter + Vector3.up * aimLineHeightOffset;
+            if (startLineAtBallSurface)
+                start += aimDirection * GetBallRadiusWorld();
+
             Vector3 end = start + aimDirection * aimLineLength;
             aimLineRenderer.SetPosition(0, start);
             aimLineRenderer.SetPosition(1, end);
+        }
+
+        private void OnShotReleased(float _)
+        {
+            if (!hideCueAndAimWhileBallsMoving)
+                return;
+
+            SetShotVisualsHidden(true);
+        }
+
+        private void OnAllBallsStopped()
+        {
+            if (!hideCueAndAimWhileBallsMoving || !visualsHiddenForShot)
+                return;
+
+            SetShotVisualsHidden(false);
+        }
+
+        private bool IsCueAndAimVisible()
+        {
+            return !hideCueAndAimWhileBallsMoving || !visualsHiddenForShot;
+        }
+
+        private void SetCueAndAimVisible(bool visible)
+        {
+            if (cueRenderers == null || cueRenderers.Length == 0)
+                cueRenderers = GetComponentsInChildren<Renderer>(true);
+
+            for (int i = 0; i < cueRenderers.Length; i++)
+            {
+                Renderer renderer = cueRenderers[i];
+                if (renderer != null)
+                    renderer.enabled = visible;
+            }
+
+            if (aimLineRenderer != null)
+                aimLineRenderer.enabled = visible;
         }
 
         private void OnDrawGizmos()
@@ -246,6 +496,14 @@ namespace Billiards.Cue
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, 0.05f);
+        }
+
+        private enum CueForwardAxis
+        {
+            Right,
+            Forward,
+            Left,
+            Back
         }
     }
 }

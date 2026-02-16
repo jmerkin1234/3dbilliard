@@ -26,8 +26,12 @@ namespace Billiards.Cue
         [Tooltip("Maximum offset from center (fraction of ball radius)")]
         [SerializeField] private float maxOffsetFraction = 0.7f;
 
-        [Tooltip("Spin injection multiplier")]
-        [SerializeField] private float spinMultiplier = 50f;
+        [Tooltip("Spin injection multiplier (angular velocity scale)")]
+        [SerializeField] private float spinMultiplier = 18f;
+
+        [Header("Realism Tuning")]
+        [Tooltip("Converts ShotPower units into physical impulse (N*s). 0.13 keeps max shot closer to typical in-game cue-ball speeds.")]
+        [SerializeField] private float powerToImpulseScale = 0.13f;
 
         [Header("Debug")]
         [SerializeField] private bool logStrikeInfo = true;
@@ -40,7 +44,6 @@ namespace Billiards.Cue
 
         // === Constants ===
         private const float BallRadius = 0.028575f;
-        private const float BallMass = 0.17f;
 
         private void Awake()
         {
@@ -97,12 +100,15 @@ namespace Billiards.Cue
             // Get aim direction from CueAim
             Vector3 direction = cueAim.AimDirection;
 
+            // Convert gameplay power units into physical impulse (N*s).
+            float physicalImpulseNs = Mathf.Max(0f, impulseForce * powerToImpulseScale);
+
             // Apply impulse to cue ball
-            Vector3 impulse = direction * impulseForce;
+            Vector3 impulse = direction * physicalImpulseNs;
             ballPhysics.ApplyImpulse(impulse);
 
             // Inject spin based on contact point offset
-            Vector3 spin = CalculateSpin(direction, impulseForce);
+            Vector3 spin = CalculateSpin(direction, physicalImpulseNs);
             if (ballSpin != null && spin.magnitude > 0.001f)
             {
                 ballSpin.InjectSpin(spin);
@@ -110,7 +116,7 @@ namespace Billiards.Cue
 
             if (logStrikeInfo)
             {
-                UnityEngine.Debug.Log($"[CueStrike] Strike executed: {impulseForce:F2}N in direction {direction}, spin {spin}");
+                UnityEngine.Debug.Log($"[CueStrike] Strike executed: power={impulseForce:F2}, impulse={physicalImpulseNs:F3}N*s, dir={direction}, spin={spin}");
             }
         }
 
@@ -125,7 +131,7 @@ namespace Billiards.Cue
         ///
         /// Spin magnitude scales with offset distance and impulse force.
         /// </summary>
-        private Vector3 CalculateSpin(Vector3 strikeDirection, float impulseForce)
+        private Vector3 CalculateSpin(Vector3 strikeDirection, float physicalImpulseNs)
         {
             // Clamp offsets to valid range
             float maxOffset = BallRadius * maxOffsetFraction;
@@ -160,8 +166,8 @@ namespace Billiards.Cue
                 spin += Vector3.up * sideSpinAmount;
             }
 
-            // Scale spin by impulse force (harder hits impart more spin)
-            float forceFactor = impulseForce / 5f; // normalize around typical shot power
+            // Scale spin by impulse (harder hits impart more spin)
+            float forceFactor = physicalImpulseNs / 0.8f; // normalize around a firm shot
             spin *= forceFactor;
 
             return spin;
@@ -192,7 +198,6 @@ namespace Billiards.Cue
                 return;
 
             // Visualize contact point offset
-            float maxOffset = BallRadius * maxOffsetFraction;
             Vector3 contactOffset = new Vector3(horizontalOffset, verticalOffset, 0f);
 
             // Transform to world space relative to cue ball and aim direction

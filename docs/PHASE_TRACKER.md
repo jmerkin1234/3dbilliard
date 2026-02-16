@@ -9,7 +9,7 @@
 | 3. Table Interaction | COMPLETE | Agent 3 | 2026-02-11 | 2026-02-15 (Refined) |
 | 4. Cue & Input System | COMPLETE | Agent 2 | 2026-02-11 | 2026-02-15 (Refined) |
 | 5. Gameplay Layer | COMPLETE | Agent 4 | 2026-02-11 | 2026-02-15 (Refined) |
-| 6. Visual Realism | WAITING (Pipeline 1) | User | — | — |
+| 6. Asset Integration | COMPLETE | User + Planner | 2026-02-15 | 2026-02-15 |
 | 7. Validation Protocol | IN PROGRESS | Planner | 2026-02-15 | — |
 
 ---
@@ -55,9 +55,9 @@ Physics Settings (DynamicsManager.asset):
 Physics Materials Created:
 | Material | Dynamic Friction | Static Friction | Bounciness | Bounce Combine |
 |----------|-----------------|----------------|------------|---------------|
-| Ball | 0.05 | 0.05 | 0.95 | Maximum |
-| Felt | 0.70 | 0.80 | 0.00 | Average |
-| Rails | 0.20 | 0.20 | 0.90 | Maximum |
+| Ball | 0.03 | 0.03 | 0.92 | Multiply |
+| Felt | 0.05 | 0.05 | 0.00 | Average |
+| Rails | 0.06 | 0.06 | 0.86 | Multiply |
 
 ### Definition of Done
 - [x] Folder structure complete
@@ -282,14 +282,14 @@ Implementation details:
 
 ---
 
-## Phase 6 — Visual Realism
-**Status:** WAITING for Pipeline 1 (Blender assets)
+## Phase 6 — Asset Integration
+**Status:** COMPLETE (2026-02-15)
 
 ### Milestone 13 — Asset Import Integration
-- [ ] Extract materials
-- [ ] Assign HDRP shaders
-- [ ] Verify scale (ball 0.05715m)
-- [ ] Assign colliders + rigidbodies + physics materials
+- [x] Extract materials
+- [x] Assign HDRP shaders
+- [x] Verify scale (ball 0.05715m)
+- [x] Assign colliders + rigidbodies + physics materials
 
 ### Milestone 14 — Reflection & Lighting
 - [ ] Reflection Probe
@@ -297,10 +297,12 @@ Implementation details:
 - [ ] Bake reflections
 - [ ] Ball gloss verification
 
+Note: Remaining visual realism polish (probe bake/lookdev) is deferred while gameplay validation runs.
+
 ---
 
 ## Phase 7 — Validation Protocol
-**Status:** BLOCKED by all phases
+**Status:** IN PROGRESS
 
 - [ ] Straight shot distance
 - [ ] Stop shot
@@ -311,6 +313,9 @@ Implementation details:
 - [ ] No sliding forever
 - [ ] No energy gain
 - [ ] No jitter at rest
+- [x] Cue stick stays aligned in Play Mode (edit/runtime transform parity)
+- [x] Aim UI integrated in PoolGame and present in Play Mode
+- [x] Shot UI integrated in PoolGame and present in Play Mode
 - [ ] 60+ FPS stable
 - [ ] Deterministic physics confirmed
 
@@ -322,3 +327,183 @@ Implementation details:
 - **Rule Integration:** Created `CueBallCollision.cs` and integrated `RuleEngine.cs` fully with `TurnManager.cs`. Shot validation now respects contact rules.
 - **Performance:** Optimized `CueAim.cs` to cache renderers, reducing per-frame overhead.
 - **Stability:** Refined `RailResponse.cs` to prevent double-bounce artifacts by delegating base reflection to Unity's physics engine.
+
+## 2026-02-16 Validation Update (Cue Alignment)
+- **Issue Reproduced:** Cue stick matched scene placement in edit mode but shifted/rotated when entering Play Mode in `PoolGame.unity`.
+- **Root Cause:** `CueAim` hard-aligned `transform.forward` to shot direction, but the imported cue mesh points along local +X.
+- **Fix Implemented:** Added cue mesh axis selection (`cueForwardAxis`) and alignment logic that maps configured local axis to aim direction; also made cue placement radius world-scale aware and added startup pivot calibration support.
+- **Scene Defaults Saved:** `CueAim.cueForwardAxis = Right`, `CueAim.autoCalibratePivotOffset = true`.
+- **Validation (Unity MCP):** In Play Mode, cue ball remained at `(-0.561705, 0.811854, 0.0)` and cue stick remained at `(-0.620280, 0.811854, ~0.0)` with `0` console warnings/errors.
+
+## 2026-02-16 Validation Update (Aim + Shot UI)
+- **Issue:** Aim/power/shoot UI controller existed (`GameUI.cs`) but was not attached in `PoolGame.unity`, so UI did not appear at runtime.
+- **Scene Fix:** Added `Billiards.UI.GameUI` component to `GameManager`.
+- **Code Fix:** Updated `GameUI.cs` startup flow to sync UI controls with cue state on load (`SyncUIWithCueState`) so aim slider starts at current cue angle (prevents first-input jump).
+- **Layout Fix:** Kept both sliders vertical and split control clusters across sides:
+  - Left cluster: power (release to shoot)
+  - Right cluster: aim + lock
+- **Input Fix:** EventSystem creation now uses Input System UI module when available (fallback to `StandaloneInputModule`) to ensure UI interaction works across project input backends.
+- **Shot UX Fix:** Removed explicit shoot button; releasing `PowerSlider` in locked phase now fires the shot using the current normalized power.
+- **Shot Trigger Reliability:** Added `EndDrag` shot trigger path so releasing off-slider still executes the selected power shot.
+- **State-Flow Hardening:** Added `ShotPower.TryShoot()` and updated `GameUI.OnPowerReleased(...)` to transition to `BallsMoving` only when a shot actually emits (prevents low-power no-shot phase lock).
+- **Visibility Fix:** Forced both control clusters onto a shared mid-screen Y band to keep `LockButton` and both sliders visible.
+- **Alignment Fix:** Pinned aim cluster Y to shot cluster Y so `AimSlider` and `PowerSlider` stay level.
+- **Validation (Unity MCP):**
+  - Play Mode object checks: `GameCanvas`, `AimSlider`, `PowerSlider` found.
+  - Runtime EventSystem module: `InputSystemUIInputModule`.
+  - UI positions (runtime): `PowerSlider` and `AimSlider` on opposite X sides at same Y; `LockButton` visible on right below aim.
+  - Console warnings/errors: `0`.
+
+## 2026-02-16 Validation Re-Check (Unity MCP)
+- **Scene + Play Mode:** Active scene confirmed as `Assets/Scenes/PoolGame.unity`; `manage_editor` play/stop both succeeded.
+- **Console:** `read_console` in play mode returned `0` warnings/errors.
+- **UI Presence:** `GameCanvas=1`, `AimSlider=1`, `PowerSlider=1`, `LockButton=1`, `ShootButton=0`, `EventSystem=1`.
+- **UI Layout (runtime RectTransform):**
+  - `AimSlider`: `anchorMin=(0.86, 0.52)`, `anchoredPosition=(0, -20)`
+  - `PowerSlider`: `anchorMin=(0.14, 0.52)`, `anchoredPosition=(0, -20)`
+  - `LockButton`: `anchorMin=(0.86, 0.52)`, `anchoredPosition=(0, -220)`
+  - Aim/power sliders remain level on Y and split to opposite sides on X.
+- **Input Module:** EventSystem contains `UnityEngine.InputSystem.UI.InputSystemUIInputModule`.
+
+## 2026-02-16 Cue Aiming UX Update (Aim Line + Mouse Wheel)
+- **User request:** Show cueball path more clearly and support fine aiming with mouse wheel scroll.
+- **Code updates:**
+  - `CueAim.cs`
+    - Aim line now starts at cueball surface (`startLineAtBallSurface=true`) with a small vertical lift (`aimLineHeightOffset`) for better visibility above felt.
+    - Added mouse wheel fine control (`enableMouseWheelFineControl`, `mouseWheelDegreesPerStep`, `invertMouseWheel`).
+    - Added `OnAimAngleChanged` event for cross-input UI synchronization.
+  - `GameUI.cs`
+    - Subscribed to `CueAim.OnAimAngleChanged` and now mirrors angle/value text when aim changes from wheel input.
+- **Validation (Unity MCP):**
+  - Play mode enter/exit successful.
+  - Console warnings/errors: `0`.
+  - Runtime checks: `cueball` and `cuestick` found.
+  - `cueball` has `LineRenderer`.
+  - `CueAim.enableMouseWheelFineControl=true` in runtime component data.
+
+## 2026-02-16 UI Interaction + Aim Line Runtime Fix
+- **Issue reported:** Aim/Power sliders were not draggable in-game, and aim line was not visible.
+- **Root causes identified (runtime):**
+  - EventSystem was bound only to one input path at runtime, causing slider interaction failure on some input backend setups.
+  - Cueball `LineRenderer` existed but was disabled in play mode.
+  - UI could start in a locked phase in runtime edge cases.
+- **Fixes implemented:**
+  - `GameUI.EnsureEventSystem()` now ensures both `StandaloneInputModule` and `InputSystemUIInputModule` are present and enables the active backend.
+  - `GameUI.Start()` now force-unlocks cue aim and starts in `Aiming` phase.
+  - `CueAim.SetupAimLine()` and `CueAim.UpdateAimLine()` now force-enable the line renderer.
+- **Validation (Unity MCP):**
+  - `AimSlider.interactable=true` at play start.
+  - `PowerSlider.interactable=false` at play start (expected until lock phase).
+  - Cueball line renderer: `enabled=true`.
+  - EventSystem components include both modules:
+    - `UnityEngine.EventSystems.StandaloneInputModule`
+    - `UnityEngine.InputSystem.UI.InputSystemUIInputModule`
+  - Console warnings/errors: `0`.
+
+## 2026-02-16 UI Layout Tweak (Status Text)
+- **User request:** Move top-center status text closer to the table.
+- **Code update:** Added configurable `statusTextOffsetY` in `GameUI` and changed default from `-20` to `-115`.
+- **Effect:** Status text remains top-centered but renders lower on screen for better table proximity.
+
+## 2026-02-16 Red-Dot Drag Reliability Fix
+- **Issue reported:** Could not hold/drag slider red dots reliably.
+- **Root cause:** `EventTrigger` hooks on slider handles and power slider could intercept pointer/drag routing.
+- **Code update (`GameUI.cs`):**
+  - Replaced `EventTrigger` release handling with `SliderReleaseRelay` (`IPointerUpHandler`, `IEndDragHandler` only).
+  - Replaced handle hover `EventTrigger` with `SliderHandleHoverFeedback` (`IPointerEnterHandler`, `IPointerExitHandler` only).
+  - Set `PowerSlider` interactable in `UIPhase.Aiming` so both sliders are draggable at startup.
+- **Validation (Unity MCP):**
+  - `AimSlider.interactable=true`
+  - `PowerSlider.interactable=true`
+  - Console warnings/errors: `0`
+
+## 2026-02-16 Physics Realism Tuning Pass
+- **User feedback:** Ball physics did not feel realistic.
+- **Key fixes:**
+  - `CueStrike.cs`
+    - Added `powerToImpulseScale` to convert UI/gameplay power to physical impulse (N*s) before applying `ForceMode.Impulse`.
+    - Reduced default spin injection and scaled spin by physical impulse instead of raw power units.
+  - `RailResponse.cs`
+    - Removed non-physical spin reset/reinject behavior on cushion contact.
+    - Added mild tangential velocity retention and spin correction based on actual rigidbody angular velocity:
+      - preserve most top/back spin
+      - invert+damp sidespin on rail hit.
+  - `BallSpin.cs`
+    - Moved realism values to serialized tuning fields:
+      - `slidingFrictionCoefficient`
+      - `spinDecayRate`
+      - `sideSpinExtraDecayRate`
+      - threshold fields
+    - Synced tracked spin state with rigidbody angular velocity after decay/injection and after rail corrections.
+  - `BallPhysics.cs`
+    - Rolling resistance now damps horizontal velocity only.
+    - Converted rolling resistance and thresholds to serialized tuning fields.
+- **Intended result:** More realistic cue-ball launch speeds, more believable rail spin behavior, and less non-physical spin resets.
+
+## 2026-02-16 Physics Calibration Update (Materials + Runtime Values)
+- **User feedback:** Motion still felt unrealistic after first pass.
+- **Runtime/asset calibration applied:**
+  - `CueStrike`:
+    - `spinMultiplier`: `18`
+    - `powerToImpulseScale`: `0.13`
+  - `BallSpin` defaults:
+    - `slidingFrictionCoefficient`: `0.12`
+    - `spinDecayRate`: `0.08`
+    - `sideSpinExtraDecayRate`: `0.16`
+    - `minAngularThreshold`: `0.008`
+    - `minVelocityThreshold`: `0.0008`
+  - `BallPhysics` defaults:
+    - `rollingResistanceCoefficient`: `0.0075`
+    - `minVelocityThreshold`: `0.0008`
+  - `RailResponse` constants:
+    - `TangentialVelocityRetention`: `0.97`
+    - `AxialSpinRetention`: `0.94`
+    - `SideSpinInversionRetention`: `0.62`
+  - Physics materials:
+    - `Ball.physicMaterial`: friction `0.03`, bounciness `0.92`
+    - `Felt.physicMaterial`: friction `0.05`
+    - `Rails.physicMaterial`: friction `0.06`, bounciness `0.86`, `bounceCombine=Multiply`
+    - `PoolGame.unity` inline material instances (`Ball (Instance)`, `Felt (Instance)`) updated to match.
+- **Expected effect:** Less exaggerated rebounds, smoother roll-out, reduced overpowered english, and more believable cue-ball speed for typical shots.
+
+## 2026-02-16 Cue/Aim Visibility During Shot
+- **User request:** Hide cue stick and aim line after the shot is taken.
+- **Code update (`CueAim.cs`):**
+  - Added `hideCueAndAimWhileBallsMoving` (default `true`).
+  - Subscribed to `ShotPower.OnShotReleased` to hide cue mesh renderers + aim line immediately.
+  - Subscribed to `BallSleepMonitor.OnAllBallsStopped` to restore cue mesh renderers + aim line for the next shot.
+  - Removed forced per-frame aim-line re-enable when visuals are intentionally hidden.
+- **Scene update (`PoolGame.unity`):**
+  - Saved `CueAim.hideCueAndAimWhileBallsMoving = true` on the cue stick component.
+
+## 2026-02-16 Mouse-Wheel Fine Aim Input Fix
+- **Issue reported:** Mouse-wheel fine aiming did not respond in-game.
+- **Root cause:** Scroll delta scaling/backend assumptions were too strict across different Unity input handling modes.
+- **Code update (`CueAim.cs`):**
+  - `ReadMouseWheelDelta()` now:
+    - Reads Input System wheel delta when available.
+    - Normalizes large ±120-style wheel reports to notch units.
+    - Falls back to Legacy Input Manager delta when enabled.
+    - Uses the larger non-zero delta from available backends.
+  - Lowered deadzone threshold in `HandleMouseWheelFineControl()` from `0.0001` to `0.001` paired with normalized input values.
+- **Expected result:** Fine aim wheel adjustments work consistently across Input System-only, Legacy-only, and mixed backend project setups.
+
+## 2026-02-16 Balls-Moving Stuck Recovery Fix
+- **Issue reported:** After a break, game could remain in `BallsMoving` and not return control.
+- **Root cause:** Stop detection could miss settled states after chaotic collisions.
+- **Code update (`BallSleepMonitor.cs`):**
+  - Uses horizontal speed threshold (XZ) instead of full 3D speed for rest checks.
+  - Treats `Rigidbody.isKinematic` and `Rigidbody.IsSleeping()` as stopped immediately.
+  - Cleans stale tracking entries more defensively.
+  - Keeps transition logic for firing `OnAllBallsStopped` when movement truly ends.
+- **Code update (`TurnManager.cs`):**
+  - Added watchdog recovery (`ballsMovingTimeoutSeconds`, default `20s`) while in `BallsMoving`.
+  - If timeout expires and no balls are reported moving, force-completes turn end flow.
+- **Expected result:** Turn reliably exits `BallsMoving` after break shots, restoring UI/cue/aim for next shot.
+
+## 2026-02-16 Cue/Aim Hide Reliability Patch
+- **Issue reported:** Cue stick + aim line sometimes remained visible after shot.
+- **Code update:**
+  - `CueAim.cs`: added public `SetShotVisualsHidden(bool)` to centralize visibility state.
+  - `GameUI.cs`: explicitly calls `cueAim.SetShotVisualsHidden(true)` on shot fired and `cueAim.SetShotVisualsHidden(false)` on balls stopped.
+- **Expected result:** Cue and aim line consistently hide during `BallsMoving` and consistently return on next aiming phase.

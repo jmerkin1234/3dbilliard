@@ -9,8 +9,13 @@ namespace Billiards.Physics
         // === Constants ===
         private const float BallMass = 0.17f;
         private const float BallRadius = 0.028575f; // regulation ball radius in meters
-        private const float RollingResistanceCoefficient = 0.01f; // cloth rolling resistance
-        private const float MinVelocityThreshold = 0.001f; // below this, force stop
+
+        [Header("Realism Tuning")]
+        [Tooltip("Rolling resistance coefficient for cloth (higher = quicker slowdown)")]
+        [SerializeField] private float rollingResistanceCoefficient = 0.0075f;
+
+        [Tooltip("Below this speed, horizontal velocity is clamped to zero")]
+        [SerializeField] private float minVelocityThreshold = 0.0008f;
 
         // === Cached References ===
         private Rigidbody rb;
@@ -20,7 +25,7 @@ namespace Billiards.Physics
         public Vector3 Velocity => rb != null ? rb.linearVelocity : Vector3.zero;
         public Vector3 AngularVelocity => rb != null ? rb.angularVelocity : Vector3.zero;
         public float Speed => Velocity.magnitude;
-        public bool IsMoving => Speed > MinVelocityThreshold;
+        public bool IsMoving => Speed > minVelocityThreshold;
         public Rigidbody Rb => rb;
 
         private void Awake()
@@ -59,27 +64,28 @@ namespace Billiards.Physics
         private void ApplyRollingResistance()
         {
             Vector3 velocity = rb.linearVelocity;
-            float speed = velocity.magnitude;
+            Vector3 horizontalVelocity = new Vector3(velocity.x, 0f, velocity.z);
+            float speed = horizontalVelocity.magnitude;
 
-            if (speed < MinVelocityThreshold)
+            if (speed < minVelocityThreshold)
                 return;
 
             // Rolling resistance force: mu * m * g
-            float resistanceForce = RollingResistanceCoefficient * BallMass * Mathf.Abs(UnityEngine.Physics.gravity.y);
+            float resistanceForce = rollingResistanceCoefficient * rb.mass * Mathf.Abs(UnityEngine.Physics.gravity.y);
 
             // Deceleration = F / m = mu * g
-            float deceleration = resistanceForce / BallMass;
+            float deceleration = resistanceForce / rb.mass;
 
             // Don't overshoot — cap deceleration so we don't reverse direction
             float speedReduction = deceleration * Time.fixedDeltaTime;
             if (speedReduction > speed)
             {
-                rb.linearVelocity = Vector3.zero;
+                rb.linearVelocity = new Vector3(0f, velocity.y, 0f);
                 return;
             }
 
             // Apply opposite to velocity direction
-            Vector3 resistanceDir = -velocity.normalized;
+            Vector3 resistanceDir = -horizontalVelocity.normalized;
             rb.AddForce(resistanceDir * resistanceForce, ForceMode.Force);
         }
 
@@ -89,12 +95,12 @@ namespace Billiards.Physics
         /// </summary>
         private void ClampMinimumVelocity()
         {
-            if (rb.linearVelocity.magnitude < MinVelocityThreshold)
+            if (new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z).magnitude < minVelocityThreshold)
             {
-                rb.linearVelocity = Vector3.zero;
+                rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
             }
 
-            if (rb.angularVelocity.magnitude < MinVelocityThreshold)
+            if (rb.angularVelocity.magnitude < minVelocityThreshold)
             {
                 rb.angularVelocity = Vector3.zero;
             }

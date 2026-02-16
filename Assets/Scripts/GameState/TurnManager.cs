@@ -41,6 +41,15 @@ namespace Billiards.GameState
         [Tooltip("Delay before returning control to player when no AI logic exists.")]
         [SerializeField] private float aiFallbackDelaySeconds = 0.4f;
 
+        [Header("Recovery")]
+        [Tooltip("Safety timeout to force-turn recovery if ball-stop event is missed after a shot.")]
+        [SerializeField] private float ballsMovingTimeoutSeconds = 20f;
+
+        [Tooltip("Enable timeout recovery for rare stuck BallsMoving states.")]
+        [SerializeField] private bool enableBallsMovingTimeoutRecovery = true;
+
+        private Coroutine ballsMovingTimeoutCoroutine;
+
         // === Events ===
         /// <summary>Fired when turn changes to AI</summary>
         public static event System.Action OnAITurnStart;
@@ -97,6 +106,12 @@ namespace Billiards.GameState
             }
 
             Table.PocketTrigger.OnBallPocketed -= HandleBallPocketed;
+
+            if (ballsMovingTimeoutCoroutine != null)
+            {
+                StopCoroutine(ballsMovingTimeoutCoroutine);
+                ballsMovingTimeoutCoroutine = null;
+            }
         }
 
         private void Start()
@@ -122,6 +137,15 @@ namespace Billiards.GameState
             SetTurnState(TurnState.BallsMoving);
             EnableInput(false);
 
+            if (enableBallsMovingTimeoutRecovery)
+            {
+                if (ballsMovingTimeoutCoroutine != null)
+                {
+                    StopCoroutine(ballsMovingTimeoutCoroutine);
+                }
+                ballsMovingTimeoutCoroutine = StartCoroutine(BallsMovingTimeoutWatchdog());
+            }
+
             // Begin shot tracking in rule engine
             if (ruleEngine != null)
             {
@@ -143,6 +167,12 @@ namespace Billiards.GameState
         {
             if (currentState != TurnState.BallsMoving)
                 return;
+
+            if (ballsMovingTimeoutCoroutine != null)
+            {
+                StopCoroutine(ballsMovingTimeoutCoroutine);
+                ballsMovingTimeoutCoroutine = null;
+            }
 
             SetTurnState(TurnState.TurnEnding);
 
@@ -303,6 +333,26 @@ namespace Billiards.GameState
         private void SetTurnState(TurnState newState)
         {
             currentState = newState;
+        }
+
+        private IEnumerator BallsMovingTimeoutWatchdog()
+        {
+            if (ballsMovingTimeoutSeconds <= 0f)
+                yield break;
+
+            yield return new WaitForSeconds(ballsMovingTimeoutSeconds);
+
+            ballsMovingTimeoutCoroutine = null;
+
+            if (currentState != TurnState.BallsMoving)
+                yield break;
+
+            Physics.BallSleepMonitor sleepMonitor = FindAnyObjectByType<Physics.BallSleepMonitor>();
+            if (sleepMonitor != null && sleepMonitor.MovingBallCount > 0)
+                yield break;
+
+            UnityEngine.Debug.LogWarning("[TurnManager] BallsMoving timeout recovery triggered. Forcing turn end.", this);
+            HandleAllBallsStopped();
         }
 
         /// <summary>

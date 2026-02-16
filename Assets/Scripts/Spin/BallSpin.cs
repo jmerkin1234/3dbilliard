@@ -12,11 +12,22 @@ namespace Billiards.Spin
     {
         // === Constants ===
         private const float BallRadius = 0.028575f;
-        private const float BallMass = 0.17f;
-        private const float SlidingFrictionCoefficient = 0.2f; // cloth friction
-        private const float SpinDecayRate = 0.3f; // additional angular decay for sidespin
-        private const float MinAngularThreshold = 0.01f;
-        private const float MinVelocityThreshold = 0.001f;
+
+        [Header("Realism Tuning")]
+        [Tooltip("Sliding friction coefficient while ball transitions from slip to roll")]
+        [SerializeField] private float slidingFrictionCoefficient = 0.12f;
+
+        [Tooltip("Base spin decay rate from cloth + micro losses")]
+        [SerializeField] private float spinDecayRate = 0.08f;
+
+        [Tooltip("Extra decay on sidespin (english)")]
+        [SerializeField] private float sideSpinExtraDecayRate = 0.16f;
+
+        [Tooltip("Angular speed below this is treated as zero")]
+        [SerializeField] private float minAngularThreshold = 0.008f;
+
+        [Tooltip("Linear speed below this is treated as near-still")]
+        [SerializeField] private float minVelocityThreshold = 0.0008f;
 
         // === Cached References ===
         private Rigidbody rb;
@@ -32,7 +43,7 @@ namespace Billiards.Spin
             {
                 // Topspin is angular velocity around the horizontal axis perpendicular to travel
                 Vector3 velocity = rb.linearVelocity;
-                if (velocity.magnitude < MinVelocityThreshold)
+                if (velocity.magnitude < minVelocityThreshold)
                     return 0f;
 
                 Vector3 forward = velocity.normalized;
@@ -50,7 +61,7 @@ namespace Billiards.Spin
         public float TotalSpinSpeed => rb.angularVelocity.magnitude;
 
         /// <summary>Whether ball has significant spin</summary>
-        public bool HasSpin => TotalSpinSpeed > MinAngularThreshold;
+        public bool HasSpin => TotalSpinSpeed > minAngularThreshold;
 
         public Vector3 AppliedSpin => appliedSpin;
 
@@ -61,8 +72,8 @@ namespace Billiards.Spin
 
         private void FixedUpdate()
         {
-            if (rb.linearVelocity.magnitude < MinVelocityThreshold &&
-                rb.angularVelocity.magnitude < MinAngularThreshold)
+            if (rb.linearVelocity.magnitude < minVelocityThreshold &&
+                rb.angularVelocity.magnitude < minAngularThreshold)
                 return;
 
             ApplySlidingFriction();
@@ -87,15 +98,15 @@ namespace Billiards.Spin
             slipVelocity.y = 0f;
 
             float slipSpeed = slipVelocity.magnitude;
-            if (slipSpeed < MinVelocityThreshold)
+            if (slipSpeed < minVelocityThreshold)
                 return;
 
             // Friction force: F = mu * m * g
-            float frictionForce = SlidingFrictionCoefficient * BallMass * Mathf.Abs(UnityEngine.Physics.gravity.y);
+            float frictionForce = slidingFrictionCoefficient * rb.mass * Mathf.Abs(UnityEngine.Physics.gravity.y);
             Vector3 frictionDir = -slipVelocity.normalized;
 
             // Don't overshoot the slip correction
-            float maxForce = slipSpeed * BallMass / Time.fixedDeltaTime;
+            float maxForce = slipSpeed * rb.mass / Time.fixedDeltaTime;
             float appliedForce = Mathf.Min(frictionForce, maxForce);
 
             // Apply friction force to linear velocity
@@ -112,16 +123,21 @@ namespace Billiards.Spin
         private void ApplySpinDecay()
         {
             Vector3 angVel = rb.angularVelocity;
-            if (angVel.magnitude < MinAngularThreshold)
+            if (angVel.magnitude < minAngularThreshold)
             {
                 rb.angularVelocity = Vector3.zero;
                 appliedSpin = Vector3.zero;
                 return;
             }
 
-            float decayFactor = 1f - SpinDecayRate * Time.fixedDeltaTime;
-            rb.angularVelocity = angVel * Mathf.Clamp01(decayFactor);
-            appliedSpin *= Mathf.Clamp01(decayFactor);
+            float baseDecay = Mathf.Clamp01(1f - spinDecayRate * Time.fixedDeltaTime);
+            float sideDecay = Mathf.Clamp01(1f - sideSpinExtraDecayRate * Time.fixedDeltaTime);
+
+            Vector3 decayed = angVel * baseDecay;
+            decayed.y *= sideDecay;
+
+            rb.angularVelocity = decayed;
+            appliedSpin = rb.angularVelocity;
         }
 
         /// <summary>
@@ -133,8 +149,8 @@ namespace Billiards.Spin
         /// </summary>
         public void InjectSpin(Vector3 spinVector)
         {
-            appliedSpin = spinVector;
             rb.angularVelocity += spinVector;
+            appliedSpin = rb.angularVelocity;
         }
 
         /// <summary>
@@ -144,6 +160,15 @@ namespace Billiards.Spin
         {
             appliedSpin = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+        }
+
+        /// <summary>
+        /// Synchronize tracked spin state from Rigidbody angular velocity.
+        /// Useful after external systems (e.g., rail response) modify spin directly.
+        /// </summary>
+        public void SyncSpinStateFromRigidbody()
+        {
+            appliedSpin = rb.angularVelocity;
         }
     }
 }

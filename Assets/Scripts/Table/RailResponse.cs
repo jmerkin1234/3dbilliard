@@ -10,9 +10,9 @@ namespace Billiards.Table
     public class RailResponse : MonoBehaviour
     {
         // === Constants ===
-        private const float RailRestitution = 0.9f; // from Rails physics material
-        private const float EnergyLossFactor = 0.95f; // additional energy loss per bounce
-        private const float SpinInversionFactor = 0.7f; // how much spin inverts on rail contact
+        private const float TangentialVelocityRetention = 0.97f; // small cushion energy loss along rail
+        private const float AxialSpinRetention = 0.94f; // mild damping on top/back spin
+        private const float SideSpinInversionRetention = 0.62f; // invert + damp english on cushion hit
 
         [Header("Rail Configuration")]
         [Tooltip("Tag used to identify balls (must match ball GameObjects)")]
@@ -58,41 +58,45 @@ namespace Billiards.Table
 
             normal = normal.normalized;
 
-            // Note: Unity's physics engine handles the basic reflection based on PhysicsMaterials.
-            // We use this script to apply additional energy loss and spin inversion.
-
-            // Apply energy loss (simulates inelastic collision)
-            ballRb.linearVelocity *= EnergyLossFactor;
-
-            // Invert spin on rail contact
-            if (ballSpin != null)
-            {
-                ApplySpinInversion(ballSpin, normal);
-            }
+            // Unity physics handles main reflection from collider + material restitution.
+            // Apply only small realism corrections.
+            ApplyRailVelocityCorrection(ballRb, normal);
+            ApplySpinCorrection(ballRb, ballSpin);
         }
 
         /// <summary>
-        /// Inverts spin components based on rail contact.
-        /// Sidespin inverts on rail contact due to friction.
+        /// Dampen rail-parallel velocity slightly to mimic cushion cloth losses.
         /// </summary>
-        private void ApplySpinInversion(Spin.BallSpin ballSpin, Vector3 normal)
+        private void ApplyRailVelocityCorrection(Rigidbody ballRb, Vector3 normal)
         {
-            Vector3 angularVel = ballSpin.AppliedSpin;
+            Vector3 velocity = ballRb.linearVelocity;
+            Vector3 normalComponent = Vector3.Project(velocity, normal);
+            Vector3 tangentialComponent = velocity - normalComponent;
 
-            // Determine which spin component to invert based on collision normal
-            // For side rails (normal along X), invert Y-axis spin (sidespin)
-            // For end rails (normal along Z), invert Y-axis spin
-            // Simplified: invert the sidespin (Y component) on any rail contact
+            ballRb.linearVelocity = normalComponent + tangentialComponent * TangentialVelocityRetention;
+        }
 
-            Vector3 invertedSpin = new Vector3(
-                angularVel.x,
-                -angularVel.y * SpinInversionFactor, // sidespin inverts
-                angularVel.z
+        /// <summary>
+        /// Preserve top/back spin mostly, but invert and damp sidespin on cushion contact.
+        /// </summary>
+        private void ApplySpinCorrection(Rigidbody ballRb, Spin.BallSpin ballSpin)
+        {
+            Vector3 angularVel = ballRb.angularVelocity;
+
+            Vector3 corrected = new Vector3(
+                angularVel.x * AxialSpinRetention,
+                -angularVel.y * SideSpinInversionRetention,
+                angularVel.z * AxialSpinRetention
             );
 
-            // Clear old spin and re-inject inverted spin
-            ballSpin.ClearSpin();
-            ballSpin.InjectSpin(invertedSpin);
+            // Avoid tiny perpetual spin values.
+            if (Mathf.Abs(corrected.y) < 0.01f)
+                corrected.y = 0f;
+
+            ballRb.angularVelocity = corrected;
+
+            if (ballSpin != null)
+                ballSpin.SyncSpinStateFromRigidbody();
         }
 
         private void OnDrawGizmosSelected()

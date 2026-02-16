@@ -192,7 +192,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 0
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -205,13 +205,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 29713639}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1305262, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0, y: 2, z: -3}
+  m_LocalRotation: {x: 0.69884956, y: -0, z: -0, w: 0.7152687}
+  m_LocalPosition: {x: 0.165, y: 3.448, z: -0.099}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 88.67, y: 0, z: 0}
 --- !u!114 &29713643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,7 +304,7 @@ MonoBehaviour:
   flipYMode: 0
   xrRendering: 1
   fullscreenPassthrough: 0
-  allowDynamicResolution: 0
+  allowDynamicResolution: 1
   customRenderingSettings: 0
   invertFaceCulling: 0
   probeLayerMask:
@@ -613,6 +613,7 @@ MonoBehaviour:
   horizontalOffset: 0
   maxOffsetFraction: 0.7
   spinMultiplier: 50
+  powerToImpulseScale: 0.17
   logStrikeInfo: 1
 --- !u!114 &413617668
 MonoBehaviour:
@@ -648,9 +649,17 @@ MonoBehaviour:
   tipGap: 0.03
   aimLineLength: 1.5
   initialAngle: 90
+  cueForwardAxis: 0
+  cuePivotToTipOffset: 0
+  autoCalibratePivotOffset: 1
   aimLineRenderer: {fileID: 1938114281}
   aimLineColor: {r: 1, g: 1, b: 1, a: 1}
   aimLineWidth: 0.005
+  startLineAtBallSurface: 1
+  aimLineHeightOffset: 0.002
+  enableMouseWheelFineControl: 1
+  mouseWheelDegreesPerStep: 0.5
+  invertMouseWheel: 0
   inputEnabled: 1
 --- !u!1 &532019327 stripped
 GameObject:
@@ -669,6 +678,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &532019330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,6 +695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &532019331
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -741,6 +757,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &613821524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,6 +774,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &613821525
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -813,6 +836,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &662577380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -825,6 +853,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &662577381
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1173,6 +1203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1178207426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,6 +1220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1178207427
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1286,6 +1323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1267787373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,6 +1340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1267787374
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1629,7 +1673,7 @@ PrefabInstance:
     - target: {fileID: 6134602890477496308, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 66811633f849baa8688cf0137bfbdc21, type: 2}
+      objectReference: {fileID: 2100000, guid: b898563b8e863a816918de1d7e8328a0, type: 2}
     - target: {fileID: 6905330743348584272, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.65
@@ -1671,7 +1715,8 @@ PrefabInstance:
       value: 0.05715
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 65702495048144492, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
@@ -2024,6 +2069,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1337434291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,6 +2086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1337434292
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2096,6 +2148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1337434295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2108,6 +2165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1337434296
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2173,6 +2232,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1400295337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2185,6 +2249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1400295338
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2245,6 +2311,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1423779815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2257,6 +2328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1423779816
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2536,6 +2609,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1897704658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2548,6 +2626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1897704659
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2608,6 +2688,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1912852529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2620,6 +2705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1912852530
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2680,6 +2767,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1924757787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2692,6 +2784,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1924757788
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2883,6 +2977,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1938114284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2895,6 +2994,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1938114285
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2958,6 +3059,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1962852136}
   - component: {fileID: 1962852135}
+  - component: {fileID: 1962852137}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -3001,6 +3103,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1962852137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962852134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d43148bb56351849b5905143654eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.UI.GameUI
+  cueAim: {fileID: 0}
+  shotPower: {fileID: 0}
+  shotClusterAnchorX: 0.14
+  shotClusterAnchorY: 0.52
+  aimClusterAnchorX: 0.86
+  aimClusterAnchorY: 0.18
+  statusTextOffsetY: -115
 --- !u!114 &1993280239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3013,6 +3134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1993280240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3025,6 +3151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1993280241
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3090,6 +3218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &1996254242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3102,6 +3235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &1996254243
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3162,6 +3297,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+  slidingFrictionCoefficient: 0.12
+  spinDecayRate: 0.08
+  sideSpinExtraDecayRate: 0.16
+  minAngularThreshold: 0.008
+  minVelocityThreshold: 0.0008
 --- !u!114 &2115343303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3174,6 +3314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  rollingResistanceCoefficient: 0.0075
+  minVelocityThreshold: 0.0008
 --- !u!135 &2115343304
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace Billiards.UI
 {
@@ -10,10 +13,9 @@ namespace Billiards.UI
     /// Creates Canvas + all UI elements programmatically.
     ///
     /// Layout:
-    /// - Left side:  POWER vertical slider (0-1)
-    /// - Right side: AIM vertical slider (0-360) + Lock button
+    /// - Left side:  POWER vertical slider (0-1), release to shoot
+    /// - Right side: AIM vertical slider (0-360) + LOCK button
     /// - Top center: Status text
-    /// - Bottom center: SHOOT button
     /// </summary>
     public class GameUI : MonoBehaviour
     {
@@ -21,12 +23,27 @@ namespace Billiards.UI
         [SerializeField] private Cue.CueAim cueAim;
         [SerializeField] private Cue.ShotPower shotPower;
 
+        [Header("Layout")]
+        [Tooltip("Horizontal anchor (0-1) for the shot/power cluster")]
+        [SerializeField, Range(0.05f, 0.4f)] private float shotClusterAnchorX = 0.14f;
+
+        [Tooltip("Vertical anchor (0-1) for the shot/power cluster")]
+        [SerializeField, Range(0.2f, 0.8f)] private float shotClusterAnchorY = 0.52f;
+
+        [Tooltip("Horizontal anchor (0-1) for the aim cluster")]
+        [SerializeField, Range(0.6f, 0.95f)] private float aimClusterAnchorX = 0.86f;
+
+        [Tooltip("Vertical anchor (0-1) for the aim cluster")]
+        [SerializeField, Range(0.2f, 0.8f)] private float aimClusterAnchorY = 0.52f;
+
+        [Tooltip("Status text Y offset from top center (more negative moves it closer to table)")]
+        [SerializeField, Range(-220f, -10f)] private float statusTextOffsetY = -115f;
+
         // === UI Elements ===
         private Canvas canvas;
         private Slider powerSlider;
         private Slider aimSlider;
         private Button lockButton;
-        private Button shootButton;
         private TextMeshProUGUI statusText;
         private TextMeshProUGUI powerLabel;
         private TextMeshProUGUI powerValueText;
@@ -35,7 +52,7 @@ namespace Billiards.UI
         private TextMeshProUGUI lockButtonText;
 
         // === State ===
-        private enum UIPhase { Aiming, Locked, Shooting, BallsMoving }
+        private enum UIPhase { Aiming, Locked, BallsMoving }
         private UIPhase currentPhase = UIPhase.Aiming;
 
         private void Awake()
@@ -49,11 +66,21 @@ namespace Billiards.UI
         private void Start()
         {
             BuildUI();
+            SyncUIWithCueState();
+
+            // Always start from an unlocked aiming state.
+            if (cueAim != null)
+            {
+                cueAim.UnlockAim();
+                cueAim.SetShotVisualsHidden(false);
+            }
             SetPhase(UIPhase.Aiming);
 
             // Subscribe to events
             if (shotPower != null)
                 shotPower.OnShotReleased += OnShotFired;
+            if (cueAim != null)
+                cueAim.OnAimAngleChanged += OnAimAngleChangedByCueInput;
 
             Physics.BallSleepMonitor.OnAllBallsStopped += OnBallsStopped;
         }
@@ -62,6 +89,8 @@ namespace Billiards.UI
         {
             if (shotPower != null)
                 shotPower.OnShotReleased -= OnShotFired;
+            if (cueAim != null)
+                cueAim.OnAimAngleChanged -= OnAimAngleChangedByCueInput;
 
             Physics.BallSleepMonitor.OnAllBallsStopped -= OnBallsStopped;
         }
@@ -70,9 +99,32 @@ namespace Billiards.UI
 
         private void BuildUI()
         {
+            // Enforce reliable side split even if serialized values drift.
+            float shotX = shotClusterAnchorX;
+            float aimX = aimClusterAnchorX;
+            if (shotX < 0.05f || shotX > 0.45f)
+                shotX = 0.14f;
+            if (aimX < 0.55f || aimX > 0.95f)
+                aimX = 0.86f;
+            if ((aimX - shotX) < 0.35f)
+            {
+                shotX = 0.14f;
+                aimX = 0.86f;
+            }
+
+            // Keep both clusters on the exact same visible Y band.
+            // Use both serialized Y values and average them, then force exact alignment.
+            float sharedY = (shotClusterAnchorY + aimClusterAnchorY) * 0.5f;
+            float shotY = Mathf.Clamp(sharedY, 0.45f, 0.65f);
+            float aimY = shotY;
+
+            Vector2 shotAnchor = new Vector2(shotX, shotY);
+            Vector2 aimAnchor = new Vector2(aimX, aimY);
+            Vector2 clusterPivot = new Vector2(0.5f, 0.5f);
+
             // Canvas
             GameObject canvasObj = new GameObject("GameCanvas");
-            canvasObj.transform.SetParent(transform);
+            canvasObj.transform.SetParent(transform, false);
             canvas = canvasObj.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 10;
@@ -81,67 +133,134 @@ namespace Billiards.UI
             scaler.referenceResolution = new Vector2(1920, 1080);
             canvasObj.AddComponent<GraphicRaycaster>();
 
-            // EventSystem
-            if (FindAnyObjectByType<UnityEngine.EventSystems.EventSystem>() == null)
-            {
-                GameObject esObj = new GameObject("EventSystem");
-                esObj.AddComponent<UnityEngine.EventSystems.EventSystem>();
-                esObj.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
-            }
+            EnsureEventSystem();
 
             RectTransform canvasRect = canvasObj.GetComponent<RectTransform>();
 
             // Status text (top center)
             statusText = CreateText(canvasRect, "StatusText", "Aim your shot",
                 new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
-                new Vector2(0, -20), new Vector2(400, 50), 28, TextAlignmentOptions.Center);
+                new Vector2(0, statusTextOffsetY), new Vector2(400, 50), 28, TextAlignmentOptions.Center);
 
-            // === BOTH SLIDERS ON RIGHT SIDE VERTICALLY (CLOSER TO TABLE) ===
-
-            // POWER slider (right side, upper position)
+            // POWER slider cluster (left side)
             powerLabel = CreateText(canvasRect, "PowerLabel", "POWER",
-                new Vector2(1, 0.75f), new Vector2(1, 0.75f), new Vector2(1, 0.75f),
-                new Vector2(-250, 180), new Vector2(80, 30), 18, TextAlignmentOptions.Center);
+                shotAnchor, shotAnchor, clusterPivot,
+                new Vector2(0, 180), new Vector2(90, 30), 18, TextAlignmentOptions.Center);
 
             powerSlider = CreateVerticalSlider(canvasRect, "PowerSlider",
-                new Vector2(1, 0.75f), new Vector2(1, 0.75f), new Vector2(1, 0.75f),
-                new Vector2(-250, -20), new Vector2(50, 300), 0f, 1f);
+                shotAnchor, shotAnchor, clusterPivot,
+                new Vector2(0, -20), new Vector2(50, 300), 0f, 1f);
 
             powerValueText = CreateText(canvasRect, "PowerValue", "0%",
-                new Vector2(1, 0.75f), new Vector2(1, 0.75f), new Vector2(1, 0.75f),
-                new Vector2(-250, -195), new Vector2(80, 30), 16, TextAlignmentOptions.Center);
+                shotAnchor, shotAnchor, clusterPivot,
+                new Vector2(0, -195), new Vector2(90, 30), 16, TextAlignmentOptions.Center);
 
-            // AIM slider (right side, lower position)
+            // AIM slider cluster (right side)
             aimLabel = CreateText(canvasRect, "AimLabel", "AIM",
-                new Vector2(1, 0.25f), new Vector2(1, 0.25f), new Vector2(1, 0.25f),
-                new Vector2(-250, 180), new Vector2(80, 30), 18, TextAlignmentOptions.Center);
+                aimAnchor, aimAnchor, clusterPivot,
+                new Vector2(0, 180), new Vector2(90, 30), 18, TextAlignmentOptions.Center);
 
             aimSlider = CreateVerticalSlider(canvasRect, "AimSlider",
-                new Vector2(1, 0.25f), new Vector2(1, 0.25f), new Vector2(1, 0.25f),
-                new Vector2(-250, -20), new Vector2(50, 300), 0f, 360f);
+                aimAnchor, aimAnchor, clusterPivot,
+                new Vector2(0, -20), new Vector2(50, 300), 0f, 360f);
 
             aimValueText = CreateText(canvasRect, "AimValue", "0\u00b0",
-                new Vector2(1, 0.25f), new Vector2(1, 0.25f), new Vector2(1, 0.25f),
-                new Vector2(-250, -195), new Vector2(80, 30), 16, TextAlignmentOptions.Center);
+                aimAnchor, aimAnchor, clusterPivot,
+                new Vector2(0, -195), new Vector2(90, 30), 16, TextAlignmentOptions.Center);
 
-            // LOCK button (right side, below aim slider)
+            // LOCK button (below aim slider)
             lockButton = CreateButton(canvasRect, "LockButton", "LOCK AIM",
-                new Vector2(1, 0.25f), new Vector2(1, 0.25f), new Vector2(1, 0.25f),
-                new Vector2(-250, -240), new Vector2(120, 40),
+                aimAnchor, aimAnchor, clusterPivot,
+                new Vector2(0, -220), new Vector2(160, 44),
                 new Color(0.2f, 0.6f, 0.2f, 1f));
             lockButtonText = lockButton.GetComponentInChildren<TextMeshProUGUI>();
-
-            // === SHOOT button (bottom center) ===
-            shootButton = CreateButton(canvasRect, "ShootButton", "SHOOT",
-                new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f),
-                new Vector2(0, 60), new Vector2(160, 50),
-                new Color(0.8f, 0.2f, 0.2f, 1f));
 
             // Wire callbacks
             powerSlider.onValueChanged.AddListener(OnPowerChanged);
             aimSlider.onValueChanged.AddListener(OnAimChanged);
             lockButton.onClick.AddListener(OnLockPressed);
-            shootButton.onClick.AddListener(OnShootPressed);
+
+            // Shoot automatically when power slider is released.
+            AddPointerReleaseTrigger(powerSlider.gameObject, OnPowerReleased);
+        }
+
+        /// <summary>
+        /// Ensures there is an EventSystem with a usable input module.
+        /// Prefers the new Input System module when available; falls back to StandaloneInputModule.
+        /// </summary>
+        private void EnsureEventSystem()
+        {
+            EventSystem eventSystem = FindAnyObjectByType<EventSystem>();
+            if (eventSystem == null)
+            {
+                GameObject esObj = new GameObject("EventSystem");
+                eventSystem = esObj.AddComponent<EventSystem>();
+            }
+
+            StandaloneInputModule standaloneModule = eventSystem.GetComponent<StandaloneInputModule>();
+            if (standaloneModule == null)
+            {
+                standaloneModule = eventSystem.gameObject.AddComponent<StandaloneInputModule>();
+            }
+
+            System.Type inputSystemUiModuleType = System.Type.GetType(
+                "UnityEngine.InputSystem.UI.InputSystemUIInputModule, Unity.InputSystem");
+
+            BaseInputModule inputSystemModule = null;
+            if (inputSystemUiModuleType != null)
+            {
+                inputSystemModule = eventSystem.GetComponent(inputSystemUiModuleType) as BaseInputModule;
+                if (inputSystemModule == null)
+                {
+                    inputSystemModule = eventSystem.gameObject.AddComponent(inputSystemUiModuleType) as BaseInputModule;
+                }
+            }
+
+            bool useInputSystemModule = ShouldUseInputSystemModule(inputSystemModule);
+            if (inputSystemModule != null)
+                inputSystemModule.enabled = useInputSystemModule;
+
+            standaloneModule.enabled = !useInputSystemModule;
+        }
+
+        private bool ShouldUseInputSystemModule(BaseInputModule inputSystemModule)
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (inputSystemModule == null)
+                return false;
+
+            return Mouse.current != null || Touchscreen.current != null || Pen.current != null;
+#else
+            return false;
+#endif
+        }
+
+        /// <summary>
+        /// Initializes slider/value labels from current cue and shot state.
+        /// Keeps first user interaction from causing an abrupt aim jump.
+        /// </summary>
+        private void SyncUIWithCueState()
+        {
+            if (cueAim != null)
+            {
+                float angle = Mathf.Repeat(cueAim.AimAngle, 360f);
+                aimSlider.SetValueWithoutNotify(angle);
+                aimValueText.text = $"{Mathf.RoundToInt(angle)}\u00b0";
+            }
+            else
+            {
+                aimSlider.SetValueWithoutNotify(0f);
+                aimValueText.text = "0\u00b0";
+                UnityEngine.Debug.LogWarning("[GameUI] CueAim reference not found. Aim slider is not functional.", this);
+            }
+
+            powerSlider.SetValueWithoutNotify(0f);
+            powerValueText.text = "0%";
+
+            if (shotPower == null)
+            {
+                UnityEngine.Debug.LogWarning("[GameUI] ShotPower reference not found. Shot UI is not functional.", this);
+            }
         }
 
         // ========== UI CALLBACKS ==========
@@ -162,6 +281,16 @@ namespace Billiards.UI
             aimValueText.text = $"{Mathf.RoundToInt(value)}\u00b0";
         }
 
+        private void OnAimAngleChangedByCueInput(float angle)
+        {
+            if (aimSlider == null || aimValueText == null)
+                return;
+
+            float normalized = Mathf.Repeat(angle, 360f);
+            aimSlider.SetValueWithoutNotify(normalized);
+            aimValueText.text = $"{Mathf.RoundToInt(normalized)}\u00b0";
+        }
+
         private void OnLockPressed()
         {
             if (cueAim == null)
@@ -179,19 +308,40 @@ namespace Billiards.UI
             }
         }
 
-        private void OnShootPressed()
+        private void OnPowerReleased(BaseEventData _)
         {
-            if (shotPower != null)
+            if (currentPhase != UIPhase.Locked || shotPower == null || !powerSlider.interactable)
+                return;
+
+            // Use current slider power and fire shot on release.
+            // Only transition UI phase if a shot is actually emitted.
+            if (shotPower.TryShoot())
             {
                 SetPhase(UIPhase.BallsMoving);
-                shotPower.Shoot();
             }
+        }
+
+        private void AddPointerReleaseTrigger(GameObject target, UnityEngine.Events.UnityAction<BaseEventData> callback)
+        {
+            if (target == null)
+                return;
+
+            SliderReleaseRelay relay = target.GetComponent<SliderReleaseRelay>();
+            if (relay == null)
+            {
+                relay = target.AddComponent<SliderReleaseRelay>();
+            }
+
+            relay.SetCallback(callback);
         }
 
         // ========== EVENTS ==========
 
         private void OnShotFired(float impulse)
         {
+            if (cueAim != null)
+                cueAim.SetShotVisualsHidden(true);
+
             SetPhase(UIPhase.BallsMoving);
         }
 
@@ -199,7 +349,10 @@ namespace Billiards.UI
         {
             // Reset UI for next shot
             if (cueAim != null)
+            {
                 cueAim.UnlockAim();
+                cueAim.SetShotVisualsHidden(false);
+            }
 
             if (shotPower != null)
                 shotPower.ResetPower();
@@ -221,32 +374,26 @@ namespace Billiards.UI
                 case UIPhase.Aiming:
                     statusText.text = "Aim your shot";
                     aimSlider.interactable = true;
-                    powerSlider.interactable = false;
-                    shootButton.interactable = false;
+                    powerSlider.interactable = true;
                     lockButton.interactable = true;
                     lockButtonText.text = "LOCK AIM";
                     SetButtonColor(lockButton, new Color(0.2f, 0.6f, 0.2f, 1f));
-                    SetButtonColor(shootButton, new Color(0.4f, 0.4f, 0.4f, 1f));
                     break;
 
                 case UIPhase.Locked:
-                    statusText.text = "Set power";
+                    statusText.text = "Set power, release to shoot";
                     aimSlider.interactable = false;
                     powerSlider.interactable = true;
-                    shootButton.interactable = true;
                     lockButton.interactable = true;
                     lockButtonText.text = "UNLOCK";
                     SetButtonColor(lockButton, new Color(0.6f, 0.6f, 0.2f, 1f));
-                    SetButtonColor(shootButton, new Color(0.8f, 0.2f, 0.2f, 1f));
                     break;
 
                 case UIPhase.BallsMoving:
                     statusText.text = "Balls in motion...";
                     aimSlider.interactable = false;
                     powerSlider.interactable = false;
-                    shootButton.interactable = false;
                     lockButton.interactable = false;
-                    SetButtonColor(shootButton, new Color(0.4f, 0.4f, 0.4f, 1f));
                     break;
             }
         }
@@ -502,33 +649,77 @@ namespace Billiards.UI
         /// </summary>
         private void AddHoverFeedback(GameObject obj, Image img, RectTransform rt, float normalSize)
         {
-            EventTrigger trigger = obj.AddComponent<EventTrigger>();
-
-            // Store original values
-            Color originalColor = img.color;
-            Vector2 originalSize = rt.sizeDelta;
-
-            // Pointer Enter (hover start)
-            EventTrigger.Entry enterEntry = new EventTrigger.Entry();
-            enterEntry.eventID = EventTriggerType.PointerEnter;
-            enterEntry.callback.AddListener((data) =>
+            SliderHandleHoverFeedback hover = obj.GetComponent<SliderHandleHoverFeedback>();
+            if (hover == null)
             {
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Hand cursor (system default for clickable)
-                img.color = new Color(originalColor.r * 1.2f, originalColor.g * 1.2f, originalColor.b * 1.2f, 1f); // Brighten
-                rt.sizeDelta = originalSize * 1.15f; // Slightly larger
-            });
-            trigger.triggers.Add(enterEntry);
+                hover = obj.AddComponent<SliderHandleHoverFeedback>();
+            }
 
-            // Pointer Exit (hover end)
-            EventTrigger.Entry exitEntry = new EventTrigger.Entry();
-            exitEntry.eventID = EventTriggerType.PointerExit;
-            exitEntry.callback.AddListener((data) =>
+            hover.Initialize(img, rt, normalSize);
+        }
+
+        /// <summary>
+        /// Relay for power-slider release events without using EventTrigger,
+        /// so drag routing to Slider stays intact.
+        /// </summary>
+        private sealed class SliderReleaseRelay : MonoBehaviour, IPointerUpHandler, IEndDragHandler
+        {
+            private UnityEngine.Events.UnityAction<BaseEventData> callback;
+
+            public void SetCallback(UnityEngine.Events.UnityAction<BaseEventData> cb)
             {
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Reset to normal
-                img.color = originalColor; // Reset color
-                rt.sizeDelta = originalSize; // Reset size
-            });
-            trigger.triggers.Add(exitEntry);
+                callback = cb;
+            }
+
+            public void OnPointerUp(PointerEventData eventData)
+            {
+                callback?.Invoke(eventData);
+            }
+
+            public void OnEndDrag(PointerEventData eventData)
+            {
+                callback?.Invoke(eventData);
+            }
+        }
+
+        /// <summary>
+        /// Hover-only visual feedback on slider handles.
+        /// Implements only enter/exit to avoid intercepting drag events.
+        /// </summary>
+        private sealed class SliderHandleHoverFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+        {
+            private Image handleImage;
+            private RectTransform handleRect;
+            private Color originalColor;
+            private Vector2 originalSize;
+            private bool initialized;
+
+            public void Initialize(Image image, RectTransform rect, float normalSize)
+            {
+                handleImage = image;
+                handleRect = rect;
+                originalColor = image != null ? image.color : Color.white;
+                originalSize = new Vector2(normalSize, normalSize);
+                initialized = true;
+            }
+
+            public void OnPointerEnter(PointerEventData eventData)
+            {
+                if (!initialized || handleImage == null || handleRect == null)
+                    return;
+
+                handleImage.color = Color.Lerp(originalColor, Color.white, 0.25f);
+                handleRect.sizeDelta = originalSize * 1.12f;
+            }
+
+            public void OnPointerExit(PointerEventData eventData)
+            {
+                if (!initialized || handleImage == null || handleRect == null)
+                    return;
+
+                handleImage.color = originalColor;
+                handleRect.sizeDelta = originalSize;
+            }
         }
     }
 }
