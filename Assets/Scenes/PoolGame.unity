@@ -1499,6 +1499,14 @@ PrefabInstance:
       value: Ball
       objectReference: {fileID: 0}
     - target: {fileID: -2047894909454858117, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2047894909454858117, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.811854
+      objectReference: {fileID: 0}
+    - target: {fileID: -2047894909454858117, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
