@@ -119,13 +119,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &12770228
+--- !u!1 &212111544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8946937118903327085, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &212111548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142206}
+  m_GameObject: {fileID: 212111544}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
@@ -133,13 +138,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
   ballTag: Ball
   railNormal: {x: 0, y: 0, z: 0}
---- !u!64 &12770229
-MeshCollider:
+--- !u!65 &212111549
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142206}
+  m_GameObject: {fileID: 212111544}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -151,45 +156,46 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3739653771031587830, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
---- !u!54 &53701191
-Rigidbody:
+  serializedVersion: 3
+  m_Size: {x: 1.0081325, y: 0.044888973, z: 0.044151902}
+  m_Center: {x: 0.55128956, y: 0.7861138, z: -0.5419865}
+--- !u!1 &214980300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -897444675891859684, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &214980302
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142219}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!64 &139410313
-MeshCollider:
+  m_GameObject: {fileID: 214980300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &214980303
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142213}
-  m_Material: {fileID: 2120505487}
+  m_GameObject: {fileID: 214980300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &214980304
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214980300}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -200,22 +206,16 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4498829398395167443, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
---- !u!1 &154070936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -4523093671150137551, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &154070941
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: -0.000000059604645, y: 0, z: -0.0000000037252903}
+--- !u!54 &214980305
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154070936}
+  m_GameObject: {fileID: 214980300}
   serializedVersion: 5
   m_Mass: 0.17
   m_LinearDamping: 0.1
@@ -233,218 +233,21 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &154070943
+  m_CollisionDetection: 1
+--- !u!1 &255192015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6201518996006285981, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &255192019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154070936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &154070945
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154070936}
-  m_Material: {fileID: 1143459680}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &222827333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
-  ballTag: Ball
-  disableDelay: 0.1
-  logPocketEvents: 1
---- !u!65 &222827334
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142210}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.0012797862, y: 0.0012869623, z: 0.00176158}
-  m_Center: {x: 0.011036699, y: 0.005455793, z: 0.0073199966}
---- !u!135 &305135264
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142216}
-  m_Material: {fileID: 1361990750}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &314665911
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142222}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &406436504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
-  ballTag: Ball
-  disableDelay: 0.1
-  logPocketEvents: 1
---- !u!65 &406436505
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142212}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.0012797853, y: 0.0012869604, z: 0.0017615786}
-  m_Center: {x: -0.011007106, y: -0.0054899612, z: 0.007319997}
---- !u!134 &451354653
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
---- !u!114 &465663218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
-  ballTag: Ball
-  disableDelay: 0.1
-  logPocketEvents: 1
---- !u!65 &465663219
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142209}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.0012797844, y: 0.0012869609, z: 0.0017615786}
-  m_Center: {x: 0.011036702, y: -0.0054899585, z: 0.007319997}
---- !u!114 &538564236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142202}
+  m_GameObject: {fileID: 255192015}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
@@ -452,13 +255,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
   ballTag: Ball
   railNormal: {x: 0, y: 0, z: 0}
---- !u!64 &538564237
-MeshCollider:
+--- !u!65 &255192020
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142202}
+  m_GameObject: {fileID: 255192015}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -470,24 +273,109 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6448379002651883452, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
---- !u!1 &624661641 stripped
+  serializedVersion: 3
+  m_Size: {x: 1.0063457, y: 0.044888854, z: 0.044151843}
+  m_Center: {x: -0.549672, y: 0.78611386, z: 0.5430536}
+--- !u!1 &331451838 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: -1080986793137417640, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
+  m_CorrespondingSourceObject: {fileID: -7170249994497489313, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &624661646
+--- !u!114 &331451842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331451838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
+  ballTag: Ball
+  disableDelay: 0.1
+  logPocketEvents: 1
+--- !u!135 &331451843
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331451838}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: 1.1036704, y: 0.7319999, z: 0.548996}
+--- !u!1 &373848798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4523093671150137551, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &373848800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373848798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &373848801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373848798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &373848802
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373848798}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: -0.000000014901161, y: -2.7755576e-17, z: 0.0000000055879354}
+--- !u!54 &373848803
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624661641}
+  m_GameObject: {fileID: 373848798}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 0.17
   m_LinearDamping: 0.1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -503,93 +391,76 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &624661648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624661641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &624661650
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624661641}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &713004216 stripped
+  m_CollisionDetection: 1
+--- !u!1 &381220777 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: -4170568238012561885, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
+  m_CorrespondingSourceObject: {fileID: -402117291202023111, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &713004221
-Rigidbody:
+--- !u!114 &381220781
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713004216}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 381220777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
+  ballTag: Ball
+  disableDelay: 0.1
+  logPocketEvents: 1
+--- !u!135 &381220782
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381220777}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &713004223
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: 1.1036699, y: 0.7319998, z: -0.54557943}
+--- !u!1 &500704497 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5295339304559299332, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &500704501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713004216}
+  m_GameObject: {fileID: 500704497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &713004225
-SphereCollider:
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
+  ballTag: Ball
+  railNormal: {x: 0, y: 0, z: 0}
+--- !u!65 &500704502
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 713004216}
+  m_GameObject: {fileID: 500704497}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -602,20 +473,48 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &727214184
+  m_Size: {x: 1.0047599, y: 0.044888973, z: 0.04415232}
+  m_Center: {x: -0.55046564, y: 0.7861138, z: -0.54198563}
+--- !u!1 &658283457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9135499519417570523, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &658283461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142217}
+  m_GameObject: {fileID: 658283457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
+  ballTag: Ball
+  railNormal: {x: 0, y: 0, z: 0}
+--- !u!65 &658283462
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658283457}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0101483, y: 0.044888854, z: 0.04415244}
+  m_Center: {x: 0.5502821, y: 0.78611386, z: 0.5430528}
 --- !u!1 &818501378
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,9 +548,12 @@ MonoBehaviour:
   gameMode: 0
   cueAim: {fileID: 0}
   shotPower: {fileID: 0}
+  ruleEngine: {fileID: 0}
   currentState: 0
   currentTurnOwner: 0
   logTurnEvents: 1
+  autoReturnTurnWhenAIUnavailable: 1
+  aiFallbackDelaySeconds: 0.4
 --- !u!114 &818501380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,84 +583,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &828205150
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142216}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!1 &905754333 stripped
+--- !u!1 &827393623 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5974305845171484013, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
+  m_CorrespondingSourceObject: {fileID: 130945389498422502, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &905754338
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905754333}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &905754340
+--- !u!114 &827393625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905754333}
+  m_GameObject: {fileID: 827393623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &827393626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827393623}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &905754342
+--- !u!135 &827393627
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905754333}
+  m_GameObject: {fileID: 827393623}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -772,14 +632,200 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &909309131
+  m_Center: {x: 0.00000013411045, y: 0, z: -0.000000033527613}
+--- !u!54 &827393628
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827393623}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &913966961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3174283689434923875, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &913966963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142211}
+  m_GameObject: {fileID: 913966961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &913966964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913966961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &913966965
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913966961}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0, y: 0, z: -0.000000022351742}
+--- !u!54 &913966966
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913966961}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &984016491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7291605266452751886, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &984016493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984016491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &984016494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984016491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &984016495
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984016491}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0, y: 0, z: -0.000000007450581}
+--- !u!54 &984016496
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984016491}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1052644239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3341134601067259838, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1052644243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052644239}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
@@ -788,13 +834,13 @@ MonoBehaviour:
   ballTag: Ball
   disableDelay: 0.1
   logPocketEvents: 1
---- !u!65 &909309132
-BoxCollider:
+--- !u!135 &1052644244
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142211}
+  m_GameObject: {fileID: 1052644239}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -807,252 +853,44 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0012797825, y: 0.0012869609, z: 0.00176158}
-  m_Center: {x: -0.01100711, y: 0.005455786, z: 0.0073199966}
---- !u!135 &1050420428
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142217}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1086299789
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142217}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1112178312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
-  ballTag: Ball
-  railNormal: {x: 0, y: 0, z: 0}
---- !u!64 &1112178313
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142201}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -494608019459059341, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
---- !u!134 &1143459680
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
---- !u!114 &1162925054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6b8831c11a5673f9c2c6ba25731098, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Cue.CueStrike
-  cueBall: {fileID: 0}
-  verticalOffset: 0
-  horizontalOffset: 0
-  maxOffsetFraction: 0.7
-  spinMultiplier: 50
-  logStrikeInfo: 1
---- !u!114 &1162925055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d7486fd1607f15c980b9df070da2ef8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Cue.ShotPower
-  minPower: 0.5
-  maxPower: 8
-  useExponentialCurve: 1
-  curvePower: 1.5
-  maxPullbackDistance: 0.3
-  inputEnabled: 1
---- !u!114 &1162925056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf08897dc4cbb2971b69228816944000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Cue.CueAim
-  cueBall: {fileID: 0}
-  tipGap: 0.03
-  aimLineLength: 1.5
-  initialAngle: 0
-  aimLineRenderer: {fileID: 0}
-  aimLineColor: {r: 1, g: 1, b: 1, a: 1}
-  aimLineWidth: 0.005
-  inputEnabled: 1
---- !u!54 &1216671097
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142220}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!134 &1361990750
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
---- !u!1 &1509194336 stripped
+  m_Radius: 0.05
+  m_Center: {x: -1.100711, y: 0.7319998, z: -0.5455787}
+--- !u!1 &1145571178 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: -2767397199966599230, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
+  m_CorrespondingSourceObject: {fileID: 2542602913892006603, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1509194341
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509194336}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1509194343
+--- !u!114 &1145571180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509194336}
+  m_GameObject: {fileID: 1145571178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1145571181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145571178}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &1509194345
+--- !u!135 &1145571182
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509194336}
+  m_GameObject: {fileID: 1145571178}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1066,7 +904,383 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.000000007450581}
+--- !u!54 &1145571183
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145571178}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1356920560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3731319838904337014, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1356920564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356920560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
+  ballTag: Ball
+  disableDelay: 0.1
+  logPocketEvents: 1
+--- !u!135 &1356920565
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356920560}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: -0.0020164438, y: 0.73199964, z: 0.58446956}
+--- !u!1 &1418660264 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8293448228226528098, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1418660266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418660264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1418660267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418660264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1418660268
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418660264}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0, y: 0, z: 0.000000011175871}
+--- !u!54 &1418660269
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418660264}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1467400775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3797293896562366790, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1467400777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467400775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1467400778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467400775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1467400779
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467400775}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0.00000011920929, y: 0, z: -0.00000003632158}
+--- !u!54 &1467400780
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467400775}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1507806363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5974305845171484013, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1507806365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507806363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1507806366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507806363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1507806367
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507806363}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0, y: 0, z: 0.000000018626451}
+--- !u!54 &1507806368
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507806363}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1538020508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1538020510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538020508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1538020511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538020508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1538020512
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538020508}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: -0.000000059604645, y: 0, z: -0.000000044703484}
+--- !u!54 &1538020513
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538020508}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1572523952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,122 +1521,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: -114.704}
---- !u!114 &1575437295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!1 &1600576820 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -7291605266452751886, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1600576825
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600576820}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1600576827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600576820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &1600576829
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600576820}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1684402995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edaff97fcaf862d60acdcb80548209b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallSleepMonitor
---- !u!54 &1684402997
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142215}
-  serializedVersion: 5
-  m_Mass: 0.17
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1732329306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,876 +1996,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1819142200
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -9070402632534888825, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 755cc4fb7c5fb3a79a6e48a6bf96835c, type: 2}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7694411168999959600, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1375ff89b0a86653cb202fb9358e0fef, type: 2}
-    - target: {fileID: -6911360345776426850, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.625013
-      objectReference: {fileID: 0}
-    - target: {fileID: -6911360345776426850, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -6861100985085279118, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.625013
-      objectReference: {fileID: 0}
-    - target: {fileID: -6861100985085279118, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -6861100985085279118, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.05715
-      objectReference: {fileID: 0}
-    - target: {fileID: -6796009618967900300, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.57552
-      objectReference: {fileID: 0}
-    - target: {fileID: -6796009618967900300, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -6796009618967900300, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.028575
-      objectReference: {fileID: 0}
-    - target: {fileID: -6722085885383957590, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_Intensity
-      value: 215.33192
-      objectReference: {fileID: 0}
-    - target: {fileID: -6093963330258848403, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.674507
-      objectReference: {fileID: 0}
-    - target: {fileID: -6093963330258848403, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -6093963330258848403, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.085725
-      objectReference: {fileID: 0}
-    - target: {fileID: -5487056382851663311, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1375ff89b0a86653cb202fb9358e0fef, type: 2}
-    - target: {fileID: -3631012944442137599, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.57552
-      objectReference: {fileID: 0}
-    - target: {fileID: -3631012944442137599, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -3631012944442137599, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.028575
-      objectReference: {fileID: 0}
-    - target: {fileID: -3459008920525559007, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.724
-      objectReference: {fileID: 0}
-    - target: {fileID: -3459008920525559007, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -3459008920525559007, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.1143
-      objectReference: {fileID: 0}
-    - target: {fileID: -2047894909454858117, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -2047894909454858117, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -2047894909454858117, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -1874210438556204396, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.674507
-      objectReference: {fileID: 0}
-    - target: {fileID: -1874210438556204396, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -1874210438556204396, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.028575
-      objectReference: {fileID: 0}
-    - target: {fileID: -1179258452999124552, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.561705
-      objectReference: {fileID: 0}
-    - target: {fileID: -1179258452999124552, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.155
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.424
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.297
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.06456027
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.57961905
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.13487928
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.8010502
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 163.086
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -107.75101
-      objectReference: {fileID: 0}
-    - target: {fileID: -447275898630060098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 3.1710052
-      objectReference: {fileID: 0}
-    - target: {fileID: -177498036779972315, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_TagString
-      value: CueBall
-      objectReference: {fileID: 0}
-    - target: {fileID: -91036877911060331, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.674507
-      objectReference: {fileID: 0}
-    - target: {fileID: -91036877911060331, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: -91036877911060331, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.028575
-      objectReference: {fileID: 0}
-    - target: {fileID: 330540544829756570, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.625013
-      objectReference: {fileID: 0}
-    - target: {fileID: 330540544829756570, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: 330540544829756570, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.05715
-      objectReference: {fileID: 0}
-    - target: {fileID: 654956220256049264, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.724
-      objectReference: {fileID: 0}
-    - target: {fileID: 654956220256049264, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_Name
-      value: PoolTable
-      objectReference: {fileID: 0}
-    - target: {fileID: 975146241410668719, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1375ff89b0a86653cb202fb9358e0fef, type: 2}
-    - target: {fileID: 1723810292618985568, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1375ff89b0a86653cb202fb9358e0fef, type: 2}
-    - target: {fileID: 2805103286984653709, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.674507
-      objectReference: {fileID: 0}
-    - target: {fileID: 2805103286984653709, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: 2805103286984653709, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.085725
-      objectReference: {fileID: 0}
-    - target: {fileID: 5542214772654746241, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.724
-      objectReference: {fileID: 0}
-    - target: {fileID: 5542214772654746241, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5542214772654746241, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.1143
-      objectReference: {fileID: 0}
-    - target: {fileID: 5636483753189145736, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 235b9c2889cac75f29d984297123ad64, type: 2}
-    - target: {fileID: 6134602890477496308, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ea0389a041bde166cb02286bbb44a454, type: 2}
-    - target: {fileID: 6905330743348584272, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.524794
-      objectReference: {fileID: 0}
-    - target: {fileID: 6905330743348584272, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: 6905330743348584272, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.001065
-      objectReference: {fileID: 0}
-    - target: {fileID: 7211337448883386799, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1375ff89b0a86653cb202fb9358e0fef, type: 2}
-    - target: {fileID: 8031953092837925202, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.724
-      objectReference: {fileID: 0}
-    - target: {fileID: 8031953092837925202, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: 8031953092837925202, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.05715
-      objectReference: {fileID: 0}
-    - target: {fileID: 8726645088781385292, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.724
-      objectReference: {fileID: 0}
-    - target: {fileID: 8726645088781385292, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.795
-      objectReference: {fileID: 0}
-    - target: {fileID: 8726645088781385292, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.05715
-      objectReference: {fileID: 0}
-    - target: {fileID: 8975167470070429350, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1375ff89b0a86653cb202fb9358e0fef, type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 154070941}
-    - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 154070943}
-    - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 154070945}
-    - targetCorrespondingSourceObject: {fileID: -7291605266452751886, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1600576825}
-    - targetCorrespondingSourceObject: {fileID: -7291605266452751886, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1600576827}
-    - targetCorrespondingSourceObject: {fileID: -7291605266452751886, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1600576829}
-    - targetCorrespondingSourceObject: {fileID: -1080986793137417640, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 624661646}
-    - targetCorrespondingSourceObject: {fileID: -1080986793137417640, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 624661648}
-    - targetCorrespondingSourceObject: {fileID: -1080986793137417640, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 624661650}
-    - targetCorrespondingSourceObject: {fileID: -4170568238012561885, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 713004221}
-    - targetCorrespondingSourceObject: {fileID: -4170568238012561885, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 713004223}
-    - targetCorrespondingSourceObject: {fileID: -4170568238012561885, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 713004225}
-    - targetCorrespondingSourceObject: {fileID: 8293448228226528098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2053476220}
-    - targetCorrespondingSourceObject: {fileID: 8293448228226528098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2053476222}
-    - targetCorrespondingSourceObject: {fileID: 8293448228226528098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2053476224}
-    - targetCorrespondingSourceObject: {fileID: -2767397199966599230, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1509194341}
-    - targetCorrespondingSourceObject: {fileID: -2767397199966599230, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1509194343}
-    - targetCorrespondingSourceObject: {fileID: -2767397199966599230, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1509194345}
-    - targetCorrespondingSourceObject: {fileID: -897444675891859684, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2109623989}
-    - targetCorrespondingSourceObject: {fileID: -897444675891859684, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2109623991}
-    - targetCorrespondingSourceObject: {fileID: -897444675891859684, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2109623993}
-    - targetCorrespondingSourceObject: {fileID: 5974305845171484013, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 905754338}
-    - targetCorrespondingSourceObject: {fileID: 5974305845171484013, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 905754340}
-    - targetCorrespondingSourceObject: {fileID: 5974305845171484013, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 905754342}
-    - targetCorrespondingSourceObject: {fileID: 130945389498422502, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 314665911}
-    - targetCorrespondingSourceObject: {fileID: 130945389498422502, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142226}
-    - targetCorrespondingSourceObject: {fileID: 130945389498422502, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142228}
-    - targetCorrespondingSourceObject: {fileID: -3797293896562366790, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142227}
-    - targetCorrespondingSourceObject: {fileID: -3797293896562366790, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142239}
-    - targetCorrespondingSourceObject: {fileID: -3797293896562366790, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142241}
-    - targetCorrespondingSourceObject: {fileID: -3906892491658813480, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1216671097}
-    - targetCorrespondingSourceObject: {fileID: -3906892491658813480, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1962345155}
-    - targetCorrespondingSourceObject: {fileID: -3906892491658813480, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1962345157}
-    - targetCorrespondingSourceObject: {fileID: -5061168438719607290, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 53701191}
-    - targetCorrespondingSourceObject: {fileID: -5061168438719607290, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142223}
-    - targetCorrespondingSourceObject: {fileID: -5061168438719607290, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142225}
-    - targetCorrespondingSourceObject: {fileID: -3174283689434923875, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142224}
-    - targetCorrespondingSourceObject: {fileID: -3174283689434923875, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142234}
-    - targetCorrespondingSourceObject: {fileID: -3174283689434923875, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819142236}
-    - targetCorrespondingSourceObject: {fileID: 3027233716559929999, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1086299789}
-    - targetCorrespondingSourceObject: {fileID: 3027233716559929999, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 727214184}
-    - targetCorrespondingSourceObject: {fileID: 3027233716559929999, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1050420428}
-    - targetCorrespondingSourceObject: {fileID: 2542602913892006603, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 828205150}
-    - targetCorrespondingSourceObject: {fileID: 2542602913892006603, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1575437295}
-    - targetCorrespondingSourceObject: {fileID: 2542602913892006603, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 305135264}
-    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1684402997}
-    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1684402995}
-    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2123590547}
-    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2123590548}
-    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2123590550}
-    - targetCorrespondingSourceObject: {fileID: -110142668121624709, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1162925056}
-    - targetCorrespondingSourceObject: {fileID: -110142668121624709, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1162925055}
-    - targetCorrespondingSourceObject: {fileID: -110142668121624709, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1162925054}
-    - targetCorrespondingSourceObject: {fileID: 891712398245736941, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 139410313}
-    - targetCorrespondingSourceObject: {fileID: -5958231672505998428, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 406436505}
-    - targetCorrespondingSourceObject: {fileID: -5958231672505998428, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 406436504}
-    - targetCorrespondingSourceObject: {fileID: -3341134601067259838, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 909309132}
-    - targetCorrespondingSourceObject: {fileID: -3341134601067259838, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 909309131}
-    - targetCorrespondingSourceObject: {fileID: -402117291202023111, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 222827334}
-    - targetCorrespondingSourceObject: {fileID: -402117291202023111, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 222827333}
-    - targetCorrespondingSourceObject: {fileID: -7170249994497489313, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 465663219}
-    - targetCorrespondingSourceObject: {fileID: -7170249994497489313, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 465663218}
-    - targetCorrespondingSourceObject: {fileID: -3731319838904337014, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2068491769}
-    - targetCorrespondingSourceObject: {fileID: -3731319838904337014, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2068491768}
-    - targetCorrespondingSourceObject: {fileID: 5368179431949383082, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1987688209}
-    - targetCorrespondingSourceObject: {fileID: 5368179431949383082, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1987688208}
-    - targetCorrespondingSourceObject: {fileID: -6637543377290448088, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 12770229}
-    - targetCorrespondingSourceObject: {fileID: -6637543377290448088, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 12770228}
-    - targetCorrespondingSourceObject: {fileID: 9135499519417570523, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1854000479}
-    - targetCorrespondingSourceObject: {fileID: 9135499519417570523, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1854000478}
-    - targetCorrespondingSourceObject: {fileID: 6201518996006285981, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2133737998}
-    - targetCorrespondingSourceObject: {fileID: 6201518996006285981, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2133737997}
-    - targetCorrespondingSourceObject: {fileID: -3643527445742407599, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2088851854}
-    - targetCorrespondingSourceObject: {fileID: -3643527445742407599, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2088851853}
-    - targetCorrespondingSourceObject: {fileID: 5295339304559299332, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 538564237}
-    - targetCorrespondingSourceObject: {fileID: 5295339304559299332, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 538564236}
-    - targetCorrespondingSourceObject: {fileID: 8946937118903327085, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1112178313}
-    - targetCorrespondingSourceObject: {fileID: 8946937118903327085, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1112178312}
-  m_SourcePrefab: {fileID: 100100000, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
---- !u!1 &1819142201 stripped
+--- !u!1 &1738380365 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8946937118903327085, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
+  m_CorrespondingSourceObject: {fileID: -3643527445742407599, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142202 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5295339304559299332, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142203 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3643527445742407599, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142204 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6201518996006285981, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142205 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9135499519417570523, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142206 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -6637543377290448088, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142207 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5368179431949383082, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142208 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3731319838904337014, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142209 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -7170249994497489313, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -402117291202023111, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142211 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3341134601067259838, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142212 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -5958231672505998428, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142213 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 891712398245736941, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -110142668121624709, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142215 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -177498036779972315, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142216 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2542602913892006603, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142217 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3027233716559929999, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142218 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3174283689434923875, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142219 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -5061168438719607290, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142220 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3906892491658813480, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142221 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3797293896562366790, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1819142222 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 130945389498422502, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1819142223
+--- !u!114 &1738380369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!54 &1819142224
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142218}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &1819142225
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142219}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1819142226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!54 &1819142227
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142221}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &1819142228
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142222}
-  m_Material: {fileID: 451354653}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1819142234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &1819142236
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142218}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1819142239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &1819142241
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142221}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1854000478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142205}
+  m_GameObject: {fileID: 1738380365}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
@@ -2775,13 +2015,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
   ballTag: Ball
   railNormal: {x: 0, y: 0, z: 0}
---- !u!64 &1854000479
-MeshCollider:
+--- !u!65 &1738380370
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142205}
+  m_GameObject: {fileID: 1738380365}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2793,10 +2033,515 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0441525, y: 0.044888973, z: 0.9958888}
+  m_Center: {x: -1.0991927, y: 0.7861138, z: 0.0006264001}
+--- !u!1 &1759554411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!120 &1759554413
+LineRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759554411}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.005
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.005
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    textureScale: {x: 1, y: 1}
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
+  m_ApplyActiveColorSpace: 1
+--- !u!114 &1759554414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759554411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edaff97fcaf862d60acdcb80548209b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallSleepMonitor
+--- !u!114 &1759554415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759554411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1759554416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759554411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1759554417
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759554411}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1759554418
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759554411}
   serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6095623728079424865, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1765085426 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 891712398245736941, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1765085430
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765085426}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.24682, y: 0.0324558, z: 1.1263101}
+  m_Center: {x: -0.0000027418137, y: 0.0021005217, z: -0.00000008940697}
+--- !u!1 &1774073310 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5958231672505998428, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1774073314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774073310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
+  ballTag: Ball
+  disableDelay: 0.1
+  logPocketEvents: 1
+--- !u!135 &1774073315
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774073310}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.05
+  m_Center: {x: -1.1007106, y: 0.7319999, z: 0.5489962}
+--- !u!1 &1781549772 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5061168438719607290, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1781549774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781549772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1781549775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781549772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1781549776
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781549772}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0, y: 0, z: -0.000000044703484}
+--- !u!54 &1781549777
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781549772}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1834338795 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2767397199966599230, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1834338797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834338795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1834338798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834338795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1834338799
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834338795}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0.000000074505806, y: 0, z: -0.000000016763806}
+--- !u!54 &1834338800
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834338795}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &1858560951 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3906892491658813480, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1858560953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858560951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &1858560954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858560951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &1858560955
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858560951}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0.000000059604645, y: 0, z: 0.000000007450581}
+--- !u!54 &1858560956
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858560951}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1878605539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2808,6 +2553,7 @@ GameObject:
   - component: {fileID: 1878605542}
   - component: {fileID: 1878605541}
   - component: {fileID: 1878605540}
+  - component: {fileID: 1878605543}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2867,8 +2613,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -2882,53 +2628,164 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878605539}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0032664537, y: 3, z: -0.104339056}
+  m_LocalRotation: {x: 0.1305262, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 2, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1962345155
+--- !u!114 &1878605543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142220}
+  m_GameObject: {fileID: 1878605539}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 23c1ce4fb46143f46bc5cb5224c934f6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &1962345157
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData
+  m_Version: 9
+  m_ObsoleteRenderingPath: 0
+  m_ObsoleteFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0
+  clearColorMode: 0
+  backgroundColorHDR: {r: 0.025, g: 0.07, b: 0.19, a: 0}
+  clearDepth: 1
+  volumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  volumeAnchorOverride: {fileID: 0}
+  antialiasing: 0
+  SMAAQuality: 2
+  dithering: 0
+  stopNaNs: 0
+  taaSharpenStrength: 0.5
+  TAAQuality: 1
+  taaSharpenMode: 0
+  taaRingingReduction: 0
+  taaHistorySharpening: 0.35
+  taaAntiFlicker: 0.5
+  taaMotionVectorRejection: 0
+  taaAntiHistoryRinging: 0
+  taaBaseBlendFactor: 0.875
+  taaJitterScale: 1
+  physicalParameters:
+    m_Iso: 200
+    m_ShutterSpeed: 0.005
+    m_Aperture: 16
+    m_FocusDistance: 10
+    m_BladeCount: 5
+    m_Curvature: {x: 2, y: 11}
+    m_BarrelClipping: 0.25
+    m_Anamorphism: 0
+  flipYMode: 0
+  xrRendering: 1
+  fullscreenPassthrough: 0
+  allowDynamicResolution: 0
+  customRenderingSettings: 0
+  invertFaceCulling: 0
+  probeLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  hasPersistentHistory: 0
+  screenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  screenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  allowDeepLearningSuperSampling: 1
+  deepLearningSuperSamplingUseCustomQualitySettings: 0
+  deepLearningSuperSamplingQuality: 0
+  deepLearningSuperSamplingUseCustomAttributes: 0
+  deepLearningSuperSamplingUseOptimalSettings: 1
+  deepLearningSuperSamplingSharpening: 0
+  allowFidelityFX2SuperResolution: 1
+  fidelityFX2SuperResolutionUseCustomQualitySettings: 0
+  fidelityFX2SuperResolutionQuality: 0
+  fidelityFX2SuperResolutionUseCustomAttributes: 0
+  fidelityFX2SuperResolutionUseOptimalSettings: 1
+  fidelityFX2SuperResolutionEnableSharpening: 0
+  fidelityFX2SuperResolutionSharpening: 0
+  fsrOverrideSharpness: 0
+  fsrSharpness: 0.92
+  exposureTarget: {fileID: 0}
+  materialMipBias: 0
+  m_RenderingPathCustomFrameSettings:
+    bitDatas:
+      data1: 5770166122053581
+      data2: 12934340311651418136
+    lodBias: 1
+    lodBiasMode: 0
+    lodBiasQualityLevel: 0
+    maximumLODLevel: 0
+    maximumLODLevelMode: 0
+    maximumLODLevelQualityLevel: 0
+    sssQualityMode: 0
+    sssQualityLevel: 0
+    sssCustomSampleBudget: 20
+    sssCustomDownsampleSteps: 0
+    msaaMode: 1
+    materialQuality: 0
+  renderingPathCustomFrameSettingsOverrideMask:
+    mask:
+      data1: 0
+      data2: 0
+  defaultFrameSettings: 0
+--- !u!1 &1881870505 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5368179431949383082, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142220}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1987688208
+--- !u!114 &1881870509
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142207}
+  m_GameObject: {fileID: 1881870505}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
@@ -2937,13 +2794,13 @@ MonoBehaviour:
   ballTag: Ball
   disableDelay: 0.1
   logPocketEvents: 1
---- !u!65 &1987688209
-BoxCollider:
+--- !u!135 &1881870510
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142207}
+  m_GameObject: {fileID: 1881870505}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2956,254 +2813,105 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0013564839, y: 0.0008406791, z: 0.00176158}
-  m_Center: {x: -0.000020169391, y: 0.0058799284, z: 0.0073199947}
---- !u!1 &2053476215 stripped
+  m_Radius: 0.05
+  m_Center: {x: -0.0020169392, y: 0.73199964, z: -0.5879929}
+--- !u!1 &1908263119 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8293448228226528098, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
+  m_CorrespondingSourceObject: {fileID: -110142668121624709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &2053476220
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053476215}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2053476222
+--- !u!114 &1908263123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053476215}
+  m_GameObject: {fileID: 1908263119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Script: {fileID: 11500000, guid: df6b8831c11a5673f9c2c6ba25731098, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &2053476224
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053476215}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2068491768
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Cue.CueStrike
+  cueBall: {fileID: 0}
+  verticalOffset: 0
+  horizontalOffset: 0
+  maxOffsetFraction: 0.7
+  spinMultiplier: 50
+  logStrikeInfo: 1
+--- !u!114 &1908263124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142208}
+  m_GameObject: {fileID: 1908263119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5292219b3cb8c2997601ee98560047, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d7486fd1607f15c980b9df070da2ef8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.PocketTrigger
-  ballTag: Ball
-  disableDelay: 0.1
-  logPocketEvents: 1
---- !u!65 &2068491769
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142208}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.0013564837, y: 0.00084068003, z: 0.0017615791}
-  m_Center: {x: -0.000020164443, y: -0.0058446946, z: 0.0073199947}
---- !u!114 &2088851853
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Cue.ShotPower
+  minPower: 0.5
+  maxPower: 8
+  useExponentialCurve: 1
+  curvePower: 1.5
+  maxPullbackDistance: 0.3
+  inputEnabled: 1
+--- !u!114 &1908263125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142203}
+  m_GameObject: {fileID: 1908263119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
+  m_Script: {fileID: 11500000, guid: cf08897dc4cbb2971b69228816944000, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
-  ballTag: Ball
-  railNormal: {x: 0, y: 0, z: 0}
---- !u!64 &2088851854
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142203}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1480691891267071827, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
---- !u!1 &2109623984 stripped
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Cue.CueAim
+  cueBall: {fileID: 0}
+  tipGap: 0.03
+  aimLineLength: 1.5
+  initialAngle: 180
+  aimLineRenderer: {fileID: 0}
+  aimLineColor: {r: 1, g: 1, b: 1, a: 1}
+  aimLineWidth: 0.005
+  inputEnabled: 1
+--- !u!1 &1998007350 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: -897444675891859684, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
-  m_PrefabInstance: {fileID: 1819142200}
+  m_CorrespondingSourceObject: {fileID: -4170568238012561885, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &2109623989
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109623984}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0.1
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2109623991
+--- !u!114 &1998007352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109623984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &2109623993
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109623984}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!134 &2120505487
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
---- !u!114 &2123590547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142215}
+  m_GameObject: {fileID: 1998007350}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
---- !u!114 &2123590548
+--- !u!114 &1998007353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142215}
+  m_GameObject: {fileID: 1998007350}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
---- !u!135 &2123590550
+--- !u!135 &1998007354
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142215}
+  m_GameObject: {fileID: 1998007350}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -3217,28 +2925,70 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.028575
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2133737997
+  m_Center: {x: 0, y: 0, z: 0.000000011175871}
+--- !u!54 &1998007355
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998007350}
+  serializedVersion: 5
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &2046784046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1080986793137417640, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2046784048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142204}
+  m_GameObject: {fileID: 2046784046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
+  m_Script: {fileID: 11500000, guid: e520abdc9de5ff79cb1e016f561409a5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
-  ballTag: Ball
-  railNormal: {x: 0, y: 0, z: 0}
---- !u!64 &2133737998
-MeshCollider:
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Spin.BallSpin
+--- !u!114 &2046784049
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819142204}
+  m_GameObject: {fileID: 2046784046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa675167dd96a83d8655c7527ca87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Physics.BallPhysics
+--- !u!135 &2046784050
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046784046}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -3250,10 +3000,487 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.028575
+  m_Center: {x: 0, y: 0, z: -0.000000034458935}
+--- !u!54 &2046784051
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046784046}
   serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3002997145558959841, guid: 300a30cdfcf4cf6998d9456523929f0c, type: 3}
+  m_Mass: 0.17
+  m_LinearDamping: 0.1
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!1 &2065681531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6637543377290448088, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+  m_PrefabInstance: {fileID: 2129522693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2065681535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065681531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e06d5f28b8f9bd59b27af032c571a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billiards.Table.RailResponse
+  ballTag: Ball
+  railNormal: {x: 0, y: 0, z: 0}
+--- !u!65 &2065681536
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065681531}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.044152617, y: 0.04491633, z: 0.996269}
+  m_Center: {x: 1.0994236, y: 0.78610015, z: 0.000625208}
+--- !u!1001 &2129522693
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7291605266452751886, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -5061168438719607290, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -4523093671150137551, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -4170568238012561885, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -3906892491658813480, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -3797293896562366790, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -3174283689434923875, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -2767397199966599230, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -1853094968961178454, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1853094968961178454, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1080986793137417640, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -897444675891859684, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: CueBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 130945389498422502, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_Name
+      value: PoolTableFixed
+      objectReference: {fileID: 0}
+    - target: {fileID: 2542602913892006603, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 5974305845171484013, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293448228226528098, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 373848803}
+    - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 373848802}
+    - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 373848801}
+    - targetCorrespondingSourceObject: {fileID: -4523093671150137551, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 373848800}
+    - targetCorrespondingSourceObject: {fileID: -7291605266452751886, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 984016496}
+    - targetCorrespondingSourceObject: {fileID: -7291605266452751886, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 984016495}
+    - targetCorrespondingSourceObject: {fileID: -7291605266452751886, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 984016494}
+    - targetCorrespondingSourceObject: {fileID: -7291605266452751886, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 984016493}
+    - targetCorrespondingSourceObject: {fileID: -1080986793137417640, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2046784051}
+    - targetCorrespondingSourceObject: {fileID: -1080986793137417640, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2046784050}
+    - targetCorrespondingSourceObject: {fileID: -1080986793137417640, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2046784049}
+    - targetCorrespondingSourceObject: {fileID: -1080986793137417640, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2046784048}
+    - targetCorrespondingSourceObject: {fileID: -4170568238012561885, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1998007355}
+    - targetCorrespondingSourceObject: {fileID: -4170568238012561885, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1998007354}
+    - targetCorrespondingSourceObject: {fileID: -4170568238012561885, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1998007353}
+    - targetCorrespondingSourceObject: {fileID: -4170568238012561885, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1998007352}
+    - targetCorrespondingSourceObject: {fileID: 8293448228226528098, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1418660269}
+    - targetCorrespondingSourceObject: {fileID: 8293448228226528098, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1418660268}
+    - targetCorrespondingSourceObject: {fileID: 8293448228226528098, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1418660267}
+    - targetCorrespondingSourceObject: {fileID: 8293448228226528098, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1418660266}
+    - targetCorrespondingSourceObject: {fileID: -2767397199966599230, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1834338800}
+    - targetCorrespondingSourceObject: {fileID: -2767397199966599230, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1834338799}
+    - targetCorrespondingSourceObject: {fileID: -2767397199966599230, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1834338798}
+    - targetCorrespondingSourceObject: {fileID: -2767397199966599230, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1834338797}
+    - targetCorrespondingSourceObject: {fileID: -897444675891859684, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214980305}
+    - targetCorrespondingSourceObject: {fileID: -897444675891859684, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214980304}
+    - targetCorrespondingSourceObject: {fileID: -897444675891859684, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214980303}
+    - targetCorrespondingSourceObject: {fileID: -897444675891859684, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 214980302}
+    - targetCorrespondingSourceObject: {fileID: 5974305845171484013, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1507806368}
+    - targetCorrespondingSourceObject: {fileID: 5974305845171484013, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1507806367}
+    - targetCorrespondingSourceObject: {fileID: 5974305845171484013, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1507806366}
+    - targetCorrespondingSourceObject: {fileID: 5974305845171484013, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1507806365}
+    - targetCorrespondingSourceObject: {fileID: 130945389498422502, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 827393628}
+    - targetCorrespondingSourceObject: {fileID: 130945389498422502, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 827393627}
+    - targetCorrespondingSourceObject: {fileID: 130945389498422502, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 827393626}
+    - targetCorrespondingSourceObject: {fileID: 130945389498422502, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 827393625}
+    - targetCorrespondingSourceObject: {fileID: -3797293896562366790, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1467400780}
+    - targetCorrespondingSourceObject: {fileID: -3797293896562366790, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1467400779}
+    - targetCorrespondingSourceObject: {fileID: -3797293896562366790, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1467400778}
+    - targetCorrespondingSourceObject: {fileID: -3797293896562366790, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1467400777}
+    - targetCorrespondingSourceObject: {fileID: -3906892491658813480, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858560956}
+    - targetCorrespondingSourceObject: {fileID: -3906892491658813480, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858560955}
+    - targetCorrespondingSourceObject: {fileID: -3906892491658813480, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858560954}
+    - targetCorrespondingSourceObject: {fileID: -3906892491658813480, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858560953}
+    - targetCorrespondingSourceObject: {fileID: -5061168438719607290, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1781549777}
+    - targetCorrespondingSourceObject: {fileID: -5061168438719607290, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1781549776}
+    - targetCorrespondingSourceObject: {fileID: -5061168438719607290, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1781549775}
+    - targetCorrespondingSourceObject: {fileID: -5061168438719607290, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1781549774}
+    - targetCorrespondingSourceObject: {fileID: -3174283689434923875, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 913966966}
+    - targetCorrespondingSourceObject: {fileID: -3174283689434923875, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 913966965}
+    - targetCorrespondingSourceObject: {fileID: -3174283689434923875, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 913966964}
+    - targetCorrespondingSourceObject: {fileID: -3174283689434923875, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 913966963}
+    - targetCorrespondingSourceObject: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1538020513}
+    - targetCorrespondingSourceObject: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1538020512}
+    - targetCorrespondingSourceObject: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1538020511}
+    - targetCorrespondingSourceObject: {fileID: 3027233716559929999, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1538020510}
+    - targetCorrespondingSourceObject: {fileID: 2542602913892006603, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1145571183}
+    - targetCorrespondingSourceObject: {fileID: 2542602913892006603, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1145571182}
+    - targetCorrespondingSourceObject: {fileID: 2542602913892006603, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1145571181}
+    - targetCorrespondingSourceObject: {fileID: 2542602913892006603, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1145571180}
+    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1759554418}
+    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1759554417}
+    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1759554416}
+    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1759554415}
+    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1759554414}
+    - targetCorrespondingSourceObject: {fileID: -177498036779972315, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1759554413}
+    - targetCorrespondingSourceObject: {fileID: -110142668121624709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1908263125}
+    - targetCorrespondingSourceObject: {fileID: -110142668121624709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1908263124}
+    - targetCorrespondingSourceObject: {fileID: -110142668121624709, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1908263123}
+    - targetCorrespondingSourceObject: {fileID: 891712398245736941, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1765085430}
+    - targetCorrespondingSourceObject: {fileID: -5958231672505998428, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1774073315}
+    - targetCorrespondingSourceObject: {fileID: -5958231672505998428, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1774073314}
+    - targetCorrespondingSourceObject: {fileID: -3341134601067259838, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1052644244}
+    - targetCorrespondingSourceObject: {fileID: -3341134601067259838, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1052644243}
+    - targetCorrespondingSourceObject: {fileID: -402117291202023111, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 381220782}
+    - targetCorrespondingSourceObject: {fileID: -402117291202023111, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 381220781}
+    - targetCorrespondingSourceObject: {fileID: -7170249994497489313, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 331451843}
+    - targetCorrespondingSourceObject: {fileID: -7170249994497489313, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 331451842}
+    - targetCorrespondingSourceObject: {fileID: -3731319838904337014, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1356920565}
+    - targetCorrespondingSourceObject: {fileID: -3731319838904337014, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1356920564}
+    - targetCorrespondingSourceObject: {fileID: 5368179431949383082, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1881870510}
+    - targetCorrespondingSourceObject: {fileID: 5368179431949383082, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1881870509}
+    - targetCorrespondingSourceObject: {fileID: -6637543377290448088, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2065681536}
+    - targetCorrespondingSourceObject: {fileID: -6637543377290448088, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2065681535}
+    - targetCorrespondingSourceObject: {fileID: 9135499519417570523, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 658283462}
+    - targetCorrespondingSourceObject: {fileID: 9135499519417570523, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 658283461}
+    - targetCorrespondingSourceObject: {fileID: 6201518996006285981, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 255192020}
+    - targetCorrespondingSourceObject: {fileID: 6201518996006285981, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 255192019}
+    - targetCorrespondingSourceObject: {fileID: -3643527445742407599, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1738380370}
+    - targetCorrespondingSourceObject: {fileID: -3643527445742407599, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1738380369}
+    - targetCorrespondingSourceObject: {fileID: 5295339304559299332, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 500704502}
+    - targetCorrespondingSourceObject: {fileID: 5295339304559299332, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 500704501}
+    - targetCorrespondingSourceObject: {fileID: 8946937118903327085, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 212111549}
+    - targetCorrespondingSourceObject: {fileID: 8946937118903327085, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 212111548}
+  m_SourcePrefab: {fileID: 100100000, guid: 9a3532dd77014d81c807ec4a5650383f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3262,4 +3489,4 @@ SceneRoots:
   - {fileID: 1572523955}
   - {fileID: 1732329309}
   - {fileID: 818501381}
-  - {fileID: 1819142200}
+  - {fileID: 2129522693}
