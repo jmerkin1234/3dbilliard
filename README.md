@@ -96,19 +96,20 @@ Assets/
 - TurnManager.cueAim → cuestick CueAim (-31552)
 - TurnManager.shotPower → cuestick ShotPower (-31556)
 
-### Ball Positioning (CORRECTED 2026-02-15)
-- **Issue**: Original FBX export had balls hovering 13.5mm above felt surface
-- **Root cause**: Ball centers at Y=0.795/0.79485, felt at Y=0.752951, ball radius 0.028575m
-  - Ball bottoms at Y=0.766425, creating 13.5mm gap → balls dropped and bounced in Play Mode
-- **Fix**: Lowered all 16 balls to **Y=0.781526** (felt Y + ball radius)
-  - Formula: 0.752951 + 0.028575 = 0.781526
-  - Ball bottoms now exactly touch felt surface at Y=0.752951
-- **Final positions**:
-  - **Cueball**: X=-0.561705, Y=0.781526, Z=0
-  - **Cue stick**: X=-0.620280, Y=0.795, Z=0 (correctly behind cueball)
-  - **Numbered balls**: Y=0.781526 (all 15 balls, triangle rack, X/Z preserved from FBX)
-  - **Felt surface**: Y=0.752951
-- **Result**: ZERO clearance gap, NO BOUNCING in Play Mode
+### Ball Positioning (FINAL FIX 2026-02-15)
+- **Critical Issue**: Balls were positioned below felt collider surface causing bounce
+- **Root Cause Analysis**:
+  - Felt Transform Y: 0.752951
+  - Felt BoxCollider center offset Y: 0.0021005
+  - Felt BoxCollider size Y: 0.032456
+  - **Felt collider TOP surface**: 0.752951 + 0.0021005 + (0.032456/2) = **0.771279**
+  - Ball radius: 0.028575m
+  - **FIRST ATTEMPT (WRONG)**: Set balls to Y=0.781526 (felt transform + radius) → balls INSIDE collider → bounced
+  - **CORRECT FORMULA**: Felt collider top + ball radius = 0.771279 + 0.028575 = **0.799854**
+- **Final Positions (VERIFIED WORKING)**:
+  - **All 16 balls**: Y=**0.799854** (cueball + 15 numbered balls)
+  - **Cue stick**: X=-0.620280, Y=0.795, Z=0, Rotation=(0,0,0)
+  - **Result**: Ball bottoms touch felt collider top surface exactly - **ZERO BOUNCING**
 
 ### Tools Created
 - **AssignPoolTableMaterials.cs**: Auto-assigns HDRP materials to model objects (Tools → Assign Pool Table Materials)

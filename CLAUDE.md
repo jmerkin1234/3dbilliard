@@ -135,17 +135,18 @@ Phase 7 — Validation Protocol (NEXT)
   - **Tools**: WirePoolGameReferences.cs created as backup reference wiring utility
   - **Scene saved**: PoolGame.unity ready for Phase 7 Play Mode validation
   - **Deprecated**: BilliardGameScene.unity (use PoolGame.unity going forward)
-- 2026-02-15: **CRITICAL FIX - Ball bouncing issue resolved**
-  - **Problem**: Balls were hovering 13.5mm above felt surface, causing drop and bounce in Play Mode
-  - **Analysis**:
-    - Original ball Y positions: 0.795 (cueball), 0.79485 (numbered balls)
-    - Felt surface Y: 0.752951
+- 2026-02-15: **CRITICAL FIX - Ball bouncing issue ACTUALLY resolved (second attempt)**
+  - **First Attempt FAILED**: Set balls to Y=0.781526 - balls STILL bounced
+  - **Root Cause Discovery**: Was using felt Transform Y (0.752951) instead of felt COLLIDER top surface
+  - **Collider Analysis**:
+    - Felt Transform Y: 0.752951
+    - Felt BoxCollider center offset Y: 0.0021005
+    - Felt BoxCollider size Y: 0.032456
+    - **Felt collider TOP surface**: 0.752951 + 0.0021005 + (0.032456/2) = 0.771279
     - Ball radius: 0.028575m
-    - Ball bottoms: 0.795 - 0.028575 = 0.766425
-    - **Gap**: 0.766425 - 0.752951 = 0.013474m (13.5mm hover)
-  - **Solution**: Lowered all 16 balls to Y=0.781526 (felt Y + ball radius)
-    - Formula: 0.752951 + 0.028575 = 0.781526
-    - Ball bottoms now exactly touch felt at Y=0.752951
-  - **Verification**: Zero clearance gap, zero bouncing
-  - **Cuestick position**: Unchanged at X=-0.620280 (correctly behind cueball at X=-0.561705)
-  - **Commit**: Ball position correction saved to PoolGame.unity
+  - **WRONG Formula** (first attempt): felt transform Y + radius = 0.752951 + 0.028575 = 0.781526 → FAILED
+  - **CORRECT Formula**: felt collider top + radius = 0.771279 + 0.028575 = **0.799854**
+  - **Final Solution**: Raised all 16 balls to Y=0.799854
+  - **Cuestick**: Rotation set to (0,0,0) - default orientation aims correctly at rack
+  - **Verification**: Tested 5+ times in Play Mode - zero bouncing confirmed
+  - **Lesson**: Always use COLLIDER bounds, not Transform position, for physics calculations
